@@ -1456,41 +1456,41 @@ graph TD
 
     <figure class="diagram">
       <pre class="mermaid">
-flowchart TD
-    subgraph 预备阶段
-        A1[月结前检查] --> A2[MM模块预关闭]
-        A2 --> A3[确认所有业务单据过账完成]
-    end
+graph TD
+    A1[月结前检查] --> A2[MM模块预关闭]
+    A2 --> A3[确认所有业务单据过账完成]
+    A3 --> B1[执行分配 KSV5]
+    B1 --> B2[执行分摊 KSU5]
+    B2 --> B3[辅助成本中心余额=0]
+    B3 --> C1[计算实际作业价格 KSII]
+    C1 --> C2[作业价格重估 CON2/MFN1]
+    C2 --> C3[成本结转至生产订单]
+    C3 --> D1[在制品计算 KKAO]
+    D1 --> D2[差异计算 KKS1/KKS2]
+    D2 --> E1[生产订单结算 CO88]
+    E1 --> E2[物料分类账 CKMLCP]
+    E2 --> E3[差异结转至销售成本/库存]
+    E3 --> F1[打开新期间 MMPV/OB52]
+    F1 --> F2[月结后检查]
+    F2 --> F3[出具成本报表]
 
-    subgraph 第一步：辅助成本中心清零
-        B1[执行分配 KSV5] --> B2[执行分摊 KSU5]
-        B2 --> B3[辅助成本中心余额=0]
-    end
-
-    subgraph 第二步：生产性成本中心清零
-        C1[计算实际作业价格 KSII] --> C2[作业价格重估 CON2/MFN1]
-        C2 --> C3[生产性成本中心余额结转至订单]
-    end
-
-    subgraph 第三步：在制品与差异
-        D1[在制品计算 KKAO] --> D2[差异计算 KKS1]
-    end
-
-    subgraph 第四步：订单结算与物料账
-        E1[生产订单结算 CO88] --> E2[物料分类账 CKMLCP]
-        E2 --> E3[差异结转至销售成本/库存]
-    end
-
-    subgraph 收尾阶段
-        F1[打开新期间 MMPV/OB52] --> F2[月结后检查]
-        F2 --> F3[出具成本报表]
-    end
-
-    A3 --> B1
-    B3 --> C1
-    C3 --> D1
-    D2 --> E1
-    E3 --> F1
+    style A1 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style A2 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style A3 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style B1 fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style B2 fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style B3 fill:#cffafe,stroke:#0891b2,stroke-width:2px,color:#164e63
+    style C1 fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style C2 fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style C3 fill:#bbf7d0,stroke:#16a34a,stroke-width:2px,color:#14532d
+    style D1 fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style D2 fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style E1 fill:#fde68a,stroke:#ca8a04,stroke-width:2px,color:#713f12
+    style E2 fill:#fcd34d,stroke:#b45309,stroke-width:2px,color:#78350f
+    style E3 fill:#fecaca,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
+    style F1 fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style F2 fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style F3 fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
       </pre>
       <figcaption>图3：制造业CO月末结账流程图</figcaption>
     </figure>
