@@ -469,6 +469,165 @@
     font-weight: 600;
   }
 
+  /* Accordion / Collapsible Panels */
+  .accordion {
+    margin: 20px 0;
+  }
+  .accordion-item {
+    background: var(--bg2);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .accordion-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .accordion-header {
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: var(--bg2);
+    transition: background 0.2s;
+  }
+  .accordion-header:hover {
+    background: var(--accent-soft);
+  }
+  .accordion-header .acc-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .accordion-header .tcode {
+    font-size: 0.82rem;
+  }
+  .accordion-header .acc-cat {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .accordion-header .acc-arrow {
+    transition: transform 0.3s;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .accordion-item.open .accordion-header .acc-arrow {
+    transform: rotate(180deg);
+  }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  .accordion-item.open .accordion-body {
+    max-height: 2000px;
+  }
+  .accordion-body-inner {
+    padding: 0 18px 18px;
+    border-top: 1px solid var(--rule);
+  }
+  .accordion-body h5 {
+    margin: 14px 0 6px;
+    font-size: 0.9rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .accordion-body h5:first-child {
+    margin-top: 14px;
+  }
+  .accordion-body ul {
+    margin: 6px 0 6px 20px;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .accordion-body li {
+    margin-bottom: 3px;
+  }
+  .accordion-body .callout-mini {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    margin: 8px 0;
+    font-size: 0.85rem;
+  }
+  .accordion-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 8px 0;
+  }
+  .accordion-body table th {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 6px 10px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid var(--rule);
+  }
+  .accordion-body table td {
+    padding: 6px 10px;
+    border: 1px solid var(--rule);
+  }
+
+  /* GitHub Pages Guide */
+  .gh-guide {
+    background: var(--bg2);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .gh-guide-step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+  .gh-guide-step:last-child {
+    margin-bottom: 0;
+  }
+  .gh-guide-step .step-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .gh-guide-step .step-content {
+    flex: 1;
+  }
+  .gh-guide-step h4 {
+    margin: 4px 0 8px;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .gh-guide-step p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .gh-guide-step img {
+    max-width: 100%;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
   @media (max-width: 768px) {
     .two-col { grid-template-columns: 1fr; }
     header.hero h1 { font-size: 1.5rem; }
@@ -803,9 +962,452 @@ graph TD
         </tbody>
       </table>
     </div>
-  </section>
 
-  <!-- 日常核算 -->
+    <h3>核心事务码详细操作指南</h3>
+    <p>点击下方每个事务码可展开查看详细的业务逻辑、操作步骤、关键检查点和常见问题。</p>
+
+    <div class="accordion">
+
+      <!-- CK11N -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CK11N</span>
+            <span class="acc-cat">标准成本</span>
+            <span>创建标准成本估算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>根据物料主数据、BOM（物料清单）、工艺路线和成本核算变式，计算物料的标准成本。这是CO模块成本核算的起点。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>CK11N</strong></li>
+              <li>输入基本参数：物料编号、工厂代码、成本核算变式（如PC01）、成本核算日期、成本核算批量</li>
+              <li>系统自动读取BOM结构、工艺路线数据，计算材料成本和制造成本</li>
+              <li>查看成本组件分解，分析成本结构合理性</li>
+              <li>决定是否标记并发布为标准成本</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>成本核算变式选择是否正确</li>
+              <li>成本构成结构（OKTZ）是否已激活</li>
+              <li>检查是否有"成本构成结构没有被激活"等报错</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>注意：</strong>如果物料当前期间已有标准成本且已发布，需先用 CKR1 删除旧的标准成本评估，才能重新估算。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CK24 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CK24</span>
+            <span class="acc-cat">标准成本</span>
+            <span>标准价格标记与发布</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>将CK11N计算出的标准成本估算结果，标记并正式发布为物料的标准价格。分为<strong>标记（Marking）</strong>和<strong>发布（Release）</strong>两步。</p>
+            <h5>📝 操作步骤</h5>
+            <p><strong>第一步：标记价格</strong></p>
+            <ul>
+              <li>进入CK24，初始界面显示"价格更新：标记标准价格"</li>
+              <li>输入年/月、公司代码、工厂代码、成本核算变式、物料编码</li>
+              <li>点击"执行"或"标记"按钮</li>
+              <li>查看运行结果，检查是否有错误</li>
+            </ul>
+            <p><strong>第二步：发布价格</strong></p>
+            <ul>
+              <li>标记完成后，点击"发布"按钮，界面切换为发布界面</li>
+              <li>选择要发布的物料，点击"执行"或"发布"按钮</li>
+              <li>发布成功后，物料主数据中"当前"的标准价格更新</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>发布后检查MM03物料主数据，确认"当前"标准价格已更新</li>
+              <li>发布会生成价格变动凭证，若物料有库存，会生成FI凭证</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>标记 vs 发布的区别：</strong>标记是将估算结果暂存为"将来"价格，尚未生效；发布是将价格正式写入"当前"标准价格，并生成凭证。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KSV5 / KSU5 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KSV5 / KSU5</span>
+            <span class="acc-cat">成本中心</span>
+            <span>分配与分摊循环执行</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p><strong>KSV5（分配）</strong>：将发送方成本中心的<strong>初级成本要素</strong>按规则分配到接收方，接收方能看到原始成本要素。</p>
+            <p><strong>KSU5（分摊）</strong>：将发送方成本中心的成本（可含初级和次级成本要素）按<strong>统计指标</strong>分摊到接收方，接收方看不到原始成本要素。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>先创建循环：KSV1（分配）/ KSU1（分摊），配置发送方、接收方和分配规则</li>
+              <li>维护统计指标实际值（KB31N）—— 仅分摊循环需要</li>
+              <li>执行循环：KSV5 / KSU5（填写执行期间、会计年度、循环号）</li>
+              <li>先测试运行，确认无误后再正式执行</li>
+              <li>通过S_ALR_87013611检查成本中心余额是否正确</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>辅助成本中心期末余额是否结转为零</li>
+              <li>统计指标是否已正确维护（KB31N）</li>
+              <li>循环的迭代方式是否正确（迭代 vs 累计）</li>
+            </ul>
+            <h5>📊 分配 vs 分摊区别</h5>
+            <table>
+              <tr><th>特性</th><th>分配（KSV5）</th><th>分摊（KSU5）</th></tr>
+              <tr><td>成本要素类型</td><td>仅初级成本要素</td><td>初级+次级成本要素</td></tr>
+              <tr><td>接收方可见性</td><td>可看到原始成本要素</td><td>看不到原始成本要素</td></tr>
+              <tr><td>分配依据</td><td>固定比例/作业量等</td><td>统计指标（如面积、人数）</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- KSII -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KSII</span>
+            <span class="acc-cat">成本中心</span>
+            <span>实际作业价格计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>计算成本中心当月各作业类型的实际作业单价。核心公式：</p>
+            <div class="callout-mini">
+              <strong>实际作业单价 = 成本中心当月实际总费用 ÷ 实际总报工作业量</strong>
+            </div>
+            <p>计算结果写入COST表，但不会自动更新已保存的生产订单。</p>
+            <h5>📝 前置步骤</h5>
+            <ul>
+              <li>成本中心费用已归集（FI过账 + 分摊分配完成）</li>
+              <li>实际报工已完成（CO11N）</li>
+              <li>已执行KSS2（实际成本分割），将总费用拆分到各作业类型</li>
+            </ul>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>KSII</strong></li>
+              <li>输入成本中心范围、作业类型、期间、会计年度</li>
+              <li>先测试运行，检查结果后再正式执行</li>
+              <li>通过KSBT查看计划价（值类型1）和实际价（值类型4）对比</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>确保所有报工已完成（作业量不能为0，否则报错）</li>
+              <li>检查作业类型主数据中"实际价格指示符"配置</li>
+              <li>价格单位可能自动缩放为100或1000（避免单价过小）</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>与KP26的关系：</strong>KP26维护的是计划价（期初中使用），KSII计算的是实际价（月末使用）。两者的差额通过CON2/MFN1重估到生产订单。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CON2 / MFN1 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CON2 / MFN1</span>
+            <span class="acc-cat">生产订单</span>
+            <span>作业价格重估</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 为什么需要重估</h5>
+            <p>期中报工（CO11N）使用的是<strong>计划作业价格</strong>（KP26），订单成本是"计划"成本。月末KSII算出实际价后，需要通过CON2/MFN1将差额补记/冲销到生产订单，使订单成本真实化。</p>
+            <h5>📝 重估逻辑</h5>
+            <div class="callout-mini">
+              <strong>差额 = (实际作业单价 - 计划作业单价) × 作业数量</strong><br>
+              借：生产订单（借记次级成本要素）<br>
+              贷：发出作业的成本中心
+            </div>
+            <h5>📝 操作步骤</h5>
+            <p><strong>CON2（批量重估）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>CON2</strong></li>
+              <li>输入工厂、期间、会计年度</li>
+              <li>先测试运行确认无误后再正式执行</li>
+              <li>查看运行结果，处理错误记录</li>
+            </ul>
+            <p><strong>MFN1（单个订单重估）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>MFN1</strong></li>
+              <li>输入工厂、期间、订单号，执行</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>工单状态不能是CLSD（关闭），否则无法写入重估成本</li>
+              <li>检查运行日志中的错误记录</li>
+              <li>重估后成本中心余额应趋近于零</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- KKAO -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KKAO</span>
+            <span class="acc-cat">生产订单</span>
+            <span>在制品（WIP）计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>计算月末未完工生产订单的在制品（WIP）价值。WIP是订单已投入但尚未完成的部分，需要在资产负债表中确认为资产。</p>
+            <div class="callout-mini">
+              <strong>WIP = 投入 - 产出</strong><br>
+              投入 = 订单领料 + 报工作业成本<br>
+              产出 = 订单收货数量 × 产成品标准价
+            </div>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>KKAO</strong>（批量）/ <strong>KKAX</strong>（单个）</li>
+              <li>输入工厂、期间、会计年度</li>
+              <li>选择订单类型、结果分析版本（如0版本）</li>
+              <li>先测试运行，再正式执行</li>
+              <li>查看结果：在制品价值 = 投入 - 产出</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>订单必须有实际领料和报工记录</li>
+              <li>订单状态需为REL（已释放），不能是CLSD（关闭）</li>
+              <li>KKAO只计算WIP，<strong>不生成FI凭证</strong>，需后续通过CO88结算才生成凭证</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>注意：</strong>计算后看不到财务凭证是正常的，需运行CO88后才会过账到FI模块。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KKS1 / KKS2 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KKS1 / KKS2</span>
+            <span class="acc-cat">生产订单</span>
+            <span>订单差异计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>计算生产订单的实际成本与目标成本（标准成本）之间的差异。差异计算是成本分析的核心，也是结算的前置步骤。</p>
+            <h5>📝 操作步骤</h5>
+            <p><strong>KKS1（单个订单）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>KKS1</strong></li>
+              <li>输入工厂代码、期间、订单号，执行</li>
+            </ul>
+            <p><strong>KKS2（批量计算）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>KKS2</strong></li>
+              <li>输入工厂代码、期间，选择订单类型等条件</li>
+              <li>执行，批量计算差异</li>
+            </ul>
+            <h5>📊 差异分类</h5>
+            <table>
+              <tr><th>差异类型</th><th>说明</th></tr>
+              <tr><td>投入差异</td><td>实际投入与标准投入的差额，包括价格差异和数量差异</td></tr>
+              <tr><td>产出差异</td><td>实际产出与标准产出的差额</td></tr>
+              <tr><td>资源利用差异</td><td>使用了不同的物料或作业类型</td></tr>
+            </table>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>确认订单状态正确（DLV/TECO等）</li>
+              <li>通过KOB1查看订单成本和差异分析明细</li>
+              <li>差异计算是分析步骤，不直接生成凭证，结算后才过账</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO88 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CO88</span>
+            <span class="acc-cat">生产订单</span>
+            <span>生产订单结算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>将生产订单的最终成本（含WIP和差异）结转到相应的FI科目。根据订单状态不同，结算逻辑不同：</p>
+            <ul>
+              <li><strong>未完工订单（REL状态）</strong>：计算WIP，借记WIP资产科目，贷记生产成本科目</li>
+              <li><strong>已完工订单（TECO/DLV状态）</strong>：计算差异，结转到产成品库存和差异科目</li>
+            </ul>
+            <h5>📝 前置步骤</h5>
+            <ul>
+              <li>费用分摊分配已完成（KSU5/KSV5）</li>
+              <li>作业价格重估已完成（CON2/MFN1）</li>
+              <li>WIP计算已完成（KKAO）</li>
+              <li>差异计算已完成（KKS1/KKS2）</li>
+            </ul>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>CO88</strong></li>
+              <li>输入结算期间、公司代码、工厂、订单类型等</li>
+              <li>先测试运行（勾选"测试运行"），确认无误后再正式执行</li>
+              <li>查看运行结果和生成的凭证</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>检查生成的FI凭证是否正确</li>
+              <li>检查生产成本科目是否结平（FS10N）</li>
+              <li>订单已CLSD（关闭）无法结算，需先取消关闭</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CKMLCP -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CKMLCP</span>
+            <span class="acc-cat">物料分类账</span>
+            <span>物料分类账期末处理</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>物料分类账（Material Ledger）的期末结算事务码。用于月末将物料的实际成本差异按BOM结构逐级上滚，计算物料的实际成本。是标准成本法下的实际成本核算工具。</p>
+            <h5>📝 操作步骤（CKMLCP全流程）</h5>
+            <table>
+              <tr><th>步骤</th><th>操作</th><th>说明</th></tr>
+              <tr><td>1</td><td>选择期间</td><td>选择正确的工厂和期间</td></tr>
+              <tr><td>2</td><td>确定顺序</td><td>系统自动确定多级处理的物料顺序</td></tr>
+              <tr><td>3</td><td>单级处理确定</td><td>计算单级（单层）差异——物料自身的差异</td></tr>
+              <tr><td>4</td><td>多级处理确定</td><td>计算多层差异上卷——下层物料差异滚到上层</td></tr>
+              <tr><td>5</td><td>消耗重估</td><td>将差异分摊到消耗方（销售成本等）</td></tr>
+              <tr><td>6</td><td>记账清算</td><td>生成物料账过账凭证（需先MMPV开新期间）</td></tr>
+            </table>
+            <h5>📊 单级 vs 多级区别</h5>
+            <ul>
+              <li><strong>单级价格确定</strong>：只计算物料自身的差异，按消耗与库存比例分摊</li>
+              <li><strong>多级价格确定</strong>：将多层差异按BOM逐级上滚到产成品，最终确定完整实际成本</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>必须先打开新物料期间（MMPV），才能执行记账清算</li>
+              <li>检查未分配/未分摊差异，分析尾差原因</li>
+              <li>通过CKM3查看物料价格分析</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>注意：</strong>有相互物料移动的工厂必须同时结算，否则导致价格异常。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MMPV -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">MMPV</span>
+            <span class="acc-cat">期间管理</span>
+            <span>打开物料期间</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>用于打开或关闭物料账期。在月末物料分类账结算前，需确保目标期间已打开，否则物料移动无法过账。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>MMPV</strong></li>
+              <li>输入会计年度、期间、工厂范围</li>
+              <li>选择"开启"操作，执行</li>
+              <li>检查物料期间状态是否更新</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li><strong>必须逐月连续开启</strong>，不能跳跃（如从11月直接跳到1月，必须先开12月）</li>
+              <li>与财务账期（OB52）同步打开</li>
+              <li>多工厂环境下，确保所有相关工厂同时开启</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>常见报错：</strong>"只能在公司代码XXXX的期间XXXX/XX中记帐" —— 说明物料期间未打开，需用MMPV打开对应期间。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OB52 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">OB52</span>
+            <span class="acc-cat">期间管理</span>
+            <span>会计期间开关</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>控制财务过账期间的打开和关闭。根据期间变式确定会计期间，通过OB52控制哪些期间可以对哪些科目类型开放过账。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>OB52</strong></li>
+              <li>选择期间变式（如0001）和会计年度</li>
+              <li>对目标期间行项目，设置"从期间"和"到期间"</li>
+              <li>按科目类型分别控制：A=资产、D=客户、K=供应商、M=物料、S=总账</li>
+              <li>保存</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>确认期间变式已正确分配给公司代码</li>
+              <li>确认科目类型正确（过账科目类型与OB52中维护的一致）</li>
+              <li>打开新期间前，确认上期间业务已完成</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>常见报错：</strong>"Posting period is not open" —— 检查OB52中对应科目类型的期间是否已打开。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
   <section id="daily">
     <h2>五、日常成本核算工作要点</h2>
     <p>作为制造业成本会计，你的日常工作主要围绕以下几个方面展开：</p>
@@ -1117,21 +1719,21 @@ flowchart TD
     <div class="resource-item">
       <div class="res-type res-book">书</div>
       <div>
-        <h4>《Controlling with SAP ERP: Business User Guide》</h4>
+        <h4><a href="https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">《Controlling with SAP ERP: Business User Guide》↗</a></h4>
         <p>SAP官方出版社SAP PRESS出品，CO模块业务用户指南，覆盖主数据、计划、实际过账、期间结账等内容，适合初学者建立系统认知。<sup><a href="#cite-6">[6]</a></sup></p>
       </div>
     </div>
     <div class="resource-item">
       <div class="res-type res-book">书</div>
       <div>
-        <h4>《Product Cost Controlling with SAP S/4HANA》</h4>
+        <h4><a href="https://www.sap-press.com/finance-controlling/controlling/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">《Product Cost Controlling with SAP S/4HANA》↗</a></h4>
         <p>产品成本控制权威指南，从主数据设置到成本估算配置，逐步讲解。如果使用S/4HANA版本，这本书必不可少。<sup><a href="#cite-7">[7]</a></sup></p>
       </div>
     </div>
     <div class="resource-item">
       <div class="res-type res-book">书</div>
       <div>
-        <h4>《SAP S4 FICO财务成本教程》</h4>
+        <h4><a href="https://blog.csdn.net/erplabs/article/details/149870334" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">《SAP S4 FICO财务成本教程》↗</a></h4>
         <p>中文实战教程，以MTS按库存生产模式为案例，覆盖FI、CO及MM/PP/SD集成，案例实用全面，适合国内用户。<sup><a href="#cite-8">[8]</a></sup></p>
       </div>
     </div>
@@ -1140,14 +1742,14 @@ flowchart TD
     <div class="resource-item">
       <div class="res-type res-video">课</div>
       <div>
-        <h4>SAP S4 HANA CO成本模块实战课程（CSDN）</h4>
+        <h4><a href="https://edu.csdn.net/course/detail/38496" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP S4 HANA CO成本模块实战课程（CSDN）↗</a></h4>
         <p>82节视频课程，涵盖成本中心、内部订单、产品成本、物料账等模块，讲师为资深财务顾问，适合系统学习。<sup><a href="#cite-9">[9]</a></sup></p>
       </div>
     </div>
     <div class="resource-item">
       <div class="res-type res-video">课</div>
       <div>
-        <h4>Udemy - SAP CO : Product Costing & COPA & Material Ledger</h4>
+        <h4><a href="https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">Udemy - SAP CO : Product Costing & COPA & Material Ledger ↗</a></h4>
         <p>英文课程，由资深CO讲师Karanam Sreedhar授课，覆盖产品成本、物料账和获利能力分析，内容较新（2026年更新）。<sup><a href="#cite-10">[10]</a></sup></p>
       </div>
     </div>
@@ -1156,15 +1758,29 @@ flowchart TD
     <div class="resource-item">
       <div class="res-type res-community">社</div>
       <div>
-        <h4>SAP Community（community.sap.com）</h4>
+        <h4><a href="https://community.sap.com/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP Community（community.sap.com）↗</a></h4>
         <p>SAP官方社区，有大量CO模块的技术博客和问答，可以搜索到各种问题的解决方案。</p>
       </div>
     </div>
     <div class="resource-item">
       <div class="res-type res-community">社</div>
       <div>
-        <h4>CSDN SAP专栏 / 知乎SAP话题</h4>
+        <h4><a href="https://blog.csdn.net/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">CSDN SAP专栏 ↗</a> / <a href="https://www.zhihu.com/search?type=content&q=SAP%20CO" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">知乎SAP话题 ↗</a></h4>
         <p>国内从业者分享的实战经验和教程，很多是项目中的真实案例，接地气，适合遇到问题时搜索参考。</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-community">社</div>
+      <div>
+        <h4><a href="https://help.sap.com/docs/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP Help Portal（help.sap.com）↗</a></h4>
+        <p>SAP官方帮助文档，最权威的功能说明和配置指南。可搜索S/4HANA CO模块的官方文档。</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-community">社</div>
+      <div>
+        <h4><a href="https://blogs.sap.com/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP Blogs（blogs.sap.com）↗</a></h4>
+        <p>SAP官方博客平台，全球SAP顾问分享的技术文章和最佳实践，英文资源丰富。</p>
       </div>
     </div>
 
@@ -1246,6 +1862,68 @@ flowchart TD
           </tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <!-- 附录：GitHub Pages 指南 -->
+  <section id="gh-pages-guide">
+    <h2>附录：如何开启 GitHub Pages 在线预览</h2>
+    <p>将本学习规划上传到GitHub仓库后，可以通过GitHub Pages功能将其部署为网页，随时随地通过浏览器访问。以下是详细的操作步骤：</p>
+
+    <div class="gh-guide">
+      <div class="gh-guide-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>进入仓库，点击 Settings</h4>
+          <p>打开你的 GitHub 仓库页面，在顶部导航栏找到最右侧的 <strong>Settings</strong>（设置）选项卡并点击进入。</p>
+          <img src="assets/step1-settings.jpg" alt="点击Settings选项卡">
+        </div>
+      </div>
+
+      <div class="gh-guide-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>左侧菜单找到 Pages</h4>
+          <p>在设置页面左侧的菜单栏中，向下滚动找到 <strong>Pages</strong> 选项并点击。</p>
+          <img src="assets/step2-pages-menu.jpg" alt="点击左侧Pages菜单">
+        </div>
+      </div>
+
+      <div class="gh-guide-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>配置部署源并保存</h4>
+          <p>在 Build and deployment 区域：</p>
+          <ul style="margin:10px 0 10px 20px;font-size:0.9rem">
+            <li><strong>Source</strong> 选择 <code>Deploy from a branch</code></li>
+            <li><strong>Branch</strong> 第一个下拉框选择 <code>main</code> 分支</li>
+            <li><strong>Branch</strong> 第二个下拉框选择 <code>/ (root)</code></li>
+            <li>点击 <strong>Save</strong> 按钮保存</li>
+          </ul>
+          <img src="assets/step3-deploy-source.jpg" alt="配置部署源并保存">
+        </div>
+      </div>
+
+      <div class="gh-guide-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>等待部署完成，访问网页</h4>
+          <p>保存后，GitHub 会自动开始部署（通常需要 1-3 分钟）。部署完成后，页面顶部会显示你的网站地址，格式为：</p>
+          <div class="callout-mini">
+            <strong>访问地址：</strong><code>https://&lt;你的用户名&gt;.github.io/SAP-study/sap-cost-accounting-learning-plan.html</code>
+          </div>
+          <p>例如，如果你的用户名是 <code>Huyx-oswald</code>，则访问地址为：<br><code>https://huyx-oswald.github.io/SAP-study/sap-cost-accounting-learning-plan.html</code></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <h4>💡 常见问题</h4>
+      <ul>
+        <li><strong>保存后页面显示404？</strong> 部署需要1-3分钟，请稍等几分钟后刷新再试。</li>
+        <li><strong>页面样式不对？</strong> 确认 Branch 选择的是 <code>/ (root)</code> 而不是 <code>/docs</code>。</li>
+        <li><strong>以后更新文件后会自动更新吗？</strong> 是的，每次推送到 main 分支后，GitHub Pages 会自动重新部署。</li>
+      </ul>
     </div>
   </section>
 
