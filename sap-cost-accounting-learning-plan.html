@@ -659,7 +659,9 @@
     <a href="#co-module">CO模块体系</a>
     <a href="#daily">日常核算</a>
     <a href="#month-end">月末结账</a>
+    <a href="#special-scenarios">特殊业务</a>
     <a href="#year-end">年末结账</a>
+    <a href="#cost-check">核对与报错</a>
     <a href="#resources">学习资源</a>
     <a href="#plan">时间规划</a>
   </div>
@@ -1674,48 +1676,828 @@ flowchart TD
     </div>
   </section>
 
+  <!-- 特殊业务场景 -->
+  <section id="special-scenarios">
+    <h2>七、制造业特殊业务场景成本处理</h2>
+    <p>制造业日常生产中，除了标准的生产订单成本核算外，还会遇到返工、报废、委外加工、联副产品等特殊场景。掌握这些场景的成本处理方式，是成本会计从入门到精通的关键。</p>
+
+    <div class="accordion">
+
+      <!-- 返工订单 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">返工</span>
+            <span>返工生产订单的成本处理</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务场景</h5>
+            <p>对不合格产品进行修复或重新包装处理，使其达到合格标准。常见场景：售后退回产品重新换包材、修复破损产品、拆解不合格品等。</p>
+
+            <h5>📝 SAP处理方式</h5>
+            <table>
+              <tr><th>返工类型</th><th>创建方式</th><th>成本去向</th></tr>
+              <tr><td>修复型返工</td><td>CO01创建返工订单（订单类型PP05等），关联原订单</td><td>成本追加到原成品价值中</td></tr>
+              <tr><td>拆解型返工</td><td>独立返工订单，结算规则设为成本中心</td><td>作为生产损耗计入损益</td></tr>
+              <tr><td>售后返工/换包</td><td>独立订单，结算至成本中心</td><td>计入主营业务成本-返工费</td></tr>
+            </table>
+
+            <h5>✅ 关键操作步骤</h5>
+            <ul>
+              <li><strong>CO01</strong>：创建返工生产订单（选择返工订单类型）</li>
+              <li><strong>CO02</strong>：维护返工订单的结算规则（至物料/成本中心/内部订单）</li>
+              <li><strong>MIGO</strong>：返工领料/收货</li>
+              <li><strong>CO11N</strong>：返工报工</li>
+              <li><strong>KO88/CO88</strong>：返工订单结算</li>
+            </ul>
+
+            <h5>💡 注意事项</h5>
+            <ul>
+              <li>返工订单必须配置正确的结算规则，否则成本无法正确结转</li>
+              <li>若原订单已关闭（CLSD），返工成本只能结算至成本中心或内部订单</li>
+              <li>返工过程中物料移动需正确处理，避免库存价值失真</li>
+              <li>可通过OPKT配置结算参数文件，OPJH将订单类型关联结算参数文件</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 生产报废 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">报废</span>
+            <span>生产报废/在制品报废</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务场景</h5>
+            <p>生产过程中产生的废品损失，包括<strong>可修复废品</strong>和<strong>不可修复废品</strong>。废品损失通过废品通知单、废品交库单等原始记录归集。</p>
+
+            <h5>📝 成本核算逻辑</h5>
+            <table>
+              <tr><th>项目</th><th>借方</th><th>贷方</th></tr>
+              <tr><td>可修复废品修复费用</td><td>废品损失</td><td>原材料/应付职工薪酬等</td></tr>
+              <tr><td>不可修复废品成本</td><td>废品损失</td><td>生产成本</td></tr>
+              <tr><td>废品残值</td><td>原材料/银行存款</td><td>废品损失</td></tr>
+              <tr><td>责任人赔偿</td><td>其他应收款</td><td>废品损失</td></tr>
+              <tr><td>净损失结转</td><td>生产成本（制造费用）</td><td>废品损失</td></tr>
+            </table>
+
+            <h5>✅ SAP处理要点</h5>
+            <ul>
+              <li>废品损失按车间、成本对象分专栏核算</li>
+              <li>月末"废品损失"科目一般无余额</li>
+              <li>通过<strong>OBYC</strong>配置自动过账科目（GBB+AUF等）</li>
+              <li>月结时通过KO88结算，在制品冲回，差异转出</li>
+              <li>不可修复废品：成本按已耗成本归集，残值和赔偿冲减损失</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 委外加工 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">委外</span>
+            <span>委外加工（外协加工）成本核算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务场景</h5>
+            <p>将原材料发送给外部供应商，由供应商加工后收回成品或半成品。分为<strong>全委外</strong>（原材料完全由本方提供）和<strong>工序委外</strong>（部分环节外包）。</p>
+
+            <h5>📝 全委外处理流程</h5>
+            <ul>
+              <li><strong>物料主数据</strong>：采购类型F（外购），特殊采购类别L（委外）</li>
+              <li><strong>ME21N</strong>：创建委外PO，维护加工单价及附加费用（条件技术PB00等）</li>
+              <li><strong>MB1B/ME2O</strong>：将原材料发给供应商（541移动类型，转移到供应商寄售库存）</li>
+              <li><strong>MIGO</strong>：委外成品收货，按PO价格更新库存价值，生成应付暂估</li>
+              <li><strong>MIRO</strong>：发票校验，确认应付账款</li>
+            </ul>
+
+            <h5>💰 成本构成</h5>
+            <div class="callout-mini">
+              <strong>委外成本 = 原材料成本 + 加工费 + 运输费 + 附加费用（模具费/产权费等）</strong>
+            </div>
+            <ul>
+              <li>原材料成本：由本方提供，发出时计入委外加工物资</li>
+              <li>加工费：支付给供应商，收货时计入库存价值</li>
+              <li>间接管理费用：可通过Costing Sheet按比例叠加（如原料×9.05%）</li>
+            </ul>
+
+            <h5>💡 注意事项</h5>
+            <ul>
+              <li>委外成本在<strong>采购收货时</strong>计算，而非销售开单时</li>
+              <li>工序委外中，物料交接需严格管理，确保生产流程衔接</li>
+              <li>复杂委外业务可使用Costing Sheet叠加间接费用</li>
+              <li>委外成本可在成本组件结构中单独配置"委外加工费"成本要素</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 联产品/副产品 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">联副</span>
+            <span>联产品/副产品成本核算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务场景</h5>
+            <ul>
+              <li><strong>联产品（Co-Product）</strong>：同一生产过程中同时产出多种具有同等价值的产品（如炼油厂同时产出汽油、柴油）</li>
+              <li><strong>副产品（By-Product）</strong>：联生产过程中产出的价值相对较低的附属产品</li>
+            </ul>
+
+            <h5>📝 联产品成本分摊</h5>
+            <ul>
+              <li>物料主数据MRP2视图设置<strong>联产品标识</strong>，维护联合生产</li>
+              <li>通过<strong>当量值（Equivalence Number）</strong>比例分摊共同成本</li>
+              <li>各成本要素可按不同比例分摊（如物料80:20，人工90:10）</li>
+              <li>分摊结构（KZS2）配置各源结构的分摊比例</li>
+            </ul>
+
+            <h5>📝 副产品处理方式</h5>
+            <ul>
+              <li>BOM中以<strong>负数</strong>形式表示副产品</li>
+              <li>收货时使用移动类型<strong>531</strong>，副产品按固定价格冲减总成本</li>
+              <li>在成本估算（CK11N）中设置负值物料</li>
+            </ul>
+
+            <h5>🔑 关键事务码</h5>
+            <table>
+              <tr><th>事务码</th><th>功能</th></tr>
+              <tr><td>KKF6N</td><td>配置联产品比例（当量值）</td></tr>
+              <tr><td>KZS2</td><td>创建成本分摊结构</td></tr>
+              <tr><td>KB31N</td><td>登记统计指标（用于分摊）</td></tr>
+              <tr><td>KKS1</td><td>计算差异</td></tr>
+              <tr><td>KO88</td><td>订单结算</td></tr>
+            </table>
+
+            <h5>💡 注意事项</h5>
+            <ul>
+              <li>联产品成本分摊基于<strong>当量值比例</strong>，而非BOM中的数量</li>
+              <li>联产品订单成本收集在Header层次，通过预结算按比例拆分到Item</li>
+              <li>若产出物料未收货，差异会留在投入物料的"未分配"差异中</li>
+              <li>需确保结算参数文件正确绑定订单类型</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 跨期订单 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">跨期</span>
+            <span>跨期生产订单的成本处理</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务场景</h5>
+            <p>生产周期较长的订单会跨月存在，月末需要根据订单状态判断是计算WIP还是计算差异。不同的订单状态对应不同的结算逻辑。</p>
+
+            <h5>📊 订单状态与结算逻辑</h5>
+            <table>
+              <tr><th>订单状态</th><th>系统判定</th><th>WIP/差异处理</th></tr>
+              <tr><td>既无DLV也无TECO</td><td>生产未完成</td><td>全部计入在制品（WIP）</td></tr>
+              <tr><td>有DLV但无TECO</td><td>产出已完成，订单未关闭</td><td>按产出比例计算WIP和差异</td></tr>
+              <tr><td>有TECO（无论有无DLV）</td><td>订单已技术性关闭</td><td>全部计入差异（Variance）</td></tr>
+            </table>
+
+            <h5>📝 WIP计算公式</h5>
+            <div class="callout-mini">
+              <strong>WIP = 实际投入成本 - （标准成本 × 实际收货数 / 计划数）</strong>
+            </div>
+
+            <h5>✅ 操作流程</h5>
+            <ul>
+              <li><strong>KKAO/KKAX</strong>：计算在制品（WIP）</li>
+              <li><strong>KKS1/KKS2</strong>：计算差异</li>
+              <li><strong>CO88/KO88</strong>：执行结算，生成会计凭证</li>
+            </ul>
+
+            <h5>💡 注意事项</h5>
+            <ul>
+              <li>CO88结算后订单仍有余额：可能是结算规则未维护、订单未达DLV/TECO状态、物料未全收货等</li>
+              <li>WIP计算依赖订单最后发货日和DLV生效日判断状态是否纳入当期</li>
+              <li>测试运行先勾选"测试运行"，无问题后再去掉勾选执行</li>
+              <li>跨期订单需确保在制品期间和会计年度正确，避免WIP跨期错配</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- 年末结账 -->
   <section id="year-end">
-    <h2>七、年末结账要点</h2>
-    <p>年末结账在月结的基础上增加了以下特殊步骤：</p>
+    <h2>八、年末结账完整流程</h2>
+    <p>年末结账（年结）是在月结基础上进行的年度余额结转和会计年度切换。年结比月结多出余额结转、资产年度切换、利润中心结转等操作。以下是完整的年结流程。</p>
 
-    <div class="card-grid">
-      <div class="card blue">
-        <div class="card-icon">F.01</div>
-        <h4>FI余额结转</h4>
-        <p>将资产负债表科目余额结转至新会计年度，损益类科目结转至留存收益。事务码：FAGLGVTR（S/4HANA）或 F.01 + F.16（ECC）</p>
+    <h3>年结 vs 月结的区别</h3>
+    <div class="two-col">
+      <div class="col-card">
+        <h4>📅 月结（月末结账）</h4>
+        <ul>
+          <li>目标：将当期费用正确归集到成本中心、生产订单</li>
+          <li>核心：费用分摊、作业价格计算、订单结算、WIP计算</li>
+          <li>特点：每月执行，不改变会计年度</li>
+          <li>可逆：可重新打开期间调整</li>
+        </ul>
       </div>
-      <div class="card teal">
-        <div class="card-icon">AJRW</div>
-        <h4>资产年度变更</h4>
-        <p>固定资产会计年度变更（AJRW）和年终结算（AJAB），将资产价值结转至新年度。</p>
-      </div>
-      <div class="card green">
-        <div class="card-icon">CKMP</div>
-        <h4>新标准价发布</h4>
-        <p>年末/年初发布新会计年度的标准成本估算，更新物料标准价格（CK24）。</p>
-      </div>
-      <div class="card amber">
-        <div class="card-icon">CO数据</div>
-        <h4>CO余额结转</h4>
-        <p>成本中心/内部订单的计划数据结转，维护新年度的成本中心标准层次。</p>
+      <div class="col-card">
+        <h4>📆 年结（年末结账）</h4>
+        <ul>
+          <li>目标：完成旧年度到新年度的余额结转</li>
+          <li>核心：余额结转（FAGLGVTR）、资产年度切换、利润中心结转</li>
+          <li>特点：每年执行一次，不可逆程度高</li>
+          <li>新增：凭证号范围维护、主数据有效期检查</li>
+        </ul>
       </div>
     </div>
 
-    <h3>年末特别注意事项</h3>
-    <ul>
-      <li>提前规划年度标准成本更新时间表，协调BOM、工艺路线、采购价格等基础数据的更新</li>
-      <li>关注在制品跨年的处理逻辑，确保WIP计算的结果正确</li>
-      <li>物料分类账年末需要特别注意库存价格的确定与结转</li>
-      <li>建议先在测试系统做一次完整的年结演练，再在生产系统执行</li>
-    </ul>
+    <div class="accordion">
+
+      <!-- 年结前准备 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">准备</span>
+            <span>年结前准备工作清单</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>🔧 系统配置类</h5>
+            <table>
+              <tr><th>序号</th><th>检查项</th><th>事务码</th></tr>
+              <tr><td>1</td><td>新年度凭证号码范围已维护</td><td>FBN1</td></tr>
+              <tr><td>2</td><td>会计凭证号已复制到新年</td><td>OBH2 / OBH1</td></tr>
+              <tr><td>3</td><td>成本中心有效期检查</td><td>KS13</td></tr>
+              <tr><td>4</td><td>成本要素有效期检查</td><td>KA23</td></tr>
+              <tr><td>5</td><td>作业类型有效期检查</td><td>KL03</td></tr>
+              <tr><td>6</td><td>利润中心有效期检查</td><td>KE53</td></tr>
+              <tr><td>7</td><td>CO凭证号码范围维护</td><td>KANK / KONK</td></tr>
+              <tr><td>8</td><td>成本控制范围版本期间</td><td>OKEQ / OKEQN</td></tr>
+              <tr><td>9</td><td>年末汇率维护</td><td>OB08</td></tr>
+            </table>
+
+            <h5>📋 业务完结类（12月月结）</h5>
+            <p>先完成12月份的正常月结流程，包括：</p>
+            <ul>
+              <li>所有入库存单入账、发票校验完成、销售发票完成</li>
+              <li>客户/供应商往来清账（F-32 / F-44）</li>
+              <li>折旧运行完成（AFAB）</li>
+              <li>应付暂估清账和重分类（F.13 / F.19）</li>
+              <li>应收应付重分类（FAGLF101）</li>
+              <li>外币评估（FAGL_FC_VAL）</li>
+              <li>成本中心分配/分摊、作业价格计算、生产订单结算</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 余额结转 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">核心</span>
+            <span>总账余额结转（FAGLGVTR / F.16）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>年结的核心操作。将旧年度的科目余额结转至新年度：</p>
+            <ul>
+              <li><strong>BS科目（资产负债表科目）</strong>：余额直接结转至下一财年，作为期初余额</li>
+              <li><strong>PL科目（损益科目）</strong>：余额结转至留存收益科目（本年利润）</li>
+            </ul>
+
+            <h5>📝 操作步骤（FAGLGVTR - S/4HANA推荐）</h5>
+            <ul>
+              <li>运行事务码 <strong>FAGLGVTR</strong></li>
+              <li>输入公司代码和要结转至的会计年度</li>
+              <li>先执行<strong>测试运行</strong>，确认无异常后再正式执行</li>
+              <li>正式执行后，新年度期初余额自动更新</li>
+            </ul>
+
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>结转前确保所有子模块（MM、SD）凭证已全部过账到总账</li>
+              <li>确保本月评估汇率（OB08）已维护</li>
+              <li>完成外币重估（FAGL_FC_VAL）和GR/IR重分类（F.19）</li>
+              <li>结转后验证：FS10N（科目余额）、FD10N（客户）、FK10N（供应商）</li>
+            </ul>
+
+            <div class="callout-mini">
+              <strong>审计调整：</strong>执行FAGLGVTR后，可通过OB52开启特殊记账期间（13-16期）录入审计调整凭证。调整后系统自动结转余额，无需再次执行余额结转。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 资产年结 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">资产</span>
+            <span>资产模块年结（AJRW / AJAB）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 两步操作</h5>
+
+            <p><strong>第一步：打开新的资产会计年度（AJRW）</strong></p>
+            <ul>
+              <li>运行事务码 <strong>AJRW</strong></li>
+              <li>输入公司代码和新的资产会计年度</li>
+              <li>先测试运行，确认无报错后后台正式执行</li>
+              <li>未执行此步，无法向新资产年度过账</li>
+            </ul>
+
+            <p><strong>第二步：关闭旧资产年度（AJAB）</strong></p>
+            <ul>
+              <li>运行事务码 <strong>AJAB</strong></li>
+              <li>先测试运行，确认无错误（绿灯）后后台正式执行</li>
+              <li>通过 <strong>OAAQ</strong> 确认已关闭的会计年度</li>
+            </ul>
+
+            <h5>✅ 结果校验</h5>
+            <ul>
+              <li><strong>OAAQ</strong>：查看已结算的资产年度</li>
+              <li><strong>AS03</strong>：选择有余额的资产，确认价值正确</li>
+              <li><strong>ABST2</strong>：核对资产总账和明细账是否一致</li>
+            </ul>
+
+            <h5>💡 常见报错</h5>
+            <table>
+              <tr><th>报错信息</th><th>原因</th><th>处理方法</th></tr>
+              <tr><td>资产未被完全创建</td><td>资产业务范围字段为空</td><td>AS02检查并补录</td></tr>
+              <tr><td>还没有执行会计年度更改</td><td>上年年结未做完</td><td>先用AJRW打开新年度</td></tr>
+              <tr><td>不能记账到资产（年度已结束）</td><td>资产年结已完成</td><td>OAAQ中回退年结年度</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO年结 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO</span>
+            <span>CO模块年结特有操作</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 CO年结与月结的关系</h5>
+            <p>CO年结大部分操作与12月月结相同，但增加以下年度特有操作：</p>
+
+            <table>
+              <tr><th>步骤</th><th>事务码</th><th>说明</th></tr>
+              <tr><td>1</td><td>KSV5 / KSU5</td><td>执行分配/分摊循环（同月结）</td></tr>
+              <tr><td>2</td><td>KSS2</td><td>实际成本分割（同月结）</td></tr>
+              <tr><td>3</td><td>KSII</td><td>计算实际作业价格（同月结）</td></tr>
+              <tr><td>4</td><td>CON2 / MFN1</td><td>生产订单重估（同月结）</td></tr>
+              <tr><td>5</td><td>KKAO / KKAX</td><td>WIP计算（同月结）</td></tr>
+              <tr><td>6</td><td>KKS1 / KKS2</td><td>差异计算（同月结）</td></tr>
+              <tr><td>7</td><td>CO88 / KO88</td><td>生产订单结算（同月结）</td></tr>
+              <tr><td>8</td><td><strong>2KES</strong></td><td><strong>利润中心余额结转（年结特有）</strong></td></tr>
+              <tr><td>9</td><td><strong>KOCO</strong></td><td><strong>内部订单预算结转（年结特有）</strong></td></tr>
+            </table>
+
+            <h5>💡 注意事项</h5>
+            <ul>
+              <li>必须先完成12月份的完整月结，再进行年结特有操作</li>
+              <li>利润中心结转（2KES）：将利润中心余额结转至新会计年度</li>
+              <li>内部订单预算结转（KOCO）：将内部订单预算余额结转至新年</li>
+              <li>可通过S_ALR_87013019查看内部订单预算结转结果</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 物料分类账年结 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">物料账</span>
+            <span>物料分类账年结特殊处理</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 关键原则</h5>
+            <div class="callout-mini">
+              <strong>物料期间只能逐月切换，不能跨月直接打开！</strong><br>
+              例如从12月不能直接跳到次年2月，必须先开1月再开2月
+            </div>
+
+            <h5>📝 年结操作步骤</h5>
+            <ol>
+              <li>先完成12月的物料分类账月末处理（CKMLCP全流程）</li>
+              <li>检查多级处理中的错误，如有错误需重新执行CKMLCP</li>
+              <li>执行 <strong>MMPV</strong> 打开1月份物料期间（逐月切换）</li>
+              <li>通过 <strong>MMRV</strong> 查看物料期间状态</li>
+              <li>继续逐月打开后续期间（如2月、3月等）</li>
+            </ol>
+
+            <h5>💡 注意事项</h5>
+            <ul>
+              <li>打开新物料期间前，必须完成所有单级及多级结算处理</li>
+              <li>物料账期一旦操作错误，难以逆转，操作前务必确认</li>
+              <li>物料账期与财务账期（OB52）的打开/关闭需协调</li>
+              <li>通常先关财务账期，再关物料账期</li>
+              <li>关注"允许前期记账"设置，财务结账后一般取消该设置</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 完整年结流程图 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">全流程</span>
+            <span>年结完整步骤顺序表</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📋 年结执行顺序（简化版）</h5>
+            <table>
+              <tr><th>阶段</th><th>操作</th><th>事务码</th></tr>
+              <tr><td rowspan="3">一、准备</td><td>维护新年度凭证号范围</td><td>FBN1 / OBH2</td></tr>
+              <tr><td>检查主数据有效期</td><td>KS13 / KA23 / KL03</td></tr>
+              <tr><td>维护年末汇率</td><td>OB08</td></tr>
+              <tr><td rowspan="2">二、开期</td><td>打开资产新年</td><td>AJRW</td></tr>
+              <tr><td>打开财务/物料/CO期间</td><td>OB52 / MMPV / OKP1</td></tr>
+              <tr><td rowspan="8">三、12月月结</td><td>费用归集与分摊分配</td><td>KSV5 / KSU5</td></tr>
+              <tr><td>实际成本分割</td><td>KSS2</td></tr>
+              <tr><td>实际作业价格计算</td><td>KSII</td></tr>
+              <tr><td>生产订单重估</td><td>CON2 / MFN1</td></tr>
+              <tr><td>WIP计算</td><td>KKAO / KKAX</td></tr>
+              <tr><td>差异计算</td><td>KKS1 / KKS2</td></tr>
+              <tr><td>生产订单结算</td><td>CO88 / KO88</td></tr>
+              <tr><td>物料分类账结算</td><td>CKMLCP</td></tr>
+              <tr><td rowspan="5">四、年结特有</td><td>外币评估</td><td>FAGL_FC_VAL</td></tr>
+              <tr><td>应收应付重分类</td><td>FAGLF101</td></tr>
+              <tr><td>总账余额结转</td><td>FAGLGVTR / F.16</td></tr>
+              <tr><td>利润中心余额结转</td><td>2KES</td></tr>
+              <tr><td>内部订单预算结转</td><td>KOCO</td></tr>
+              <tr><td rowspan="2">五、关期</td><td>关闭资产年度</td><td>AJAB</td></tr>
+              <tr><td>关闭旧年度期间</td><td>OB52 / OKP1</td></tr>
+              <tr><td>六、核对</td><td>余额核对验证</td><td>FS10N / FD10N / FK10N</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 成本核对与报错排查 -->
+  <section id="cost-check">
+    <h2>九、成本核对与常见报错排查</h2>
+    <p>月结完成后，需要从多个维度验证成本数据的准确性。遇到报错时，掌握常见问题的排查方法能大大提高工作效率。</p>
+
+    <h3>月结核对清单</h3>
+    <table>
+      <tr><th>步骤</th><th>事务码</th><th>检查内容</th><th>合格标准</th></tr>
+      <tr><td>1</td><td>S_ALR_87013611</td><td>辅助成本中心余额</td><td>辅助成本中心为0（统计型除外）</td></tr>
+      <tr><td>2</td><td>KOB1 vs FS10N</td><td>CO成本中心余额 vs FI总账余额</td><td>两者一致</td></tr>
+      <tr><td>3</td><td>FS10N</td><td>生产成本+制造费用科目</td><td>合计为0</td></tr>
+      <tr><td>4</td><td>KKAO / KKAX</td><td>WIP金额计算与结算</td><td>WIP金额合理</td></tr>
+      <tr><td>5</td><td>CKM3 / CKMVFM</td><td>物料分类账差异分摊</td><td>未分配差异为0</td></tr>
+      <tr><td>6</td><td>KSII / KSB1</td><td>实际作业价格</td><td>无KP250等错误</td></tr>
+      <tr><td>7</td><td>CO03 / CO88</td><td>订单余额、差异</td><td>订单余额正常</td></tr>
+    </table>
+
+    <div class="accordion">
+
+      <!-- FI/CO对账 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">核对</span>
+            <span>生产成本科目对账（FI vs CO）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 核心对账方法</h5>
+            <div class="callout-mini">
+              <strong>KOB1（CO侧） vs FS10N（FI侧）</strong><br>
+              确保成本中心余额与总账科目余额一致
+            </div>
+
+            <h5>📝 对账步骤</h5>
+            <ul>
+              <li><strong>KOB1</strong>：查看CO模块成本中心实际成本明细</li>
+              <li><strong>FS10N</strong>：查看FI模块对应总账科目余额</li>
+              <li>将KOB1按成本要素汇总的金额与FS10N中对应科目余额比对</li>
+              <li>如有差异，双击FS10N余额钻取到行项目，追踪凭证来源</li>
+            </ul>
+
+            <h5>✅ 辅助成本中心对账要点</h5>
+            <ul>
+              <li>先用KOB1确认CO侧辅助成本中心余额已结平</li>
+              <li>再用FS10N确认对应总账科目余额已结平</li>
+              <li>如余额不平，先检查成本中心有效期（KS13）和成本要素有效期（KA23）</li>
+              <li>检查是否误将分配分摊循环运行到错误期间</li>
+            </ul>
+
+            <h5>💡 生产成本科目检查</h5>
+            <ul>
+              <li>生产成本科目及制造费用科目月结后<strong>合计应接近0</strong></li>
+              <li>否则可能影响资产负债表未分配利润与利润表净利润勾稽关系</li>
+              <li>用FS10N查看生产成本科目余额，关注大额异常变动</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- WIP核对 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">核对</span>
+            <span>WIP（在制品）核对方法</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 WIP计算公式</h5>
+            <div class="callout-mini">
+              <strong>WIP = 当期生产订单投入 - 当期生产订单产出</strong><br>
+              投入 = 订单领料成本 + 报工作业成本<br>
+              产出 = 订单收货数量 × 产成品标准价
+            </div>
+
+            <h5>📝 验证步骤</h5>
+            <ol>
+              <li>执行 <strong>KKAO/KKAX</strong>：计算WIP金额（先测试运行）</li>
+              <li>执行 <strong>CO88</strong>：结算WIP到WIP科目</li>
+              <li>运行 <strong>KKAX</strong>：查看各生产订单"Actual WIP"字段值</li>
+              <li><strong>手动验证</strong>：按订单自行计算WIP = 投入 - 产出，与系统结果比对</li>
+            </ol>
+
+            <h5>💡 注意事项</h5>
+            <ul>
+              <li>KKAO只计算WIP，<strong>不生成FI凭证</strong>，需CO88结算后才生成凭证</li>
+              <li>如果只有DLV状态没有TECO，CO88会结算订单余额和WIP余额</li>
+              <li>测试运行先勾选"测试运行"，无问题后再去掉勾选执行</li>
+              <li>输出选项建议勾选"隐藏WIP=0的订单"，减少干扰</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 物料分类账核对 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">核对</span>
+            <span>物料分类账差异核对（CKM3）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 CKM3报表结构</h5>
+            <ul>
+              <li><strong>价格分析</strong>：物料价格变化、库存变化和差异分摊情况</li>
+              <li><strong>价格来源</strong>：价格变动来源（采购、生产入库、移库等）</li>
+              <li><strong>价格变动结构</strong>：消耗、期末库存、差异分摊之间的关系</li>
+            </ul>
+
+            <h5>📝 差异分摊逻辑</h5>
+            <p>系统根据期初库存、本期收货、本期消耗之间的数量比例，将总差异金额分摊到这些对象上。分摊后期末库存更新PUP（实际价格），消耗成本同步调整。</p>
+
+            <h5>❓ "未分配差异"常见原因</h5>
+            <ul>
+              <li>库存数量为0或负数</li>
+              <li>本期无消耗且无库存</li>
+              <li>负差异超过库存价值</li>
+              <li>生产订单产出为零</li>
+              <li>价格限制器启用</li>
+              <li>四舍五入尾差</li>
+            </ul>
+
+            <h5>✅ 检查步骤</h5>
+            <ol>
+              <li>运行 <strong>CKM3</strong>：查看物料差异分摊情况</li>
+              <li>运行 <strong>CKMVFM</strong>：执行CKMLCP前检查差异分摊，分析未分配差异原因</li>
+              <li>如尾差较小，可手工结转至损益科目</li>
+              <li>如差异较大，需检查业务凭证是否完整</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO88常见错误 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">报错</span>
+            <span>CO88结算常见错误及解决</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>报错现象</th><th>原因</th><th>解决方法</th></tr>
+              <tr>
+                <td>结算规则不存在 / 未维护</td>
+                <td>订单未配置结算规则，或接收方无效</td>
+                <td>CO03 → 转到 → 结算规则，检查是否维护完整；确保结算类型为PER</td>
+              </tr>
+              <tr>
+                <td>期间未打开</td>
+                <td>结算期间与订单成本期间不匹配</td>
+                <td>检查OB52会计期间是否已打开；确认结算期间正确</td>
+              </tr>
+              <tr>
+                <td>订单未达DLV或TECO</td>
+                <td>订单状态不对，仅计算WIP未完整结算</td>
+                <td>CO02将订单设为TECO；确认是否已完工</td>
+              </tr>
+              <tr>
+                <td>结算后订单仍有余额</td>
+                <td>物料未全收货/作业未全确认/跨月价格不同</td>
+                <td>检查CO03行项目；检查货物移动记录；设TECO后重新结算</td>
+              </tr>
+              <tr>
+                <td>KKAO/KKS1后订单仍有余额</td>
+                <td>混淆了计算和结算</td>
+                <td>KKAO和KKS1只是计算步骤，不生成凭证；必须执行CO88才结算</td>
+              </tr>
+            </table>
+
+            <div class="callout-mini">
+              <strong>排查技巧：</strong>使用COHV执行"错误分析"，可批量查看未确认工序、未清预留等详细错误。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KSII常见错误 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">报错</span>
+            <span>KSII实际价格计算常见错误</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>❌ 错误1：作业量为0（KP250错误）</h5>
+            <p><strong>现象：</strong>KSII报错"虽然作业为零但仍有成本"，消息号KP250</p>
+            <p><strong>原因：</strong>成本中心有费用发生，但对应作业类型无报工，作业量为0，无法作除数</p>
+            <p><strong>解决：</strong></p>
+            <ul>
+              <li>检查CO11N报工记录，确认车间是否漏做报工</li>
+              <li>如确无作业，检查KP06和KP26维护，调整成本归集方式</li>
+              <li>检查实际成本分割结果（KSS2），确认成本是否正确归集</li>
+            </ul>
+
+            <h5>❌ 错误2：实际单价高得离谱</h5>
+            <p><strong>现象：</strong>KSII计算出的实际单价异常高（天价工时）</p>
+            <p><strong>原因：</strong>CO11N报工时数量录入错误，如本该10小时错录为0.1小时</p>
+            <p><strong>解决：</strong></p>
+            <ul>
+              <li>检查报工记录，确认作业数量是否正确</li>
+              <li>对比KP26计划价与KSII实际价，判断差异是否合理</li>
+            </ul>
+
+            <h5>❌ 错误3：价格无法确定</h5>
+            <p><strong>现象：</strong>报错"没有内部作业的价格可被确定"</p>
+            <p><strong>原因：</strong>有成本的作业类型无作业数量</p>
+            <p><strong>解决：</strong>检查KSII运行参数和主数据，确认有成本的作业类型是否有作业量</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CKMLCP常见错误 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">报错</span>
+            <span>CKMLCP物料分类账常见错误</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>❌ 错误1：未分配差异</h5>
+            <p><strong>现象：</strong>CKMLCP执行后，差异科目仍有余额</p>
+            <p><strong>原因：</strong>系统无法将差异分摊至有效库存载体</p>
+            <p><strong>解决：</strong></p>
+            <ul>
+              <li>运行CKMVFM分析未分配差异原因</li>
+              <li>检查库存数量是否不足、价格限制器是否启用</li>
+              <li>尾差较小时，可手工结转至损益科目</li>
+              <li>必要时使用MR22手工调整库存金额</li>
+            </ul>
+
+            <h5>❌ 错误2：价格为负</h5>
+            <p><strong>现象：</strong>CKM3显示物料价格为负，CKMLCP无法完成</p>
+            <p><strong>原因：</strong>负差异超过库存价值，或库存数量不足</p>
+            <p><strong>解决：</strong></p>
+            <ul>
+              <li>用MR22给库存金额增加一个正差异，使实际价格不再为负</li>
+              <li>完成CKMLCP后，下一期间再用MR22冲回该调整</li>
+            </ul>
+
+            <h5>❌ 错误3：库存覆盖范围检查失败</h5>
+            <p><strong>现象：</strong>未分配差异出现在库存数量为0或负数的物料</p>
+            <p><strong>原因：</strong>后继调整数量大于累计库存数量（如发票跨月结算）</p>
+            <p><strong>解决：</strong>在CKMVFM中调整价格限制逻辑；确保业务凭证数量和期间正确</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 生产订单常见问题 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">报错</span>
+            <span>生产订单常见成本问题</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>❌ 问题1：订单余额不为零</h5>
+            <p><strong>常见原因：</strong></p>
+            <ul>
+              <li>货物移动记录在不同月份，物料价格不同导致尾差</li>
+              <li>物料未全部收货 / 作业未全部确认</li>
+              <li>订单未TECO，无法完成完整结算</li>
+            </ul>
+            <p><strong>排查方法：</strong></p>
+            <ul>
+              <li>CO03 → 转到 → 记入文档的货物移动，查看领退料记录</li>
+              <li>CO02将订单设为TECO后，重新KKS2计算差异、CO88结算</li>
+            </ul>
+
+            <h5>❌ 问题2：差异过大</h5>
+            <p><strong>常见原因：</strong></p>
+            <ul>
+              <li>原材料价格波动大（实际成本显著高于标准成本）</li>
+              <li>实际作业价格与计划价格差异大</li>
+              <li>KSII计算出的实际单价异常（报工数量错误）</li>
+              <li>订单结算规则配置错误</li>
+            </ul>
+            <p><strong>排查方法：</strong></p>
+            <ul>
+              <li>检查物料价格变动，确认差异是否合理</li>
+              <li>检查KSB1作业类型实际价格</li>
+              <li>通过KKAX分析差异明细，定位差异来源</li>
+            </ul>
+
+            <div class="callout-mini">
+              <strong>快速排查工具：</strong>CO03 → 转到 → 成本 → 余额，可直接查看订单余额和成本明细。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <!-- 学习资源 -->
   <section id="resources">
-    <h2>八、学习资源推荐</h2>
-
-    <h3>书籍推荐</h3>
+    <h2>十、学习资源推荐</h2>
     <div class="resource-item">
       <div class="res-type res-book">书</div>
       <div>
@@ -1796,7 +2578,7 @@ flowchart TD
 
   <!-- 时间规划 -->
   <section id="plan">
-    <h2>九、6个月学习时间规划</h2>
+    <h2>十一、6个月学习时间规划</h2>
     <p>以下是一份建议的6个月学习计划，你可以根据自己的实际情况调整节奏：</p>
 
     <figure class="chart-figure">
