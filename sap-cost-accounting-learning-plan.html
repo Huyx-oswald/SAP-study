@@ -1069,9 +1069,10 @@
   <a href="#cost-check" class="nav-link"><span class="nav-num">09</span>核对与报错</a>
   <div class="nav-group-title">跨模块与实战</div>
   <a href="#cross-module" class="nav-link"><span class="nav-num">10</span>跨模块集成</a>
-  <a href="#case-study" class="nav-link"><span class="nav-num">11</span>实战案例</a>
-  <a href="#resources" class="nav-link"><span class="nav-num">12</span>学习资源</a>
-  <a href="#plan" class="nav-link"><span class="nav-num">13</span>时间规划</a>
+  <a href="#sap-ecosystem" class="nav-link"><span class="nav-num">11</span>SAP套件集成</a>
+  <a href="#case-study" class="nav-link"><span class="nav-num">12</span>实战案例</a>
+  <a href="#resources" class="nav-link"><span class="nav-num">13</span>学习资源</a>
+  <a href="#plan" class="nav-link"><span class="nav-num">14</span>时间规划</a>
 </aside>
 
 <div class="content-area">
@@ -3956,9 +3957,347 @@ graph TD
     </div>
   </section>
 
+  <!-- SAP套件与外部系统集成 -->
+  <section id="sap-ecosystem">
+    <h2>十一、SAP套件与外部系统集成</h2>
+    <p>在制造业实际运营中，SAP ERP通常不是孤立运行的——它需要与MES（制造执行系统）、SRM（供应商关系管理）、WMS（仓储管理系统）等外部系统协同工作。理解这些系统的集成方式和数据流向，有助于成本会计排查跨系统数据异常。</p>
+
+    <pre class="mermaid">
+graph LR
+    subgraph 计划层
+    ERP["SAP ERP<br/>FI/CO/MM/PP/SD"]
+    end
+    subgraph 执行层
+    MES["MES<br/>工单/报工/质量"]
+    SRM["SRM<br/>采购协同/供应商"]
+    WMS["WMS<br/>入库/出库/盘点"]
+    end
+    subgraph 接口技术
+    PI["SAP PI/PO 中间件"]
+    end
+
+    ERP -->|"生产订单/BOM/工艺 →|"<br/>报工/产量/损耗 ←|" MES
+    ERP -->|"采购需求 →|"<br/>ASN/收货确认 ←|" SRM
+    ERP -->|"物料主数据 →|"<br/>收货/拣货/盘点 ←|" WMS
+
+    MES -.-> PI
+    SRM -.-> PI
+    WMS -.-> PI
+    PI -.-> ERP
+
+    style ERP fill:#e0e7ff,stroke:#4f46e5,stroke-width:3px,color:#3730a3
+    style MES fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style SRM fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style WMS fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style PI fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843
+    </pre>
+
+    <!-- SAP与MES集成 -->
+    <h3>SAP与MES集成：计划与执行的闭环</h3>
+    <p>MES是制造执行层核心系统，负责将SAP下发的生产计划转化为车间级工单，并将执行数据回传SAP。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">MES</span>
+            <span>典型业务场景与数据流</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>场景</th><th>数据流向</th><th>传递内容</th><th>SAP影响</th></tr>
+              <tr><td>生产计划下发</td><td>SAP → MES</td><td>生产订单、BOM、工艺路线</td><td>订单状态 CRTD→REL</td></tr>
+              <tr><td>工单报工</td><td>MES → SAP</td><td>产量、工时、报废数、报工时间戳</td><td>触发CO11N确认，成本中心→订单结转</td></tr>
+              <tr><td>物料消耗</td><td>双向</td><td>领料/退料记录、批次信息</td><td>触发MIGO 261/262，更新订单材料成本</td></tr>
+              <tr><td>成品入库</td><td>MES → SAP</td><td>完工数量、入库仓位</td><td>触发MIGO 101，库存增加，产出贷记订单</td></tr>
+              <tr><td>质量数据</td><td>MES → SAP</td><td>检验结果、不合格记录、批次追溯</td><td>影响质检判定和库存状态</td></tr>
+              <tr><td>设备OEE</td><td>MES → SAP</td><td>稼动率、能耗、停机记录</td><td>用于成本分析（设备效率→费用分摊依据）</td></tr>
+              <tr><td>工单状态同步</td><td>双向</td><td>订单状态（开工/完工/中止）</td><td>确保PP主数据（WIP、产能负荷）与现场一致</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>核心难点：</strong>工单状态双向同步是MES与SAP集成的典型技术难题。MES端报工后SAP中工单可能仍显示"已释放"，导致WIP和产能负荷失真；反之SAP端订单取消后MES未感知，继续按旧计划作业。需要建立状态同步补偿机制。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">MES</span>
+            <span>CO成本关注点</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>MES数据</th><th>影响的CO环节</th><th>风险点</th></tr>
+              <tr><td>报工工时</td><td>CO11N确认→订单作业成本→KSII实际价</td><td>工时延迟→月末KOB1工时为0→KSII报错</td></tr>
+              <tr><td>报废数量</td><td>差异计算KKS2→生产差异</td><td>报废未及时反馈→订单余额异常</td></tr>
+              <tr><td>完工入库数量</td><td>MIGO 101→库存+产出</td><td>入库延迟→订单状态不匹配→CO88报错</td></tr>
+              <tr><td>批次信息</td><td>物料分类账CKMLCP批次追溯</td><td>批次不一致→CKMLCP差异无法分摊</td></tr>
+              <tr><td>工作中心编码</td><td>成本中心→作业价格</td><td>MES与SAP编码不一致→报工过账失败</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>建议：</strong>成本会计月结前，通过COOIS检查是否有"已报工未入库"或"已入库未报工"的异常订单，这些通常是MES数据传递不完整导致的。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAP与SRM集成 -->
+    <h3>SAP与SRM集成：采购全链路协同</h3>
+    <p>SRM系统负责供应商门户协同，从采购需求到收货确认全链路与SAP MM/FI模块深度集成。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">SRM</span>
+            <span>典型业务场景与数据流</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>场景</th><th>数据流向</th><th>传递内容</th><th>SAP影响</th></tr>
+              <tr><td>采购需求传递</td><td>SAP → SRM</td><td>MRP生成的采购申请</td><td>SAP ME21N生成采购订单</td></tr>
+              <tr><td>供应商竞标</td><td>SRM → SAP</td><td>中标结果、合同价格</td><td>更新采购信息记录ME12</td></tr>
+              <tr><td>订单确认</td><td>SRM → SAP</td><td>供应商确认交期和数量</td><td>更新采购订单交货日期</td></tr>
+              <tr><td>发货通知(ASN)</td><td>SRM → SAP</td><td>发货单号、物料、数量、批次</td><td>指导仓库收货，生成 inbound delivery</td></tr>
+              <tr><td>收货确认</td><td>SRM → SAP</td><td>实际收货数量、质检结果</td><td>触发MIGO 101，库存+GR/IR暂估</td></tr>
+              <tr><td>退货处理</td><td>SRM → SAP</td><td>退货数量、原因码</td><td>触发MIGO 122/161，库存调整</td></tr>
+              <tr><td>财务对账</td><td>SRM → SAP</td><td>收货质检信息</td><td>作为MIRO发票校验依据</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">SRM</span>
+            <span>CO成本关注点</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>SRM数据</th><th>影响的CO环节</th><th>风险点</th></tr>
+              <tr><td>采购价格</td><td>采购信息记录→标准成本估算CK11N</td><td>价格未同步→标准成本偏低/偏高</td></tr>
+              <tr><td>收货数量</td><td>MIGO 101→库存增加+GR/IR</td><td>收货延迟→月末库存不准确</td></tr>
+              <tr><td>退货信息</td><td>库存调整+应付调整</td><td>退货未及时过账→库存账实不符</td></tr>
+              <tr><td>质检不合格</td><td>影响入库数量和质量成本</td><td>不合格品未处理→价差科目余额异常</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAP与WMS集成 -->
+    <h3>SAP与WMS集成：仓储作业自动化</h3>
+    <p>WMS负责仓库级作业管理（收货、上架、拣货、发货、盘点），与SAP MM/FI模块实时同步库存数据。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">WMS</span>
+            <span>核心业务链路与凭证生成</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>环节</th><th>WMS动作</th><th>SAP凭证</th><th>FI/CO影响</th></tr>
+              <tr><td>收货</td><td>PDA扫描到货物料条码+采购订单号</td><td>物料凭证→会计凭证</td><td>借:库存 / 贷:GR/IR暂估</td></tr>
+              <tr><td>上架</td><td>从暂存区移到存储库位，扫描库位条码</td><td>更新库位信息</td><td>无金额影响（仅仓位变化）</td></tr>
+              <tr><td>拣货</td><td>扫描物料条码确认拣货数量</td><td>扣减库位库存</td><td>无金额影响（仅数量扣减）</td></tr>
+              <tr><td>发货</td><td>包装复核+出库确认</td><td>发货过账凭证（601）</td><td>借:主营成本 / 贷:库存</td></tr>
+              <tr><td>盘点</td><td>扫描库位实际数量</td><td>盘点差异凭证（701/702）</td><td>借/贷:库存 / 贷/借:盘点差异</td></tr>
+              <tr><td>转储</td><td>库位间转移</td><td>库存转移凭证（301）</td><td>无金额影响（仅仓位变化）</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>三层对账机制：</strong>①操作级——每笔WMS变动获取SAP确认回执；②周期级——每天/周运行库存数量对比；③月末关账级——财务+仓库联合运行库存价值（数量+金额）双向核对。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">WMS</span>
+            <span>主数据权威来源与对账</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>主数据</th><th>权威来源</th><th>同步方向</th><th>说明</th></tr>
+              <tr><td>物料主数据</td><td>SAP ERP</td><td>SAP → WMS</td><td>物料编码、描述、计量单位、评估类</td></tr>
+              <tr><td>库位主数据</td><td>WMS</td><td>WMS → SAP</td><td>库位编码、容量、存储属性</td></tr>
+              <tr><td>条码标签规则</td><td>双方联合定义</td><td>静态配置</td><td>不实时同步，初始化时配置</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 接口技术 -->
+    <h3>SAP常用接口技术对比</h3>
+    <p>SAP与外部系统的接口技术有多种选择，不同技术适用于不同场景。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">接口</span>
+            <span>7种接口技术对比</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>接口方式</th><th>协议</th><th>特点</th><th>适用场景</th><th>优势</th><th>劣势</th></tr>
+              <tr><td><strong>RFC/BAPI</strong></td><td>TCP/IP</td><td>同步调用，直接调用SAP函数</td><td>实时查询、写入</td><td>性能高、延迟低</td><td>并发过多影响SAP性能</td></tr>
+              <tr><td><strong>IDoc</strong></td><td>数据结构</td><td>自包含异步传输，可重试</td><td>大批量单据传输（PO、ASN）</td><td>事务解耦、审计追溯</td><td>配置复杂、需维护逻辑系统</td></tr>
+              <tr><td><strong>Web Service</strong></td><td>HTTP/SOAP</td><td>跨平台、语言无关</td><td>供应商协同平台集成</td><td>标准化、通用性强</td><td>性能不如RFC</td></tr>
+              <tr><td><strong>REST API</strong></td><td>HTTP/JSON</td><td>轻量、灵活</td><td>现代Web应用、移动端</td><td>易开发、易维护</td><td>安全性需额外配置</td></tr>
+              <tr><td><strong>PI/PO中间件</strong></td><td>多协议</td><td>统一管理所有接口</td><td>大规模多系统复杂集成</td><td>统一监控、协议转换</td><td>成本高、维护复杂</td></tr>
+              <tr><td><strong>CPI云集成</strong></td><td>云端</td><td>云原生、支持OAuth</td><td>云系统、S/4HANA Cloud</td><td>弹性扩展、现代API治理</td><td>需网络稳定、订阅费用</td></tr>
+              <tr><td><strong>FTP/SFTP</strong></td><td>文件传输</td><td>通过文件交换数据</td><td>批量文件、历史数据</td><td>简单、成本低</td><td>实时性差、无事务保障</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>选型原则：</strong>①实时+低延迟→RFC/BAPI；②异步+可重试+审计→IDoc；③跨平台+标准化→Web Service/REST；④多系统+复杂协议→PI/PO中间件。制造业SAP与MES常用IDoc+BAPI组合，与SRM常用PI/PO中间件，与WMS常用RFC+IDoc。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">接口</span>
+            <span>常见接口问题与注意事项</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>问题</th><th>原因</th><th>影响</th><th>解决方法</th></tr>
+              <tr><td>IDoc接收失败</td><td>未配置端口/逻辑系统</td><td>采购订单/ASN无法传输</td><td>WE21配置端口、BD54配置逻辑系统</td></tr>
+              <tr><td>RFC调用报权限错</td><td>直接调用FUNCTION MODULE而非BAPI</td><td>权限和更新锁问题</td><td>优先使用标准BAPI</td></tr>
+              <tr><td>IDoc数据丢失</td><td>忽略回发与重试机制</td><td>业务单据不完整</td><td>配置BD87重新处理失败IDoc</td></tr>
+              <tr><td>RFC性能下降</td><td>并发连接数过多</td><td>SAP服务器负载高</td><td>限制并发数、改用批量接口</td></tr>
+              <tr><td>主数据不一致</td><td>物料/工作中心编码口径不同</td><td>报工/收货过账失败</td><td>建立主数据同步机制</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据流全景 -->
+    <h3>跨系统数据流全景图</h3>
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">全景</span>
+            <span>SAP ↔ MES/SRM/WMS 数据流总览</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <pre class="mermaid">
+graph TD
+    subgraph SAP ERP
+    PP["PP 生产订单"]
+    MM["MM 采购/库存"]
+    FI["FI 凭证"]
+    CO["CO 成本"]
+    end
+
+    subgraph MES
+    M1["工单执行"]
+    M2["报工采集"]
+    M3["质量检测"]
+    M4["设备OEE"]
+    end
+
+    subgraph SRM
+    S1["供应商门户"]
+    S2["竞标/合同"]
+    S3["ASN发货通知"]
+    end
+
+    subgraph WMS
+    W1["PDA收货"]
+    W2["上架/拣货"]
+    W3["盘点"]
+    end
+
+    PP -->|"订单/BOM →|" M1
+    M2 -->|"报工/产量 ←|" PP
+    M2 -->|"工时/报废 ←|" CO
+    M3 -->|"质检结果 ←|" MM
+    M4 -->|"OEE/能耗 ←|" CO
+
+    MM -->|"采购需求 →|" S1
+    S2 -->|"合同价格 ←|" MM
+    S3 -->|"ASN →|" W1
+    S1 -->|"收货确认 ←|" MM
+
+    MM -->|"物料主数据 →|" W1
+    W1 -->|"收货凭证 ←|" FI
+    W2 -->|"出库601 ←|" FI
+    W3 -->|"盘点差异 ←|" CO
+
+    style PP fill:#e0e7ff,stroke:#4f46e5
+    style MM fill:#dbeafe,stroke:#2563eb
+    style FI fill:#fef3c7,stroke:#d97706
+    style CO fill:#d1fae5,stroke:#059669
+    style M1 fill:#f0fdf4,stroke:#059669
+    style M2 fill:#f0fdf4,stroke:#059669
+    style S1 fill:#fffbeb,stroke:#d97706
+    style S3 fill:#fffbeb,stroke:#d97706
+    style W1 fill:#f5f3ff,stroke:#7c3aed
+    style W2 fill:#f5f3ff,stroke:#7c3aed
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>成本会计的跨系统思维</h4>
+      <p>在多系统集成的环境下，成本会计需要特别注意：</p>
+      <ul>
+        <li><strong>MES报工延迟</strong> → 月末KOB1显示工时为0 → KSII实际价格计算报错</li>
+        <li><strong>WMS收货延迟</strong> → 库存账面与实际不符 → 月末库存金额不准确</li>
+        <li><strong>SRM采购价未同步</strong> → 标准成本估算偏差 → CKMLCP差异异常</li>
+        <li><strong>主数据编码不一致</strong> → 接口报工/收货失败 → 订单余额异常</li>
+        <li><strong>接口数据丢失</strong> → 领料/报工/入库数据不完整 → CO88结算报错</li>
+      </ul>
+      <p>建议每月结前与IT/关键用户确认接口运行状态，通过COOIS/MB51/KOB1等报表检查是否存在"数据不完整"的订单和物料。</p>
+    </div>
+  </section>
+
   <!-- 完整实战案例 -->
   <section id="case-study">
-    <h2>十一、完整实战案例：从标准成本到月结出表</h2>
+    <h2>十二、完整实战案例：从标准成本到月结出表</h2>
     <p>本节以一家机械加工企业为背景，模拟从月初标准成本发布、月中生产业务、到月末完整结算的完整流程，帮助成本会计建立系统性的操作认知。所有数字均可对照练习。</p>
 
     <!-- 案例企业背景 -->
@@ -4627,7 +4966,7 @@ graph LR
 
   <!-- 学习资源 -->
   <section id="resources">
-    <h2>十二、学习资源推荐</h2>
+    <h2>十三、学习资源推荐</h2>
     <div class="resource-item">
       <div class="res-type res-book">书</div>
       <div>
@@ -4708,7 +5047,7 @@ graph LR
 
   <!-- 时间规划 -->
   <section id="plan">
-    <h2>十三、6个月学习时间规划</h2>
+    <h2>十四、6个月学习时间规划</h2>
     <p>以下是一份建议的6个月学习计划，你可以根据自己的实际情况调整节奏：</p>
 
     <figure class="chart-figure">
@@ -4774,68 +5113,6 @@ graph LR
           </tr>
         </tbody>
       </table>
-    </div>
-  </section>
-
-  <!-- 附录：GitHub Pages 指南 -->
-  <section id="gh-pages-guide">
-    <h2>附录：如何开启 GitHub Pages 在线预览</h2>
-    <p>将本学习规划上传到GitHub仓库后，可以通过GitHub Pages功能将其部署为网页，随时随地通过浏览器访问。以下是详细的操作步骤：</p>
-
-    <div class="gh-guide">
-      <div class="gh-guide-step">
-        <div class="step-num">1</div>
-        <div class="step-content">
-          <h4>进入仓库，点击 Settings</h4>
-          <p>打开你的 GitHub 仓库页面，在顶部导航栏找到最右侧的 <strong>Settings</strong>（设置）选项卡并点击进入。</p>
-          <img src="assets/step1-settings.jpg" alt="点击Settings选项卡">
-        </div>
-      </div>
-
-      <div class="gh-guide-step">
-        <div class="step-num">2</div>
-        <div class="step-content">
-          <h4>左侧菜单找到 Pages</h4>
-          <p>在设置页面左侧的菜单栏中，向下滚动找到 <strong>Pages</strong> 选项并点击。</p>
-          <img src="assets/step2-pages-menu.jpg" alt="点击左侧Pages菜单">
-        </div>
-      </div>
-
-      <div class="gh-guide-step">
-        <div class="step-num">3</div>
-        <div class="step-content">
-          <h4>配置部署源并保存</h4>
-          <p>在 Build and deployment 区域：</p>
-          <ul style="margin:10px 0 10px 20px;font-size:0.9rem">
-            <li><strong>Source</strong> 选择 <code>Deploy from a branch</code></li>
-            <li><strong>Branch</strong> 第一个下拉框选择 <code>main</code> 分支</li>
-            <li><strong>Branch</strong> 第二个下拉框选择 <code>/ (root)</code></li>
-            <li>点击 <strong>Save</strong> 按钮保存</li>
-          </ul>
-          <img src="assets/step3-deploy-source.jpg" alt="配置部署源并保存">
-        </div>
-      </div>
-
-      <div class="gh-guide-step">
-        <div class="step-num">4</div>
-        <div class="step-content">
-          <h4>等待部署完成，访问网页</h4>
-          <p>保存后，GitHub 会自动开始部署（通常需要 1-3 分钟）。部署完成后，页面顶部会显示你的网站地址，格式为：</p>
-          <div class="callout-mini">
-            <strong>访问地址：</strong><code>https://&lt;你的用户名&gt;.github.io/SAP-study/sap-cost-accounting-learning-plan.html</code>
-          </div>
-          <p>例如，如果你的用户名是 <code>Huyx-oswald</code>，则访问地址为：<br><code>https://huyx-oswald.github.io/SAP-study/sap-cost-accounting-learning-plan.html</code></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="tip-box">
-      <h4>💡 常见问题</h4>
-      <ul>
-        <li><strong>保存后页面显示404？</strong> 部署需要1-3分钟，请稍等几分钟后刷新再试。</li>
-        <li><strong>页面样式不对？</strong> 确认 Branch 选择的是 <code>/ (root)</code> 而不是 <code>/docs</code>。</li>
-        <li><strong>以后更新文件后会自动更新吗？</strong> 是的，每次推送到 main 分支后，GitHub Pages 会自动重新部署。</li>
-      </ul>
     </div>
   </section>
 
