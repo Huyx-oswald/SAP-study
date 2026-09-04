@@ -138,6 +138,7 @@
 
   section {
     margin-bottom: 48px;
+    position: relative;
   }
   section h2 {
     font-size: 1.5rem;
@@ -824,12 +825,210 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
+  /* === 布局优化：侧边栏 + 进度条 + 返回顶部 === */
+  .layout-wrapper {
+    display: flex;
+    gap: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: flex-start;
+  }
+
+  /* 侧边栏 */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    background: #fff;
+    border-right: 1px solid var(--rule);
+    padding: 16px 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--accent-soft); border-radius: 2px; }
+
+  .sidebar-search {
+    padding: 0 16px 12px;
+  }
+  .sidebar-search input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background: var(--bg-soft);
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+  .sidebar-search input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+  }
+
+  .nav-group-title {
+    padding: 8px 16px 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    margin-top: 4px;
+  }
+  .nav-group-title:first-child { margin-top: 0; }
+
+  .sidebar a.nav-link {
+    display: block;
+    padding: 7px 16px 7px 24px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    line-height: 1.4;
+  }
+  .sidebar a.nav-link:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-left-color: var(--accent-soft);
+  }
+  .sidebar a.nav-link.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-left-color: var(--accent);
+    font-weight: 600;
+  }
+  .sidebar a.nav-link .nav-num {
+    display: inline-block;
+    width: 22px;
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+  .sidebar a.nav-link.active .nav-num { color: var(--accent); }
+
+  /* 主内容区 */
+  .content-area {
+    flex: 1;
+    min-width: 0;
+    padding: 24px 32px 48px;
+  }
+  .content-area section {
+    scroll-margin-top: 64px;
+  }
+
+  /* 章节折叠 */
+  .section-collapse-control {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+  }
+  .section-collapse-control .collapse-icon {
+    font-size: 0.8rem;
+    color: var(--muted);
+    transition: transform 0.3s;
+  }
+  .section-collapsed .collapse-icon { transform: rotate(-90deg); }
+  .section-collapsed > *:not(.section-collapse-control):not(h2) { display: none; }
+
+  /* 进度条 */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--accent), #818cf8);
+    width: 0%;
+    z-index: 9999;
+    transition: width 0.1s;
+  }
+
+  /* 返回顶部 */
+  .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 44px;
+    height: 44px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 9998;
+    box-shadow: 0 4px 12px rgba(79,70,229,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .back-to-top.visible { opacity: 1; visibility: visible; }
+  .back-to-top:hover { background: #4338ca; transform: translateY(-3px); }
+
+  /* 移动端汉堡按钮 */
+  .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 200;
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  /* 移动端遮罩 */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 99;
+  }
+
+  @media (max-width: 1024px) {
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      transform: translateX(-100%);
+      z-index: 150;
+      padding-top: 60px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.1);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+    .sidebar-overlay.show { display: block; }
+    .content-area { padding: 24px 16px 48px; }
+    .layout-wrapper { flex-direction: column; }
+    .nav-group-title { padding-left: 24px; }
+    .sidebar a.nav-link { padding-left: 32px; }
+  }
+
   @media (max-width: 768px) {
     .two-col { grid-template-columns: 1fr; }
     header.hero h1 { font-size: 1.5rem; }
     section h2 { font-size: 1.25rem; }
     header.hero { padding: 40px 0 30px; }
-    main { padding: 24px 0 40px; }
+    .content-area { padding: 20px 12px 40px; }
+    .back-to-top { bottom: 16px; right: 16px; }
   }
 </style>
 </head>
@@ -847,24 +1046,35 @@
   </div>
 </header>
 
-<nav class="toc">
-  <div class="container">
-    <a href="#version">版本说明</a>
-    <a href="#overview">学习总览</a>
-    <a href="#phase">分阶段路线</a>
-    <a href="#co-module">CO模块体系</a>
-    <a href="#daily">日常核算</a>
-    <a href="#month-end">月末结账</a>
-    <a href="#special-scenarios">特殊业务</a>
-    <a href="#year-end">年末结账</a>
-    <a href="#cost-check">核对与报错</a>
-    <a href="#case-study">实战案例</a>
-    <a href="#resources">学习资源</a>
-    <a href="#plan">时间规划</a>
-  </div>
-</nav>
+<button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('show')">☰</button>
+<div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('show')"></div>
 
-<main class="container">
+<div class="layout-wrapper">
+
+<aside class="sidebar">
+  <div class="sidebar-search">
+    <input type="text" placeholder="搜索章节..." oninput="filterNav(this.value)">
+  </div>
+  <div class="nav-group-title">基础入门</div>
+  <a href="#version" class="nav-link"><span class="nav-num">01</span>版本说明</a>
+  <a href="#overview" class="nav-link"><span class="nav-num">02</span>学习总览</a>
+  <a href="#phase" class="nav-link"><span class="nav-num">03</span>分阶段路线</a>
+  <div class="nav-group-title">CO核心知识</div>
+  <a href="#co-module" class="nav-link"><span class="nav-num">04</span>CO模块体系</a>
+  <a href="#daily" class="nav-link"><span class="nav-num">05</span>日常核算</a>
+  <a href="#month-end" class="nav-link"><span class="nav-num">06</span>月末结账</a>
+  <div class="nav-group-title">进阶应用</div>
+  <a href="#special-scenarios" class="nav-link"><span class="nav-num">07</span>特殊业务</a>
+  <a href="#year-end" class="nav-link"><span class="nav-num">08</span>年末结账</a>
+  <a href="#cost-check" class="nav-link"><span class="nav-num">09</span>核对与报错</a>
+  <div class="nav-group-title">实战与资源</div>
+  <a href="#case-study" class="nav-link"><span class="nav-num">10</span>实战案例</a>
+  <a href="#resources" class="nav-link"><span class="nav-num">11</span>学习资源</a>
+  <a href="#plan" class="nav-link"><span class="nav-num">12</span>时间规划</a>
+</aside>
+
+<div class="content-area">
+<main>
 
   <!-- 版本说明 -->
   <section id="version">
@@ -4149,6 +4359,12 @@ graph LR
   </section>
 
 </main>
+</div><!-- /content-area -->
+
+</div><!-- /layout-wrapper -->
+
+<div class="progress-bar" id="progressBar"></div>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <footer>
   <div class="container">
@@ -4203,5 +4419,154 @@ graph LR
 <script src="./_shared/js/echarts.min.js"></script>
 <script src="./_shared/js/mermaid.min.js"></script>
 <script src="assets/charts.js"></script>
+<script>
+// === 侧边栏导航交互 ===
+(function() {
+  const links = document.querySelectorAll('.sidebar a.nav-link');
+  const sections = document.querySelectorAll('main section[id]');
+  const progressBar = document.getElementById('progressBar');
+  const backToTop = document.getElementById('backToTop');
+
+  // 滚动监听：高亮当前章节 + 进度条 + 返回顶部
+  function onScroll() {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+
+    // 返回顶部按钮
+    if (scrollY > 400) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+
+    // 高亮当前章节
+    let current = '';
+    sections.forEach(function(sec) {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top <= 120 && rect.bottom >= 120) {
+        current = sec.id;
+      }
+    });
+    if (!current && sections.length > 0) {
+      // 如果在第一个section之前
+      if (window.scrollY < sections[0].offsetTop) {
+        current = sections[0].id;
+      }
+    }
+    links.forEach(function(link) {
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+        // 确保active项在侧边栏可见
+        link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+
+  // 节流
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        onScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // 初始高亮
+  onScroll();
+
+  // 点击导航链接后关闭移动端侧边栏
+  links.forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 1024) {
+        document.querySelector('.sidebar').classList.remove('open');
+        document.querySelector('.sidebar-overlay').classList.remove('show');
+      }
+    });
+  });
+})();
+
+// === 侧边栏搜索过滤 ===
+function filterNav(keyword) {
+  const kw = keyword.trim().toLowerCase();
+  const links = document.querySelectorAll('.sidebar a.nav-link');
+  const groupTitles = document.querySelectorAll('.sidebar .nav-group-title');
+  links.forEach(function(link) {
+    const text = link.textContent.toLowerCase();
+    if (kw === '' || text.includes(kw)) {
+      link.style.display = '';
+    } else {
+      link.style.display = 'none';
+    }
+  });
+  // 隐藏没有可见链接的分组标题
+  groupTitles.forEach(function(title) {
+    let next = title.nextElementSibling;
+    let hasVisible = false;
+    while (next && !next.classList.contains('nav-group-title')) {
+      if (next.style.display !== 'none' && next.classList.contains('nav-link')) {
+        hasVisible = true;
+        break;
+      }
+      next = next.nextElementSibling;
+    }
+    title.style.display = hasVisible ? '' : 'none';
+  });
+}
+
+// === 章节折叠 ===
+document.querySelectorAll('main section > h2').forEach(function(h2) {
+  const section = h2.closest('section');
+  if (!section) return;
+
+  // 在h2前插入折叠控制按钮
+  const ctrl = document.createElement('div');
+  ctrl.className = 'section-collapse-control';
+  ctrl.innerHTML = '<span class="collapse-icon">▼</span>';
+  ctrl.style.cssText = 'position:absolute;margin-left:-24px;margin-top:6px;cursor:pointer';
+  ctrl.onclick = function(e) {
+    e.stopPropagation();
+    section.classList.toggle('section-collapsed');
+    saveCollapseState();
+  };
+
+  h2.parentNode.insertBefore(ctrl, h2);
+  h2.style.cursor = 'pointer';
+  h2.addEventListener('click', function() {
+    section.classList.toggle('section-collapsed');
+    saveCollapseState();
+  });
+});
+
+// 保存折叠状态
+function saveCollapseState() {
+  const states = {};
+  document.querySelectorAll('main section').forEach(function(sec) {
+    if (sec.id) {
+      states[sec.id] = sec.classList.contains('section-collapsed');
+    }
+  });
+  try {
+    localStorage.setItem('sap-collapse-state', JSON.stringify(states));
+  } catch(e) {}
+}
+
+// 恢复折叠状态
+try {
+  const saved = JSON.parse(localStorage.getItem('sap-collapse-state') || '{}');
+  Object.keys(saved).forEach(function(id) {
+    if (saved[id]) {
+      const sec = document.getElementById(id);
+      if (sec) sec.classList.add('section-collapsed');
+    }
+  });
+} catch(e) {}
+</script>
 </body>
 </html>
