@@ -560,6 +560,202 @@
     margin: 8px 0;
     font-size: 0.85rem;
   }
+
+  /* === SAP GUI 界面模拟样式 === */
+  .sap-mockup {
+    background: #e8edf0;
+    border: 1px solid #9ba8b5;
+    border-radius: 3px;
+    font-family: 'Segoe UI', 'Microsoft YaHei', Arial, sans-serif;
+    font-size: 12px;
+    margin: 12px 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .sap-titlebar {
+    background: linear-gradient(to bottom, #2d6cb3, #1a4d8e);
+    color: #fff;
+    padding: 5px 12px;
+    font-weight: 600;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 0.3px;
+  }
+  .sap-titlebar .sap-tx {
+    background: rgba(255,255,255,0.15);
+    padding: 1px 8px;
+    border-radius: 2px;
+    font-family: monospace;
+    font-size: 11px;
+  }
+  .sap-menubar {
+    background: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: #444;
+  }
+  .sap-menubar span {
+    margin-right: 12px;
+    cursor: default;
+  }
+  .sap-toolbar {
+    background: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    padding: 4px 10px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .sap-btn {
+    background: linear-gradient(to bottom, #fafafa, #e0e0e0);
+    border: 1px solid #b0b0b0;
+    border-radius: 2px;
+    padding: 2px 10px;
+    font-size: 11px;
+    color: #333;
+    display: inline-block;
+  }
+  .sap-btn-primary {
+    background: linear-gradient(to bottom, #4a90d9, #2d6cb3);
+    border-color: #1a4d8e;
+    color: #fff;
+  }
+  .sap-body {
+    background: #fff;
+    padding: 10px;
+  }
+  .sap-field-row {
+    display: flex;
+    align-items: center;
+    margin: 3px 0;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .sap-label {
+    min-width: 110px;
+    text-align: right;
+    color: #555;
+    font-size: 11px;
+  }
+  .sap-input {
+    background: #ffffe8;
+    border: 1px solid #b0b0b0;
+    padding: 2px 6px;
+    min-width: 140px;
+    font-size: 11px;
+    color: #222;
+    display: inline-block;
+    border-radius: 1px;
+  }
+  .sap-input-readonly {
+    background: #e8e8e8;
+    border: 1px solid #c0c0c0;
+    padding: 2px 6px;
+    min-width: 140px;
+    font-size: 11px;
+    color: #888;
+    display: inline-block;
+    border-radius: 1px;
+  }
+  .sap-input-highlight {
+    background: #d4edda;
+    border: 1px solid #28a745;
+    padding: 2px 6px;
+    font-size: 11px;
+    color: #155724;
+    display: inline-block;
+    border-radius: 1px;
+    font-weight: 600;
+  }
+  .sap-input-warn {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    padding: 2px 6px;
+    font-size: 11px;
+    color: #856404;
+    display: inline-block;
+    border-radius: 1px;
+  }
+  .sap-section-hdr {
+    background: #d0dce8;
+    color: #1a4d8e;
+    padding: 3px 10px;
+    font-weight: 600;
+    font-size: 11px;
+    margin: 6px -10px 4px -10px;
+    border-bottom: 1px solid #9bb;
+  }
+  .sap-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0;
+    font-size: 11px;
+  }
+  .sap-table th {
+    background: #c5d1de;
+    border: 1px solid #9bb;
+    padding: 3px 8px;
+    text-align: left;
+    font-weight: 600;
+    color: #1a4d8e;
+    white-space: nowrap;
+  }
+  .sap-table td {
+    border: 1px solid #d0d0d0;
+    padding: 3px 8px;
+    color: #333;
+  }
+  .sap-table tr:nth-child(even) td {
+    background: #f8f9fa;
+  }
+  .sap-table .sap-highlight {
+    background: #fff3cd !important;
+    font-weight: 600;
+  }
+  .sap-table .sap-total {
+    background: #d4edda !important;
+    font-weight: 700;
+    color: #155724;
+  }
+  .sap-statusbar {
+    background: #d4d0c8;
+    border-top: 1px solid #9ba8b5;
+    padding: 3px 10px;
+    color: #333;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .sap-statusbar .sap-ok {
+    color: #155724;
+    font-weight: 600;
+  }
+  .sap-tree {
+    margin: 6px 0;
+    font-size: 11px;
+    font-family: monospace;
+    line-height: 1.7;
+    background: #f8f9fa;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+  }
+  .sap-tree .level0 { font-weight: 700; color: #1a4d8e; }
+  .sap-tree .level1 { padding-left: 20px; color: #2d6cb3; }
+  .sap-tree .level2 { padding-left: 40px; color: #555; }
+  .sap-tree .cost { color: #155724; font-weight: 600; }
+  .sap-mockup-note {
+    background: #fffde4;
+    border: 1px dashed #d4c100;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin: 8px 0;
+    font-size: 11px;
+    color: #666;
+  }
   .accordion-body table {
     width: 100%;
     border-collapse: collapse;
@@ -686,6 +882,579 @@
         <h4>SAP GUI 800</h4>
         <p>即SAP客户端（前端）版本号为800。这只是登录界面的版本，不影响后台业务逻辑，核心仍取决于你使用的是ECC还是S/4HANA。<sup><a href="#cite-2">[2]</a></sup></p>
       </div>
+    </div>
+
+    <!-- 事务码操作界面模拟 -->
+    <h3>附：核心事务码操作界面模拟</h3>
+    <p>以下为案例中涉及的核心事务码的操作界面模拟图，帮助你在SAP系统中快速定位相关功能。实际界面可能因系统版本和配置略有不同。</p>
+
+    <div class="accordion">
+
+      <!-- CK11N -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CK11N - 标准成本估算（齿轮组件 SF001）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>创建成本估算</span>
+                <span class="sap-tx">CK11N</span>
+              </div>
+              <div class="sap-menubar">
+                <span>订单</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">📊 成本组件</span>
+                <span class="sap-btn">📄 项目明细</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">物料</span><span class="sap-input">SF001 齿轮组件</span></div>
+                <div class="sap-field-row"><span class="sap-label">工厂</span><span class="sap-input">P100 上海加工厂</span></div>
+                <div class="sap-field-row"><span class="sap-label">成本核算变式</span><span class="sap-input">ZPC1 标准成本核算</span></div>
+                <div class="sap-field-row"><span class="sap-label">版本</span><span class="sap-input">1</span></div>
+                <div class="sap-field-row"><span class="sap-label">成本核算日期</span><span class="sap-input">2026-09-01</span></div>
+                <div class="sap-field-row"><span class="sap-label">成本批量</span><span class="sap-input-readonly">1 EA</span></div>
+
+                <div class="sap-section-hdr">BOM 展开 / 成本构成</div>
+                <div class="sap-tree">
+                  <div class="level0">▼ SF001 齿轮组件（半成品） <span class="cost">标准成本: 200.00 元</span></div>
+                  <div class="level1">▼ M 钢材 RM001（3 kg） <span class="cost">150.00 元</span></div>
+                  <div class="level2">采购价格: 50.00 元/kg × 3 kg</div>
+                  <div class="level1">▼ E 人工工时 LABOR（1.0 h） <span class="cost">30.00 元</span></div>
+                  <div class="level2">计划作业价: 30.00 元/h × 1.0 h（机加工车间）</div>
+                  <div class="level1">▼ E 机器工时 MACHINE（1.33 h） <span class="cost">20.00 元</span></div>
+                  <div class="level2">计划作业价: 15.00 元/h × 1.33 h（机加工车间）</div>
+                </div>
+
+                <table class="sap-table">
+                  <tr><th>成本组件</th><th>成本要素</th><th>金额（元）</th><th>占比</th></tr>
+                  <tr><td>原材料成本</td><td>钢材 RM001</td><td>150.00</td><td>75.0%</td></tr>
+                  <tr><td>直接人工</td><td>人工工时 LABOR</td><td>30.00</td><td>15.0%</td></tr>
+                  <tr><td>制造费用</td><td>机器工时 MACHINE</td><td>20.00</td><td>10.0%</td></tr>
+                  <tr class="sap-total"><td colspan="2">标准成本合计</td><td>200.00</td><td>100%</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>● 成本估算已创建</span>
+                <span class="sap-ok">✅ 可标记</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：保存估算后，需通过 <strong>CK24</strong> 标记并发布标准价格，才能更新物料主数据中的标准价。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO01 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CO01 - 创建生产订单（齿轮组件 #1001）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>创建生产订单</span>
+                <span class="sap-tx">CO01</span>
+              </div>
+              <div class="sap-menubar">
+                <span>订单</span><span>跳转</span><span>主数据</span><span>环境</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">📊 成本分析</span>
+                <span class="sap-btn">📦 组件</span>
+                <span class="sap-btn">⚙ 工序</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-section-hdr">订单抬头</div>
+                <div class="sap-field-row"><span class="sap-label">订单</span><span class="sap-input-readonly">1000011（自动分配）</span></div>
+                <div class="sap-field-row"><span class="sap-label">订单类型</span><span class="sap-input">PP01 标准生产订单</span></div>
+                <div class="sap-field-row"><span class="sap-label">物料</span><span class="sap-input">SF001 齿轮组件</span></div>
+                <div class="sap-field-row"><span class="sap-label">工厂</span><span class="sap-input">P100 上海加工厂</span></div>
+                <div class="sap-field-row"><span class="sap-label">数量</span><span class="sap-input">20 EA</span></div>
+                <div class="sap-field-row"><span class="sap-label">开始日期</span><span class="sap-input">2026-09-01</span></div>
+                <div class="sap-field-row"><span class="sap-label">结束日期</span><span class="sap-input">2026-09-25</span></div>
+
+                <div class="sap-section-hdr">BOM 组件（自动展开）</div>
+                <table class="sap-table">
+                  <tr><th>项目</th><th>物料</th><th>物料描述</th><th>数量</th><th>单位</th><th>标准价</th><th>金额</th></tr>
+                  <tr><td>0010</td><td>RM001</td><td>钢材（45#钢）</td><td>60</td><td>kg</td><td>50.00</td><td>3,000.00</td></tr>
+                  <tr class="sap-total"><td colspan="6">材料成本合计</td><td>3,000.00</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">工序（工艺路线展开）</div>
+                <table class="sap-table">
+                  <tr><th>工序</th><th>工作中心</th><th>标准值</th><th>作业类型</th><th>计划价</th><th>计划成本</th></tr>
+                  <tr><td>0010</td><td>机加工车间</td><td>20 h</td><td>LABOR</td><td>30.00</td><td>600.00</td></tr>
+                  <tr><td>0010</td><td>机加工车间</td><td>26.6 h</td><td>MACHINE</td><td>15.00</td><td>399.00</td></tr>
+                  <tr class="sap-total"><td colspan="5">作业成本合计</td><td>999.00</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">计划成本汇总</div>
+                <table class="sap-table">
+                  <tr><th>成本项目</th><th>金额（元）</th></tr>
+                  <tr><td>原材料</td><td>3,000.00</td></tr>
+                  <tr><td>直接人工（计划）</td><td>600.00</td></tr>
+                  <tr><td>制造费用（计划）</td><td>399.00</td></tr>
+                  <tr><td>产出（贷方，20个×200）</td><td>-4,000.00</td></tr>
+                  <tr class="sap-total"><td>计划成本合计</td><td>-1.00（≈0）</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>状态: CRTD（已创建）</span>
+                <span>下一步: CO02 下达订单</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：订单创建后状态为 CRTD（Created），需通过 <strong>CO02</strong> 下达（Release）后才能进行领料和报工操作。下达后状态变为 REL（Released）。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MIGO 261 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>MIGO - 生产领料（移动类型261）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>货物移动</span>
+                <span class="sap-tx">MIGO</span>
+              </div>
+              <div class="sap-menubar">
+                <span>凭证</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 过账</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">🔍 检查</span>
+                <span class="sap-btn">📋 项目明细</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">操作类型</span><span class="sap-input">A1 发货</span></div>
+                <div class="sap-field-row"><span class="sap-label">移动类型</span><span class="sap-input">261 为生产订单领料</span></div>
+                <div class="sap-field-row"><span class="sap-label">接收订单</span><span class="sap-input">1000011（齿轮组件订单）</span></div>
+
+                <div class="sap-section-hdr">项目明细</div>
+                <table class="sap-table">
+                  <tr><th>项目</th><th>物料</th><th>描述</th><th>数量</th><th>单位</th><th>移动类型</th><th>批次</th></tr>
+                  <tr class="sap-highlight"><td>1</td><td>RM001</td><td>钢材（45#钢）</td><td>60</td><td>kg</td><td>261</td><td>B20260901</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">自动生成的会计凭证</div>
+                <table class="sap-table">
+                  <tr><th>行</th><th>科目</th><th>描述</th><th>借/贷</th><th>金额</th></tr>
+                  <tr><td>1</td><td>50010101</td><td>生产成本-原材料</td><td>借</td><td>3,000.00</td></tr>
+                  <tr><td>2</td><td>30010101</td><td>原材料-钢材</td><td>贷</td><td>3,000.00</td></tr>
+                  <tr class="sap-total"><td colspan="4">合计</td><td>3,000.00</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>物料凭证: 4900001234 已过账</span>
+                <span class="sap-ok">✅ 过账成功</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：移动类型 <strong>261</strong> 是生产领料，系统自动从库存扣减原材料，同时计入生产订单的"原材料"成本。订单#1002（齿轮箱）的领料操作类似，领用齿轮组件20个和铜线5kg。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO11N -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CO11N - 生产订单报工确认</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>订单确认</span>
+                <span class="sap-tx">CO11N</span>
+              </div>
+              <div class="sap-menubar">
+                <span>凭证</span><span>跳转</span><span>主数据</span><span>环境</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 过账</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">📊 成本分析</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-section-hdr">确认抬头</div>
+                <div class="sap-field-row"><span class="sap-label">订单</span><span class="sap-input">1000011</span></div>
+                <div class="sap-field-row"><span class="sap-label">工序</span><span class="sap-input-readonly">0010 机加工</span></div>
+                <div class="sap-field-row"><span class="sap-label">移动类型</span><span class="sap-input-readonly">101 生产收货（自动）</span></div>
+                <div class="sap-field-row"><span class="sap-label">确认数量</span><span class="sap-input-highlight">20 EA</span></div>
+                <div class="sap-field-row"><span class="sap-label">确认日期</span><span class="sap-input">2026-09-20</span></div>
+
+                <div class="sap-section-hdr">作业量确认</div>
+                <table class="sap-table">
+                  <tr><th>作业类型</th><th>描述</th><th>实际数量</th><th>单位</th><th>计划单价</th><th>金额（计划价）</th></tr>
+                  <tr class="sap-highlight"><td>LABOR</td><td>人工工时</td><td>20.0</td><td>h</td><td>30.00</td><td>600.00</td></tr>
+                  <tr class="sap-highlight"><td>MACHINE</td><td>机器工时</td><td>26.6</td><td>h</td><td>15.00</td><td>399.00</td></tr>
+                  <tr class="sap-total"><td colspan="5">作业成本合计（计划价）</td><td>999.00</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">自动生成的会计凭证</div>
+                <table class="sap-table">
+                  <tr><th>行</th><th>科目</th><th>描述</th><th>借/贷</th><th>金额</th></tr>
+                  <tr><td>1</td><td>50020101</td><td>生产成本-直接人工</td><td>借</td><td>600.00</td></tr>
+                  <tr><td>2</td><td>42010101</td><td>成本中心-机加工车间</td><td>贷</td><td>600.00</td></tr>
+                  <tr><td>3</td><td>50030101</td><td>生产成本-制造费用</td><td>借</td><td>399.00</td></tr>
+                  <tr><td>4</td><td>42010101</td><td>成本中心-机加工车间</td><td>贷</td><td>399.00</td></tr>
+                  <tr><td>5</td><td>30020101</td><td>库存商品-齿轮组件</td><td>借</td><td>4,000.00</td></tr>
+                  <tr><td>6</td><td>50040101</td><td>生产成本-产出</td><td>贷</td><td>4,000.00</td></tr>
+                  <tr class="sap-total"><td colspan="4">合计</td><td>5,399.00</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>确认凭证已过账 | 收货20个自动完成</span>
+                <span class="sap-ok">✅ 订单状态: DLV（已交货）</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：报工确认（CO11N）同时完成三件事：①记录人工和机器作业量；②按计划价将成本从成本中心转到订单；③自动触发收货（移动类型101）将产品入库。人工和机器成本月末会通过KSII/MFN1从计划价调整为实际价。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KSII -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>KSII - 实际作业价格计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>计算实际作业价格</span>
+                <span class="sap-tx">KSII</span>
+              </div>
+              <div class="sap-menubar">
+                <span>周期</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">📊 报表</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">控制范围</span><span class="sap-input">1000</span></div>
+                <div class="sap-field-row"><span class="sap-label">期间</span><span class="sap-input">09 / 2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">版本</span><span class="sap-input-readonly">0（实际版本）</span></div>
+                <div class="sap-field-row"><span class="sap-label">测试运行</span><span class="sap-input">☑（先测试后正式）</span></div>
+
+                <div class="sap-section-hdr">计算结果</div>
+                <table class="sap-table">
+                  <tr><th>成本中心</th><th>作业类型</th><th>实际成本</th><th>实际报工</th><th>计划价</th><th>实际价</th><th>差异</th></tr>
+                  <tr class="sap-highlight"><td>机加工车间</td><td>LABOR</td><td>714.00</td><td>20.0 h</td><td>30.00</td><td><strong>35.70</strong></td><td style="color:#c00">+5.70</td></tr>
+                  <tr class="sap-highlight"><td>机加工车间</td><td>MACHINE</td><td>719.00</td><td>26.6 h</td><td>15.00</td><td><strong>27.03</strong></td><td style="color:#c00">+12.03</td></tr>
+                  <tr class="sap-highlight"><td>装配车间</td><td>LABOR</td><td>536.00</td><td>15.0 h</td><td>30.00</td><td><strong>35.73</strong></td><td style="color:#c00">+5.73</td></tr>
+                  <tr class="sap-highlight"><td>装配车间</td><td>MACHINE</td><td>331.00</td><td>10.0 h</td><td>15.00</td><td><strong>33.10</strong></td><td style="color:#c00">+18.10</td></tr>
+                </table>
+                <div class="sap-mockup-note">⚠ 实际价格均高于计划价格。原因：①辅助费用分摊增加了成本中心总费用；②实际报工量小于计划，单位成本被摊高。下一步需通过 MFN1/CON2 对生产订单进行重估。</div>
+              </div>
+              <div class="sap-statusbar">
+                <span>实际价格已计算并更新到价格表</span>
+                <span class="sap-ok">✅ 无KP250错误</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO88 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CO88 - 生产订单批量结算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>订单结算（批量）</span>
+                <span class="sap-tx">CO88</span>
+              </div>
+              <div class="sap-menubar">
+                <span>周期</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">📊 结算报表</span>
+                <span class="sap-btn">🔍 错误分析</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">控制范围</span><span class="sap-input">1000</span></div>
+                <div class="sap-field-row"><span class="sap-label">结算期间</span><span class="sap-input">09 / 2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">处理类型</span><span class="sap-input">AUT 自动处理</span></div>
+                <div class="sap-field-row"><span class="sap-label">测试运行</span><span class="sap-input">☑（先测试后正式）</span></div>
+
+                <div class="sap-section-hdr">结算结果汇总</div>
+                <table class="sap-table">
+                  <tr><th>订单号</th><th>物料</th><th>状态</th><th>WIP</th><th>差异</th><th>结算金额</th><th>结算后余额</th></tr>
+                  <tr class="sap-highlight"><td>1000011</td><td>SF001</td><td>DLV</td><td>0</td><td style="color:#c00">+433.00</td><td>433.00</td><td class="sap-ok">0.00 ✅</td></tr>
+                  <tr class="sap-highlight"><td>1000012</td><td>FG001</td><td>部分交货</td><td style="color:#c00">1,267.00</td><td>0</td><td>1,267.00</td><td class="sap-ok">0.00 ✅</td></tr>
+                  <tr class="sap-total"><td colspan="3">合计</td><td>1,267.00</td><td>433.00</td><td>1,700.00</td><td>0.00</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">生成的FI凭证（简化）</div>
+                <table class="sap-table">
+                  <tr><th>凭证</th><th>科目</th><th>描述</th><th>借/贷</th><th>金额</th></tr>
+                  <tr><td>1</td><td>14020101</td><td>在制品（WIP）</td><td>借</td><td>1,267.00</td></tr>
+                  <tr><td>1</td><td>50050101</td><td>生产成本-在制品转出</td><td>贷</td><td>1,267.00</td></tr>
+                  <tr><td>2</td><td>50060101</td><td>生产成本-订单差异</td><td>借</td><td>433.00</td></tr>
+                  <tr><td>2</td><td>14030101</td><td>库存商品-差异</td><td>贷</td><td>433.00</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>2个订单结算完成，生成2张FI凭证</span>
+                <span class="sap-ok">✅ 所有订单余额=0</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：CO88批量结算前必须完成：KKAO（WIP计算）和 KKS1/KKS2（差异计算）。建议先勾选"测试运行"确认无错误，再正式执行。如果结算后订单仍有余额，使用COHV进行错误分析。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CKMLCP -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CKMLCP - 物料分类账期末处理</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>物料分类账：多级处理</span>
+                <span class="sap-tx">CKMLCP</span>
+              </div>
+              <div class="sap-menubar">
+                <span>周期</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">📊 检查</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">工厂</span><span class="sap-input">P100</span></div>
+                <div class="sap-field-row"><span class="sap-label">处理期间</span><span class="sap-input">09 / 2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">测试运行</span><span class="sap-input">☑（先测试后正式）</span></div>
+
+                <div class="sap-section-hdr">处理步骤</div>
+                <table class="sap-table">
+                  <tr><th>步骤</th><th>描述</th><th>事务码</th><th>状态</th><th>物料数</th></tr>
+                  <tr><td>1</td><td>创建</td><td>CKMF_RUN</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                  <tr><td>2</td><td>允许结算</td><td>CKMG_RUN</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                  <tr><td>3</td><td>允许关闭分录</td><td>CKMG_RUN</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                  <tr><td>4</td><td>物料选择</td><td>CKMB_RUN</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                  <tr><td>5</td><td>确定成本序列</td><td>CKMC_RUN</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                  <tr class="sap-highlight"><td>6</td><td>单层结算</td><td>CKMH_RUN</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                  <tr class="sap-highlight"><td>7</td><td>多层结算</td><td>CKMM_RUN</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                  <tr class="sap-highlight"><td>8</td><td>过账关闭分录</td><td>CKMI</td><td class="sap-ok">✅ 完成</td><td>4</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">差异分摊结果</div>
+                <table class="sap-table">
+                  <tr><th>物料</th><th>直接差异</th><th>上卷差异</th><th>总差异</th><th>→期末库存</th><th>→已销成本</th></tr>
+                  <tr><td>SF001 齿轮组件</td><td>+433.00</td><td>0</td><td>433.00</td><td>0</td><td>433.00</td></tr>
+                  <tr class="sap-highlight"><td>FG001 齿轮箱</td><td>0</td><td>+433.00</td><td>433.00</td><td>162.40</td><td>270.60</td></tr>
+                  <tr class="sap-total"><td colspan="4">差异合计</td><td>162.40</td><td>270.60</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">过账的FI凭证</div>
+                <table class="sap-table">
+                  <tr><th>行</th><th>科目</th><th>描述</th><th>借/贷</th><th>金额</th></tr>
+                  <tr><td>1</td><td>14020201</td><td>库存商品-齿轮箱（差异调整）</td><td>借</td><td>162.40</td></tr>
+                  <tr><td>2</td><td>64010101</td><td>主营业务成本（差异分摊）</td><td>借</td><td>270.60</td></tr>
+                  <tr><td>3</td><td>14030101</td><td>库存商品-差异（结转）</td><td>贷</td><td>433.00</td></tr>
+                  <tr class="sap-total"><td colspan="4">合计</td><td>433.00</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>物料分类账处理完成 | 差异=0</span>
+                <span class="sap-ok">✅ 4,000 + 433 = 4,433元 ✅ 平衡</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CKM3 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CKM3 - 物料价格分析（齿轮箱）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>物料价格分析</span>
+                <span class="sap-tx">CKM3</span>
+              </div>
+              <div class="sap-menubar">
+                <span>凭证</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📊 成本组件</span>
+                <span class="sap-btn">🔍 差异明细</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">物料</span><span class="sap-input">FG001 齿轮箱</span></div>
+                <div class="sap-field-row"><span class="sap-label">工厂</span><span class="sap-input">P100</span></div>
+                <div class="sap-field-row"><span class="sap-label">期间</span><span class="sap-input">09 / 2026</span></div>
+
+                <div class="sap-section-hdr">价格分析</div>
+                <table class="sap-table">
+                  <tr><th>项目</th><th>数量</th><th>价格</th><th>金额（元）</th></tr>
+                  <tr><td>期初库存</td><td>0</td><td>—</td><td>0.00</td></tr>
+                  <tr><td>收货（生产入库）</td><td>8 台</td><td>500.00</td><td>4,000.00</td></tr>
+                  <tr><td>消耗（销售出库）</td><td>-5 台</td><td>500.00</td><td>-2,500.00</td></tr>
+                  <tr class="sap-highlight"><td>期末库存</td><td>3 台</td><td>500.00</td><td>1,500.00</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">差异分析</div>
+                <table class="sap-table">
+                  <tr><th>差异类型</th><th>来源</th><th>金额</th></tr>
+                  <tr><td>直接差异</td><td>订单#1001生产差异</td><td>0.00</td></tr>
+                  <tr class="sap-highlight"><td>上卷差异（单层→多层）</td><td>SF001齿轮组件差异上卷</td><td>+433.00</td></tr>
+                  <tr class="sap-total"><td colspan="2">总差异</td><td>433.00</td></tr>
+                  <tr><td>→ 分摊到期末库存</td><td>3台/8台 × 433</td><td>162.40</td></tr>
+                  <tr><td>→ 分摊到已销成本</td><td>5台/8台 × 433</td><td>270.60</td></tr>
+                  <tr class="sap-total"><td colspan="2">分摊合计</td><td>433.00 ✅</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">实际单价（PUP）</div>
+                <table class="sap-table">
+                  <tr><th>项目</th><th>值</th></tr>
+                  <tr><td>标准价</td><td>500.00 元</td></tr>
+                  <tr class="sap-highlight"><td><strong>实际价（PUP）</strong></td><td><strong>554.13 元</strong> = (1,500 + 162.4) ÷ 3</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>物料分类账已关闭 | 实际价: 554.13元</span>
+                <span class="sap-ok">✅ 未分配差异 = 0</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：CKM3是成本会计月结后最常用的分析报表。重点关注"未分配差异"是否为0，以及实际价(PUP)与标准价的偏差程度。如果未分配差异不为0，需通过CKMVFM分析原因。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- S_ALR_87013611 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>S_ALR_87013611 - 成本中心计划/实际对比</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>成本中心：实际/计划/差异</span>
+                <span class="sap-tx">S_ALR_87013611</span>
+              </div>
+              <div class="sap-menubar">
+                <span>报表</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📊 图表</span>
+                <span class="sap-btn">📤 导出</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">控制范围</span><span class="sap-input">1000</span></div>
+                <div class="sap-field-row"><span class="sap-label">期间</span><span class="sap-input">09 / 2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">版本</span><span class="sap-input-readonly">0（实际）/ 1（计划）</span></div>
+                <div class="sap-field-row"><span class="sap-label">成本中心组</span><span class="sap-input">全部</span></div>
+
+                <div class="sap-section-hdr">成本中心实际/计划/差异报表</div>
+                <table class="sap-table">
+                  <tr><th>成本中心</th><th>原始费用</th><th>分入</th><th>合计（实际）</th><th>重估转出</th><th>月结后余额</th></tr>
+                  <tr><td>设备维护部</td><td>300.00</td><td>0</td><td>300.00</td><td>-300.00</td><td class="sap-ok">0.00 ✅</td></tr>
+                  <tr><td>质量管理部</td><td>200.00</td><td>0</td><td>200.00</td><td>-200.00</td><td class="sap-ok">0.00 ✅</td></tr>
+                  <tr class="sap-highlight"><td>机加工车间</td><td>1,100.00</td><td>333.00</td><td>1,433.00</td><td>-1,433.00</td><td class="sap-ok">0.00 ✅</td></tr>
+                  <tr class="sap-highlight"><td>装配车间</td><td>700.00</td><td>167.00</td><td>867.00</td><td>-867.00</td><td class="sap-ok">0.00 ✅</td></tr>
+                  <tr class="sap-total"><td colspan="5">所有成本中心余额合计</td><td>0.00 ✅</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">按成本要素分析</div>
+                <table class="sap-table">
+                  <tr><th>成本中心</th><th>成本要素</th><th>描述</th><th>实际</th><th>状态</th></tr>
+                  <tr><td>机加工车间</td><td>50010001</td><td>人工费</td><td>600.00</td><td>已转出</td></tr>
+                  <tr><td>机加工车间</td><td>50010002</td><td>机器折旧</td><td>400.00</td><td>已转出</td></tr>
+                  <tr><td>机加工车间</td><td>50010003</td><td>其他费用</td><td>100.00</td><td>已转出</td></tr>
+                  <tr><td>机加工车间</td><td>分入</td><td>来自辅助成本中心</td><td>333.00</td><td>已转出</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>月结验证通过</span>
+                <span class="sap-ok">✅ 所有成本中心余额 = 0</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：这是月结后最重要的验证报表。辅助成本中心余额应为0（已分摊到生产车间），生产成本中心余额应为0（已重估到生产订单）。如有余额不为0，需检查分摊循环（KSV5/KSU5）和重估（MFN1/CON2）是否执行。</div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="callout">
