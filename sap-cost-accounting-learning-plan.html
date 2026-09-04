@@ -1067,10 +1067,11 @@
   <a href="#special-scenarios" class="nav-link"><span class="nav-num">07</span>特殊业务</a>
   <a href="#year-end" class="nav-link"><span class="nav-num">08</span>年末结账</a>
   <a href="#cost-check" class="nav-link"><span class="nav-num">09</span>核对与报错</a>
-  <div class="nav-group-title">实战与资源</div>
-  <a href="#case-study" class="nav-link"><span class="nav-num">10</span>实战案例</a>
-  <a href="#resources" class="nav-link"><span class="nav-num">11</span>学习资源</a>
-  <a href="#plan" class="nav-link"><span class="nav-num">12</span>时间规划</a>
+  <div class="nav-group-title">跨模块与实战</div>
+  <a href="#cross-module" class="nav-link"><span class="nav-num">10</span>跨模块集成</a>
+  <a href="#case-study" class="nav-link"><span class="nav-num">11</span>实战案例</a>
+  <a href="#resources" class="nav-link"><span class="nav-num">12</span>学习资源</a>
+  <a href="#plan" class="nav-link"><span class="nav-num">13</span>时间规划</a>
 </aside>
 
 <div class="content-area">
@@ -3475,9 +3476,489 @@ graph TD
     </div>
   </section>
 
+  <!-- CO与关联模块集成 -->
+  <section id="cross-module">
+    <h2>十、CO与关联模块集成知识点</h2>
+    <p>成本会计日常工作中，CO模块并非孤立运行——它与FI（财务会计）、MM（物料管理）、PP（生产计划）、SD（销售分销）之间存在紧密的数据传递关系。理解这些集成点，是排查跨模块问题和月结顺利推进的关键。</p>
+
+    <pre class="mermaid">
+graph TD
+    CO["CO 模块<br/>成本中心/生产订单/获利分析"]
+    FI["FI 模块<br/>总账/成本要素/期间管理"]
+    MM["MM 模块<br/>物料移动/计价/库存"]
+    PP["PP 模块<br/>BOM/工艺路线/生产订单"]
+    SD["SD 模块<br/>销售/交货/开票"]
+    PA["CO-PA<br/>获利能力分析"]
+
+    FI -->|"成本要素桥接<br/>凭证传递"| CO
+    MM -->|"移动类型→自动凭证<br/>标准价/V价"| CO
+    PP -->|"BOM+工艺→成本估算<br/>报工→作业成本"| CO
+    SD -->|"开票→收入<br/>发货→销售成本"| CO
+    CO -->|"差异分摊<br/>实际成本"| PA
+
+    style CO fill:#e0e7ff,stroke:#4f46e5,stroke-width:3px,color:#3730a3
+    style FI fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style MM fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style PP fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style SD fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style PA fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843
+    </pre>
+
+    <!-- CO-FI -->
+    <h3>CO-FI 集成：成本要素桥接</h3>
+    <p>FI与CO之间的数据传递通过<strong>成本要素</strong>（Cost Element）实现，它是两个模块之间的"契约接口"。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-FI</span>
+            <span>成本要素：初级 vs 次级</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>维度</th><th>初级成本要素</th><th>次级成本要素</th></tr>
+              <tr><td>对应FI科目</td><td>是（与损益类科目一一对应）</td><td>否（仅存在于CO内部）</td></tr>
+              <tr><td>用途</td><td>归集外部费用（如电费、人工费）</td><td>CO内部费用流转（如分摊、结算）</td></tr>
+              <tr><td>创建方式</td><td>FS00创建科目时自动生成（OKB2）</td><td>KA01手动创建（类别12/22等）</td></tr>
+              <tr><td>典型场景</td><td>FI凭证→CO凭证的传递</td><td>成本中心→订单的结转</td></tr>
+              <tr><td>事务码</td><td>KA01/KA02/KA03</td><td>KA01（类别选12/22）</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>记忆要点：</strong>初级成本要素 = FI科目 + CO映射，用于"外部费用归集"；次级成本要素 = CO专用工具，用于"内部费用流转"。月结中的分摊（KSU5）、结算（CO88）都使用次级成本要素。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-FI</span>
+            <span>凭证传递链路与查看方法</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>数据流向</th><th>触发方式</th><th>查看事务码</th></tr>
+              <tr><td>FI → CO</td><td>FI凭证过账时自动生成CO凭证</td><td>KSB5（CO凭证）、FB03（FI凭证）</td></tr>
+              <tr><td>MM → FI → CO</td><td>物料移动自动过账到FI，再带入CO</td><td>MB51（物料凭证）、KSB5</td></tr>
+              <tr><td>SD → FI → CO</td><td>销售开票过账到FI，再带入CO</td><td>VBRK/VBRP（发票）、KSB5</td></tr>
+              <tr><td>CO → CO</td><td>CO内部费用流转（分摊/分配/结算）</td><td>KSB5、KOB1</td></tr>
+              <tr><td>CO → FI</td><td>订单结算、物料分类账过账</td><td>FB03（FI凭证）、CKM3</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>关键表：</strong>COBK（CO凭证抬头）、COEP（CO行项目）。查看CO凭证用 <strong>KSB5</strong>，查看生产订单成本用 <strong>KOB1</strong>，查看FI总账余额用 <strong>FS10N</strong>。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-FI</span>
+            <span>期间管理：OB52 vs OKP1</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>维度</th><th>FI期间（OB52）</th><th>CO期间（OKP1）</th></tr>
+              <tr><td>控制对象</td><td>公司代码下各科目类别</td><td>成本控制范围</td></tr>
+              <tr><td>开关逻辑</td><td>未打开的期间=关闭（不能过账）</td><td>未关闭的期间=打开（可以过账）</td></tr>
+              <tr><td>月结操作</td><td>关闭上月、打开当月</td><td>通常与FI期间协调</td></tr>
+              <tr><td>常见问题</td><td>凭证无法过账→检查OB52</td><td>CO费用无法入账→检查OKP1</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>月结协同：</strong>FI期间（OB52）、CO期间（OKP1）、MM期间（MMPV）三者需协同操作。月结时通常同时打开当前期间和下一期间，结账完成后及时关闭已完成期间。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-FI</span>
+            <span>FI与CO对账方法</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>对账步骤</h5>
+            <ol>
+              <li><strong>FS10N</strong>查看FI总账科目余额（如生产成本科目5001xxxx）</li>
+              <li><strong>KSB5</strong>或<strong>KOB1</strong>查看CO凭证中的对应成本</li>
+              <li>比较FI科目余额与CO成本对象余额是否一致</li>
+              <li>如有差异，钻取到行项目级别定位</li>
+              <li>常见差异原因：未过账凭证、暂存凭证、成本要素未创建、次级成本要素在FI无余额</li>
+            </ol>
+            <div class="callout-mini">
+              <strong>重点：</strong>初级成本要素在FI和CO中都能看到余额，二者应一致；次级成本要素仅在CO中有余额，FI中不体现，这是正常的，不是差异。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CO-MM -->
+    <h3>CO-MM 集成：物料移动与成本</h3>
+    <p>物料移动是成本归集的主要来源之一。理解移动类型与成本的关系，是排查成本异常的基础。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-MM</span>
+            <span>物料计价方式：标准价 vs 移动平均价</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>维度</th><th>标准价（S）</th><th>移动平均价（V）</th></tr>
+              <tr><td>价格更新</td><td>月初CK11N/CK24发布</td><td>每次收货自动更新</td></tr>
+              <tr><td>差异处理</td><td>价差进入差异科目，月终通过物料分类账分摊</td><td>收货时直接更新价格，无价差科目</td></tr>
+              <tr><td>适用物料</td><td>半成品、产成品</td><td>原材料（采购件）</td></tr>
+              <tr><td>成本控制</td><td>便于考核（计划vs实际对比）</td><td>反映市场实时价格</td></tr>
+              <tr><td>物料分类账</td><td>必须运行（还原实际成本）</td><td>可选（但建议运行）</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>实务建议：</strong>制造业通常对原材料用V价（反映采购价格波动），对半成品和产成品用S价（便于成本控制和差异分析）。物料分类账（CKMLCP）月结后将S价物料的差异分摊到库存和销售成本，还原实际成本。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-MM</span>
+            <span>关键移动类型及其成本影响</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>移动类型</th><th>业务含义</th><th>借方科目</th><th>贷方科目</th><th>对CO的影响</th></tr>
+              <tr><td><strong>101</strong></td><td>采购收货/生产入库</td><td>库存商品(BSX)</td><td>GR/IR暂估(WRX) 或 生产产出</td><td>生产入库增加库存，同时贷记生产成本-产出</td></tr>
+              <tr><td><strong>102</strong></td><td>收货反向冲销</td><td>反向冲销</td><td>反向冲销</td><td>冲回入库成本</td></tr>
+              <tr><td><strong>201</strong></td><td>成本中心领料</td><td>成本中心费用(GBB)</td><td>库存(BSX)</td><td>费用直接进入成本中心</td></tr>
+              <tr><td><strong>261</strong></td><td>生产订单领料</td><td>生产订单-原材料</td><td>库存(BSX)</td><td>材料成本归集到生产订单</td></tr>
+              <tr><td><strong>262</strong></td><td>领料退回</td><td>库存(BSX)</td><td>生产订单-原材料</td><td>冲回订单材料成本</td></tr>
+              <tr><td><strong>301</strong></td><td>工厂间转储</td><td>目标工厂库存</td><td>源工厂库存</td><td>无成本影响（仅库存转移）</td></tr>
+              <tr><td><strong>501</strong></td><td>无采购订单收货</td><td>库存(BSX)</td><td>相关科目</td><td>增加库存，需手动指定成本对象</td></tr>
+              <tr><td><strong>551</strong></td><td>库存报废</td><td>报废损失(GBB)</td><td>库存(BSX)</td><td>损失进入成本中心或订单</td></tr>
+              <tr><td><strong>601</strong></td><td>销售出库</td><td>主营业务成本(VV01)</td><td>库存(BSX)</td><td>结转销售成本，影响CO-PA</td></tr>
+              <tr><td><strong>541</strong></td><td>发料至分包商</td><td>分包库存</td><td>库存(BSX)</td><td>委外加工特有移动</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>核心逻辑链：</strong>移动类型 → 价值串(TE码) → 事务键+科目修改 → 评估类+评估分组 → 总账科目。配置路径：<strong>OMJJ</strong>（移动类型）→ <strong>OBYC</strong>（自动过账）→ 物料主数据（评估类）→ <strong>OMWD</strong>（工厂分组）。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-MM</span>
+            <span>OBYC自动过账配置详解</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>事务键(TE码)</th><th>含义</th><th>典型场景</th><th>配置事务码</th></tr>
+              <tr><td><strong>BSX</strong></td><td>库存科目</td><td>所有库存增减（收货/领料/出库）</td><td>OBYC→BSX</td></tr>
+              <tr><td><strong>WRX</strong></td><td>GR/IR暂估科目</td><td>采购收货未收发票时暂估</td><td>OBYC→WRX</td></tr>
+              <tr><td><strong>GBB</strong></td><td>库存消耗/抵消科目</td><td>成本中心领料、生产领料、报废</td><td>OBYC→GBB（含科目修改VBR/BSA等）</td></tr>
+              <tr><td><strong>PRD</strong></td><td>价格差异科目</td><td>标准价与采购价/发票价差异</td><td>OBYC→PRD</td></tr>
+              <tr><td><strong>VLN</strong></td><td>销售成本科目</td><td>销售出库结转成本</td><td>OBYC→VLN/VV01</td></tr>
+              <tr><td><strong>UMB</strong></td><td>库存差异科目</td><td>盘点盈亏</td><td>OBYC→UMB</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>排查要点：</strong>物料移动无法生成会计凭证时，按以下顺序检查：①OMJJ移动类型 → ②OBYC事务键映射 → ③物料主数据评估类 → ④OMWD工厂评估分组 → ⑤MM期间MMPV → ⑥FI期间OB52。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CO-PP -->
+    <h3>CO-PP 集成：生产成本归集</h3>
+    <p>PP模块提供成本核算的基础数据（BOM、工艺路线、生产订单），CO模块负责成本计算和结算。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-PP</span>
+            <span>BOM与工艺路线：成本估算的基础</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>主数据</th><th>创建事务码</th><th>对CO的影响</th><th>关键检查点</th></tr>
+              <tr><td>BOM（物料清单）</td><td>CS01/CS02</td><td>决定材料成本构成（哪些料、多少量）</td><td>组件有效性、替代料策略</td></tr>
+              <tr><td>工艺路线</td><td>CA01/CA02</td><td>决定作业成本（工序、工时、作业类型）</td><td>工作中心绑定成本中心</td></tr>
+              <tr><td>工作中心</td><td>CR01/CR02</td><td>关联成本中心，决定费用归集去向</td><td>成本中心字段是否维护</td></tr>
+              <tr><td>生产版本</td><td>C223</td><td>连接BOM和工艺路线，CK11N必须</td><td>生产版本有效性和状态</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>依赖关系：</strong>CK11N标准成本估算的输入 = BOM（材料成本）+ 工艺路线（作业成本）+ 采购信息记录（材料价格）+ KP26（作业计划价格）。任何一个主数据缺失或错误，都会导致成本估算失败或结果异常。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-PP</span>
+            <span>生产订单成本流转全链路</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>步骤</th><th>PP操作</th><th>事务码</th><th>成本影响</th><th>CO凭证类型</th></tr>
+              <tr><td>1.创建订单</td><td>CO01创建</td><td>CO01</td><td>系统计算计划成本</td><td>CO计划凭证</td></tr>
+              <tr><td>2.下达</td><td>CO02下达</td><td>CO02</td><td>状态CRTD→REL，可领料报工</td><td>—</td></tr>
+              <tr><td>3.领料</td><td>MIGO 261发料</td><td>MIGO</td><td>材料成本借记订单</td><td>FI+CO凭证</td></tr>
+              <tr><td>4.报工</td><td>CO11N确认</td><td>CO11N</td><td>人工+机器按计划价借记订单，成本中心贷记</td><td>FI+CO凭证</td></tr>
+              <tr><td>5.收货</td><td>MIGO 101入库</td><td>MIGO</td><td>库存借记，生产产出贷记订单</td><td>FI+CO凭证</td></tr>
+              <tr><td>6.月末重估</td><td>MFN1/CON2</td><td>MFN1</td><td>计划价→实际价调整，成本中心→0</td><td>CO凭证</td></tr>
+              <tr><td>7.WIP计算</td><td>KKAO</td><td>KKAO</td><td>未完工订单计算在制品</td><td>存储结果（不过账）</td></tr>
+              <tr><td>8.差异计算</td><td>KKS1/KKS2</td><td>KKS1</td><td>已完工订单计算差异</td><td>存储结果（不过账）</td></tr>
+              <tr><td>9.结算</td><td>CO88</td><td>CO88</td><td>WIP+差异过账到FI科目</td><td>FI+CO结算凭证</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>关键依赖：</strong>PP模块的BOM和工艺路线是CO成本估算的基础；PP的生产订单是CO成本归集的载体；PP的报工（CO11N）是CO从成本中心到订单结转的触发点。PP数据质量直接影响CO核算准确性。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-PP</span>
+            <span>超投料与差异核算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>场景</th><th>定义</th><th>系统处理</th><th>事务码</th></tr>
+              <tr><td>标准投料</td><td>按BOM定额领料</td><td>按标准价×BOM数量计入订单</td><td>MIGO 261</td></tr>
+              <tr><td>超投料</td><td>实际领料 > BOM定额</td><td>超耗部分仍计入订单，月末通过KKS2分离为差异</td><td>MIGO 261 + KKS2</td></tr>
+              <tr><td>欠投料</td><td>实际领料 < BOM定额</td><td>少领部分反映为负差异（节约）</td><td>MIGO 261 + KKS2</td></tr>
+              <tr><td>退料</td><td>多领的料退回库存</td><td>冲回订单材料成本</td><td>MIGO 262</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>差异类型：</strong>超投料产生的差异属于"输入数量差异"（Input Quantity Variance），在KKS2中自动分离。通过 <strong>COOIS</strong> 可查看订单成本明细，通过 <strong>CK13N</strong> 可对比标准成本与实际成本。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CO-SD -->
+    <h3>CO-SD 集成：销售与获利分析</h3>
+    <p>SD模块的销售业务通过FI传递到CO，最终在CO-PA中实现收入与成本的配比分析。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-SD</span>
+            <span>CO-PA获利能力分析核心概念</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>概念</th><th>含义</th><th>典型例子</th></tr>
+              <tr><td>经营范围</td><td>CO-PA的分析维度框架</td><td>公司代码+产品线+客户群</td></tr>
+              <tr><td>特征（Characteristic）</td><td>分析维度</td><td>产品、客户、销售组织、地区</td></tr>
+              <tr><td>值字段（Value Field）</td><td>金额/数量字段</td><td>收入、成本、毛利、销量</td></tr>
+              <tr><td>获利段（PA Segment）</td><td>特征组合</td><td>产品A+客户B = 一个获利段</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>两种类型：</strong>①基于成本核算的CO-PA（Costing-based）：从SD开票和CO-PC成本滚算获取数据，存放在CE1xxxx表；②基于会计的CO-PA（Accounting-based）：从FI记账获取数据，存放在COEP/COSS/COSP表。制造业常用基于成本核算的CO-PA。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-SD</span>
+            <span>收入与成本配比逻辑</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>SD业务</th><th>事务码</th><th>FI凭证</th><th>CO-PA影响</th></tr>
+              <tr><td>创建销售订单</td><td>VA01</td><td>—（无FI凭证）</td><td>—</td></tr>
+              <tr><td>创建交货单</td><td>VL01N</td><td>—（无FI凭证）</td><td>—</td></tr>
+              <tr><td>发货出库（601）</td><td>VL02N</td><td>借：主营成本 / 贷：库存</td><td>销售成本传入CO-PA</td></tr>
+              <tr><td>销售开票</td><td>VF01</td><td>借：应收 / 贷：主营收入</td><td>收入+成本同时传入CO-PA</td></tr>
+              <tr><td>查看获利报表</td><td>KE30</td><td>—</td><td>按产品/客户/地区分析毛利</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>配比原则：</strong>收入（开票时确认）与成本（发货时结转）在不同时间点过账，CO-PA通过获利段将两者配比。物料分类账（CKMLCP）运行后，标准成本的差异分摊到销售成本，CO-PA中的成本数据也会更新为实际成本。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">CO-SD</span>
+            <span>CO-PA关键事务码与配置</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>事务码</th><th>功能</th><th>使用频率</th></tr>
+              <tr><td>KE30</td><td>获利分析报表（核心报表）</td><td>日常/月结</td></tr>
+              <tr><td>KEA0</td><td>定义经营范围和特征</td><td>配置（一次性）</td></tr>
+              <tr><td>KEA6</td><td>定义值字段</td><td>配置（一次性）</td></tr>
+              <tr><td>KEI2</td><td>值字段分配（条件类型→值字段）</td><td>配置（一次性）</td></tr>
+              <tr><td>OKB9</td><td>自动科目分配（获利段派生）</td><td>配置（一次性）</td></tr>
+              <tr><td>KE24</td><td>行项目报表</td><td>日常分析</td></tr>
+              <tr><td>KE21N</td><td>手动录入CO-PA数据</td><td>偶尔</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 跨模块问题排查 -->
+    <h3>跨模块常见问题及排查方法</h3>
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">排查</span>
+            <span>5大跨模块常见问题</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <table>
+              <tr><th>问题</th><th>可能原因</th><th>排查路径</th></tr>
+              <tr><td>物料移动无法生成凭证</td><td>OBYC配置缺失/评估类错误/期间未开</td><td>OMJJ→OBYC→物料主数据→OMWD→MMPV→OB52</td></tr>
+              <tr><td>FI与CO余额不一致</td><td>未过账凭证/成本要素未创建/次级要素干扰</td><td>FS10N→KSB5→COEP→检查成本要素类型</td></tr>
+              <tr><td>生产订单成本异常</td><td>BOM不完整/工作中心未绑成本中心/未报工</td><td>COOIS→CK13N→CS01→CA01→CR02→CO11N</td></tr>
+              <tr><td>CO-PA数据缺失</td><td>经营范围未定义/值字段未分配/OKB9未配</td><td>KEA0→KEA6→KEI2→OKB9→VBRK/VBRP</td></tr>
+              <tr><td>期间不一致</td><td>FI/MM/CO期间不同步</td><td>OB52→MMPV/MMRV→OKP1→CKMLCP</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 关联事务码速查 -->
+    <h3>跨模块关联事务码速查</h3>
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">速查</span>
+            <span>FI / MM / PP / SD 关联事务码</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>FI 关联事务码</h5>
+            <table>
+              <tr><th>事务码</th><th>功能</th><th>CO关联</th></tr>
+              <tr><td>FS00</td><td>创建/修改总账科目</td><td>创建科目时自动生成初级成本要素</td></tr>
+              <tr><td>FS10N</td><td>总账余额显示</td><td>FI-CO对账的核心工具</td></tr>
+              <tr><td>FB03</td><td>查看FI凭证</td><td>查看CO相关FI凭证</td></tr>
+              <tr><td>OB52</td><td>FI期间开关</td><td>与CO期间OKP1协调</td></tr>
+              <tr><td>FAGLB03</td><td>总账行项目</td><td>钻取到CO行项目</td></tr>
+            </table>
+
+            <h5>MM 关联事务码</h5>
+            <table>
+              <tr><th>事务码</th><th>功能</th><th>CO关联</th></tr>
+              <tr><td>MIGO</td><td>货物移动</td><td>领料/收货/出库的成本归集</td></tr>
+              <tr><td>MB51</td><td>物料凭证清单</td><td>查询物料移动对成本的影响</td></tr>
+              <tr><td>OMJJ</td><td>移动类型维护</td><td>决定移动类型→成本科目映射</td></tr>
+              <tr><td>OBYC</td><td>自动过账配置</td><td>移动类型→FI/CO凭证的核心配置</td></tr>
+              <tr><td>MM03</td><td>查看物料主数据</td><td>查看计价方式和标准价</td></tr>
+              <tr><td>MMPV</td><td>MM期间开关</td><td>与FI/CO期间协调</td></tr>
+            </table>
+
+            <h5>PP 关联事务码</h5>
+            <table>
+              <tr><th>事务码</th><th>功能</th><th>CO关联</th></tr>
+              <tr><td>CS01/CS02</td><td>创建/修改BOM</td><td>决定材料成本构成</td></tr>
+              <tr><td>CA01/CA02</td><td>创建/修改工艺路线</td><td>决定作业成本构成</td></tr>
+              <tr><td>CR01/CR02</td><td>创建/修改工作中心</td><td>绑定成本中心，决定费用归集</td></tr>
+              <tr><td>CO01/CO02</td><td>创建/修改生产订单</td><td>CO成本归集的载体</td></tr>
+              <tr><td>CO11N</td><td>报工确认</td><td>触发成本中心→订单结转</td></tr>
+              <tr><td>COOIS</td><td>生产订单信息系统</td><td>查看订单成本明细</td></tr>
+            </table>
+
+            <h5>SD/CO-PA 关联事务码</h5>
+            <table>
+              <tr><th>事务码</th><th>功能</th><th>CO关联</th></tr>
+              <tr><td>VL01N</td><td>创建交货单</td><td>发货出库601结转销售成本</td></tr>
+              <tr><td>VF01</td><td>销售开票</td><td>收入+成本传入CO-PA</td></tr>
+              <tr><td>KE30</td><td>获利分析报表</td><td>按多维度分析毛利</td></tr>
+              <tr><td>KEA0</td><td>定义经营范围</td><td>CO-PA配置基础</td></tr>
+              <tr><td>OKB9</td><td>自动科目分配</td><td>获利段自动派生</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>成本会计的跨模块思维</h4>
+      <p>作为成本会计，你需要建立以下跨模块思维：</p>
+      <ul>
+        <li><strong>FI视角</strong>：成本要素是FI与CO的桥梁，FS10N是对账核心工具</li>
+        <li><strong>MM视角</strong>：移动类型决定成本走向，OBYC是核心配置</li>
+        <li><strong>PP视角</strong>：BOM+工艺路线=成本估算的基础，报工=成本归集的触发</li>
+        <li><strong>SD视角</strong>：开票=收入确认，发货=成本结转，CO-PA=毛利分析</li>
+      </ul>
+      <p>排查问题时，始终遵循"从FI凭证到CO凭证到主数据"的链路，逐层定位根因。</p>
+    </div>
+  </section>
+
   <!-- 完整实战案例 -->
   <section id="case-study">
-    <h2>十、完整实战案例：从标准成本到月结出表</h2>
+    <h2>十一、完整实战案例：从标准成本到月结出表</h2>
     <p>本节以一家机械加工企业为背景，模拟从月初标准成本发布、月中生产业务、到月末完整结算的完整流程，帮助成本会计建立系统性的操作认知。所有数字均可对照练习。</p>
 
     <!-- 案例企业背景 -->
@@ -4146,7 +4627,7 @@ graph LR
 
   <!-- 学习资源 -->
   <section id="resources">
-    <h2>十一、学习资源推荐</h2>
+    <h2>十二、学习资源推荐</h2>
     <div class="resource-item">
       <div class="res-type res-book">书</div>
       <div>
@@ -4227,7 +4708,7 @@ graph LR
 
   <!-- 时间规划 -->
   <section id="plan">
-    <h2>十二、6个月学习时间规划</h2>
+    <h2>十三、6个月学习时间规划</h2>
     <p>以下是一份建议的6个月学习计划，你可以根据自己的实际情况调整节奏：</p>
 
     <figure class="chart-figure">
