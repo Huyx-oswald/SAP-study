@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>实战案例、学习资源与时间规划 | SAP制造业成本会计学习</title>
+<meta name="description" content="从标准成本估算到月结出表的完整实战案例，SAP CO学习资源推荐（书籍、视频课程、官方文档）与6个月系统学习时间规划。">
+<meta name="keywords" content="SAP, CO模块, 成本会计, 制造业, 标准成本, 物料分类账, 月末结账, CKMLCP, CO88, KSII, 学习规划">
+<meta name="author" content="SAP学习笔记">
+<meta property="og:title" content="实战案例、学习资源与时间规划 | SAP制造业成本会计学习">
+<meta property="og:description" content="从标准成本估算到月结出表的完整实战案例，SAP CO学习资源推荐（书籍、视频课程、官方文档）与6个月系统学习时间规划。">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="hero hero--compact">
+  <div class="container">
+    <h1>实战案例与学习规划</h1>
+    <p class="subtitle">完整实战案例 · 资源推荐 · 6个月学习计划</p>
+  </div>
+</header>
+
+<!-- 快速导航条 -->
+<nav class="quick-nav">
+  <div class="container">
+    <a href="index.html#version">版本说明</a>
+    <a href="index.html#overview">学习总览</a>
+    <a href="index.html#phase">学习路线</a>
+    <a href="co-basics.html#co-module">CO核心</a>
+    <a href="monthly-ops.html#daily">日常核算</a>
+    <a href="monthly-ops.html#month-end">月末结账</a>
+    <a href="special-yearend.html#special-scenarios">特殊业务</a>
+    <a href="special-yearend.html#year-end">年末结账</a>
+    <a href="integration.html#cost-check">核对报错</a>
+    <a href="integration.html#cross-module">跨模块</a>
+    <a href="cases-resources.html#case-study">实战案例</a>
+    <a href="cases-resources.html#resources">学习资源</a>
+    <a href="cases-resources.html#plan">时间规划</a>
+  </div>
+</nav>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="打开导航菜单">☰</button>
+<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
+
+<div class="layout-wrapper">
+
+<aside class="sidebar">
+  <div class="sidebar-search">
+    <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <div class="nav-group-title">基础入门</div>
+  <a href="index.html#version" class="nav-link"><span class="nav-num">01</span>版本说明</a>
+  <a href="index.html#overview" class="nav-link"><span class="nav-num">02</span>学习总览</a>
+  <a href="index.html#phase" class="nav-link"><span class="nav-num">03</span>分阶段路线</a>
+  <div class="nav-group-title">CO核心知识</div>
+  <a href="co-basics.html#co-module" class="nav-link"><span class="nav-num">04</span>CO模块体系</a>
+  <a href="monthly-ops.html#daily" class="nav-link"><span class="nav-num">05</span>日常核算</a>
+  <a href="monthly-ops.html#month-end" class="nav-link"><span class="nav-num">06</span>月末结账</a>
+  <div class="nav-group-title">进阶应用</div>
+  <a href="special-yearend.html#special-scenarios" class="nav-link"><span class="nav-num">07</span>特殊业务</a>
+  <a href="special-yearend.html#year-end" class="nav-link"><span class="nav-num">08</span>年末结账</a>
+  <a href="integration.html#cost-check" class="nav-link"><span class="nav-num">09</span>核对与报错</a>
+  <div class="nav-group-title">跨模块与实战</div>
+  <a href="integration.html#cross-module" class="nav-link"><span class="nav-num">10</span>跨模块集成</a>
+  <a href="integration.html#sap-ecosystem" class="nav-link"><span class="nav-num">11</span>SAP套件集成</a>
+  <a href="cases-resources.html#case-study" class="nav-link"><span class="nav-num">12</span>实战案例</a>
+  <a href="cases-resources.html#resources" class="nav-link"><span class="nav-num">13</span>学习资源</a>
+  <a href="cases-resources.html#plan" class="nav-link"><span class="nav-num">14</span>时间规划</a>
+</aside>
+
+<div class="content-area">
+<main>
+
+  <section id="case-study">
+    <h2>十二、完整实战案例：从标准成本到月结出表</h2>
+    <p>本节以一家机械加工企业为背景，模拟从月初标准成本发布、月中生产业务、到月末完整结算的完整流程，帮助成本会计建立系统性的操作认知。所有数字均可对照练习。</p>
+
+    <!-- 案例企业背景 -->
+    <h3>案例企业背景</h3>
+    <div class="card-grid">
+      <div class="card blue">
+        <div class="card-icon">1000</div>
+        <h4>公司代码</h4>
+        <p>精益机械制造有限公司</p>
+      </div>
+      <div class="card teal">
+        <div class="card-icon">P100</div>
+        <h4>工厂</h4>
+        <p>上海加工厂（唯一生产工厂）</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">CO</div>
+        <h4>控制范围</h4>
+        <p>1000（与公司代码一致）</p>
+      </div>
+    </div>
+
+    <h4>组织架构：成本中心体系</h4>
+    <table>
+      <tr><th>成本中心</th><th>类型</th><th>功能说明</th><th>作业类型</th></tr>
+      <tr><td>机加工车间</td><td>F（生产）</td><td>齿轮组件加工</td><td>LABOR（人工）/ MACHINE（机器）</td></tr>
+      <tr><td>装配车间</td><td>F（生产）</td><td>齿轮箱总装</td><td>LABOR（人工）/ MACHINE（机器）</td></tr>
+      <tr><td>设备维护部</td><td>F（辅助）</td><td>设备保养维修</td><td>—</td></tr>
+      <tr><td>质量管理部</td><td>F（辅助）</td><td>质量检验</td><td>—</td></tr>
+      <tr><td>财务部</td><td>L（管理）</td><td>财务管理</td><td>—</td></tr>
+    </table>
+    <div class="callout-mini">
+      <strong>设计要点：</strong>辅助成本中心（设备维护部、质量管理部）的费用月结后通过分配/分摊结转到基本生产成本中心，月结后余额应为0。
+    </div>
+
+    <h4>作业类型与计划价格（KP26）</h4>
+    <table>
+      <tr><th>作业类型</th><th>单位</th><th>计划价格</th><th>所属成本中心</th></tr>
+      <tr><td>LABOR（人工）</td><td>小时</td><td>30元</td><td>机加工车间 / 装配车间</td></tr>
+      <tr><td>MACHINE（机器）</td><td>小时</td><td>15元</td><td>机加工车间 / 装配车间</td></tr>
+    </table>
+
+    <!-- BOM结构 -->
+    <h3>物料体系与BOM结构</h3>
+    <table>
+      <tr><th>物料编码</th><th>物料名称</th><th>物料类型</th><th>计价方式</th><th>标准价</th></tr>
+      <tr><td>RM001</td><td>钢材（45#钢）</td><td>原材料</td><td>V（移动平均价）</td><td>50元/kg</td></tr>
+      <tr><td>RM002</td><td>铜线</td><td>原材料</td><td>V（移动平均价）</td><td>80元/kg</td></tr>
+      <tr><td>SF001</td><td>齿轮组件</td><td>半成品</td><td>S（标准价）</td><td>200元/个</td></tr>
+      <tr><td>FG001</td><td>齿轮箱</td><td>产成品</td><td>S（标准价）</td><td>500元/台</td></tr>
+    </table>
+
+    <h4>BOM结构图</h4>
+    <pre class="mermaid">
+graph TD
+    FG001["齿轮箱 FG001<br/>标准价: 500元"]
+    SF001["齿轮组件 SF001<br/>标准价: 200元 × 2个 = 400元"]
+    RM002["铜线 RM002<br/>0.5kg × 80元 = 40元"]
+    LABOR_A["人工工时<br/>1.5h × 30元 = 45元"]
+    MACH_A["机器工时<br/>1h × 15元 = 15元"]
+    RM001["钢材 RM001<br/>3kg × 50元 = 150元"]
+    LABOR_S["人工工时<br/>1h × 30元 = 30元"]
+    MACH_S["机器工时<br/>1.33h × 15元 = 20元"]
+
+    FG001 --> SF001
+    FG001 --> RM002
+    FG001 --> LABOR_A
+    FG001 --> MACH_A
+    SF001 --> RM001
+    SF001 --> LABOR_S
+    SF001 --> MACH_S
+
+    style FG001 fill:#e0e7ff,stroke:#4f46e5,stroke-width:3px,color:#3730a3
+    style SF001 fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style RM001 fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style RM002 fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style LABOR_A fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style MACH_A fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style LABOR_S fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style MACH_S fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    </pre>
+
+    <h4>标准成本构成明细</h4>
+    <table>
+      <tr><th>成本组件</th><th>齿轮组件 SF001</th><th>齿轮箱 FG001</th></tr>
+      <tr><td>原材料成本</td><td>150元（钢材3kg×50）</td><td>440元（齿轮组件400+铜线40）</td></tr>
+      <tr><td>直接人工</td><td>30元（1h×30）</td><td>45元（1.5h×30）</td></tr>
+      <tr><td>制造费用（机器）</td><td>20元（1.33h×15）</td><td>15元（1h×15）</td></tr>
+      <tr><td><strong>标准成本合计</strong></td><td><strong>200元</strong></td><td><strong>500元</strong></td></tr>
+    </table>
+
+    <!-- 月初标准成本发布 -->
+    <h3>第一步：月初标准成本发布</h3>
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">月初</span>
+            <span>CK11N + CK24：标准成本估算与发布</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作步骤</h5>
+            <ol>
+              <li><strong>CK11N</strong>：输入物料编码 SF001、工厂 P100、成本核算变式 ZPC1、版本1</li>
+              <li>系统自动读取BOM展开，左侧显示BOM树形结构</li>
+              <li>点击"成本组件"按钮，查看成本构成（材料150 + 人工30 + 机器20 = 200元）</li>
+              <li>点击"项目明细"按钮，查看M（物料成本）和E（作业成本）的明细</li>
+              <li>保存估算结果</li>
+              <li>对 FG001 重复以上操作，得到标准成本500元</li>
+              <li><strong>CK24</strong>：标记标准价格 → 发布标准价格</li>
+            </ol>
+
+            <h5>✅ 发布后验证</h5>
+            <table>
+              <tr><th>物料</th><th>发布前价格</th><th>发布后价格</th><th>状态</th></tr>
+              <tr><td>SF001 齿轮组件</td><td>—</td><td>200元</td><td>已发布</td></tr>
+              <tr><td>FG001 齿轮箱</td><td>—</td><td>500元</td><td>已发布</td></tr>
+            </table>
+            <p>通过 <strong>MM03</strong> → 会计视图1 → 查看"当前标准价"字段确认价格已更新。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 月中业务 -->
+    <h3>第二步：月中生产业务</h3>
+    <p>本月计划生产齿轮箱10台。需要先生产齿轮组件20个（其中10个直接用于齿轮箱装配，10个入库备用），再装配齿轮箱。</p>
+
+    <div class="accordion">
+      <!-- 订单1：齿轮组件 -->
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">订单1</span>
+            <span>生产订单#1001：齿轮组件 20个</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📋 订单信息</h5>
+            <table>
+              <tr><th>字段</th><th>值</th></tr>
+              <tr><td>订单号</td><td>1000011（系统自动编号）</td></tr>
+              <tr><td>物料</td><td>SF001 齿轮组件</td></tr>
+              <tr><td>订单数量</td><td>20个</td></tr>
+              <tr><td>工作中心</td><td>机加工车间</td></tr>
+              <tr><td>计划成本</td><td>20 × 200 = 4,000元</td></tr>
+            </table>
+
+            <h5>📝 业务操作</h5>
+            <table>
+              <tr><th>步骤</th><th>事务码</th><th>操作内容</th><th>金额</th><th>会计凭证（简化）</th></tr>
+              <tr><td>1.创建订单</td><td>CO01</td><td>创建生产订单，系统自动计算计划成本</td><td>4,000元</td><td>—（CO凭证）</td></tr>
+              <tr><td>2.下达订单</td><td>CO02</td><td>订单状态：CRTD → REL</td><td>—</td><td>—</td></tr>
+              <tr><td>3.领料</td><td>MIGO</td><td>移动类型261，领用钢材60kg</td><td>3,000元</td><td>借：生产成本-原材料 3,000 / 贷：原材料 3,000</td></tr>
+              <tr><td>4.报工</td><td>CO11N</td><td>确认20个完工，人工20h，机器26.6h</td><td>人工600 + 机器399 = 999元</td><td>借：生产成本-人工 600 / 贷：成本中心 600<br/>借：生产成本-机器 399 / 贷：成本中心 399</td></tr>
+              <tr><td>5.收货</td><td>MIGO</td><td>移动类型101，收20个入库存</td><td>20 × 200 = 4,000元</td><td>借：库存商品 4,000 / 贷：生产成本-产出 4,000</td></tr>
+            </table>
+
+            <h5>📊 订单成本汇总</h5>
+            <table>
+              <tr><th>成本项目</th><th>计划成本</th><th>实际成本</th><th>差异</th></tr>
+              <tr><td>原材料（钢材）</td><td>3,000</td><td>3,000</td><td>0</td></tr>
+              <tr><td>直接人工</td><td>600（20h×30）</td><td>600（20h×30计划价）</td><td>0（月末重估后变化）</td></tr>
+              <tr><td>制造费用（机器）</td><td>400（20个×20元/个）</td><td>399（26.6h×15计划价）</td><td>-1（工时尾数差异）</td></tr>
+              <tr><td>产出（贷方）</td><td>-4,000</td><td>-4,000</td><td>0</td></tr>
+              <tr><td><strong>订单余额</strong></td><td><strong>0</strong></td><td><strong>-1</strong></td><td><strong>-1</strong></td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>说明：</strong>报工时人工和机器成本按<strong>计划作业价格</strong>计入订单，月末通过KSII计算实际价格后，再用MFN1重估调整差异。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单2：齿轮箱 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">订单2</span>
+            <span>生产订单#1002：齿轮箱 10台（部分完工）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📋 订单信息</h5>
+            <table>
+              <tr><th>字段</th><th>值</th></tr>
+              <tr><td>订单号</td><td>1000012</td></tr>
+              <tr><td>物料</td><td>FG001 齿轮箱</td></tr>
+              <tr><td>订单数量</td><td>10台</td></tr>
+              <tr><td>工作中心</td><td>装配车间</td></tr>
+              <tr><td>计划成本</td><td>10 × 500 = 5,000元</td></tr>
+            </table>
+
+            <h5>📝 业务操作</h5>
+            <table>
+              <tr><th>步骤</th><th>事务码</th><th>操作内容</th><th>金额</th></tr>
+              <tr><td>1.创建订单</td><td>CO01</td><td>创建生产订单</td><td>计划5,000元</td></tr>
+              <tr><td>2.下达</td><td>CO02</td><td>CRTD → REL</td><td>—</td></tr>
+              <tr><td>3.领料</td><td>MIGO</td><td>领齿轮组件20个 + 铜线5kg</td><td>4,000 + 400 = 4,400元</td></tr>
+              <tr><td>4.报工</td><td>CO11N</td><td>确认8台完工，人工15h，机器10h</td><td>450 + 150 = 600元</td></tr>
+              <tr><td>5.收货</td><td>MIGO</td><td>收8台入库存（标准价500元/台）</td><td>8 × 500 = 4,000元</td></tr>
+            </table>
+
+            <h5>📊 订单成本汇总（月末前）</h5>
+            <table>
+              <tr><th>成本项目</th><th>计划成本（10台）</th><th>实际成本（已发生）</th></tr>
+              <tr><td>原材料（齿轮组件+铜线）</td><td>4,400</td><td>4,400</td></tr>
+              <tr><td>直接人工（计划价）</td><td>450（15h×30）</td><td>450</td></tr>
+              <tr><td>制造费用（计划价）</td><td>150（10h×15）</td><td>150</td></tr>
+              <tr><td>产出（贷方，8台收货）</td><td>-5,000</td><td>-4,000</td></tr>
+              <tr><td><strong>订单余额</strong></td><td><strong>0</strong></td><td><strong>1,000</strong>（在制品）</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>关键点：</strong>订单只完工了8台，剩余2台未完工。订单余额1,000元代表在制品（WIP）。月末需要计算WIP，而非全部转入差异。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 月末结算 -->
+    <h3>第三步：月末结算（七步法）</h3>
+    <p>以下是完整的月末结算流程，每一步都附有具体数字。假设本月成本中心发生了以下实际费用：</p>
+
+    <h4>本月成本中心实际费用归集</h4>
+    <table>
+      <tr><th>成本中心</th><th>费用项目</th><th>金额（元）</th><th>备注</th></tr>
+      <tr><td>设备维护部（辅助）</td><td>维修材料费</td><td>300</td><td>需分摊到生产车间</td></tr>
+      <tr><td>质量管理部（辅助）</td><td>检验费用</td><td>200</td><td>需分摊到生产车间</td></tr>
+      <tr><td>机加工车间</td><td>人工费</td><td>600</td><td>含工资福利</td></tr>
+      <tr><td>机加工车间</td><td>机器折旧</td><td>400</td><td>固定资产折旧</td></tr>
+      <tr><td>机加工车间</td><td>其他费用</td><td>100</td><td>水电等</td></tr>
+      <tr><td>装配车间</td><td>人工费</td><td>450</td><td>含工资福利</td></tr>
+      <tr><td>装配车间</td><td>机器折旧</td><td>200</td><td>固定资产折旧</td></tr>
+      <tr><td>装配车间</td><td>其他费用</td><td>50</td><td>水电等</td></tr>
+    </table>
+
+    <div class="accordion">
+      <!-- 步骤1 -->
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">步骤1</span>
+            <span>辅助成本中心分配/分摊（KSV5 / KSU5）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作</h5>
+            <p>将设备维护部（300元）和质量管理部（200元）的费用，按分摊规则结转到机加工车间和装配车间。</p>
+            <p>分摊规则：设备维护费按机器工时分摊（机加工26.6h : 装配10h ≈ 73% : 27%），质量费用按人工工时分摊（机加工20h : 装配15h ≈ 57% : 43%）。</p>
+
+            <h5>📊 分摊结果</h5>
+            <table>
+              <tr><th>接收方</th><th>来自设备维护部</th><th>来自质量管理部</th><th>合计新增</th></tr>
+              <tr><td>机加工车间</td><td>219元（300×73%）</td><td>114元（200×57%）</td><td>333元</td></tr>
+              <tr><td>装配车间</td><td>81元（300×27%）</td><td>86元（200×43%）</td><td>167元</td></tr>
+            </table>
+
+            <h5>✅ 分摊后成本中心余额</h5>
+            <table>
+              <tr><th>成本中心</th><th>原始费用</th><th>分入</th><th>合计</th><th>状态</th></tr>
+              <tr><td>设备维护部</td><td>300</td><td>0</td><td>0</td><td>✅ 已结平</td></tr>
+              <tr><td>质量管理部</td><td>200</td><td>0</td><td>0</td><td>✅ 已结平</td></tr>
+              <tr><td>机加工车间</td><td>1,100</td><td>333</td><td>1,433</td><td>待分割</td></tr>
+              <tr><td>装配车间</td><td>700</td><td>167</td><td>867</td><td>待分割</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 步骤2 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">步骤2</span>
+            <span>实际成本分割（KSS2）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作</h5>
+            <p>将成本中心的总费用按性质分割为"人工成本"和"机器成本"两大类，为计算实际作业价格做准备。</p>
+
+            <h5>📊 分割结果</h5>
+            <table>
+              <tr><th>成本中心</th><th>总费用</th><th>人工类成本</th><th>机器类成本</th></tr>
+              <tr><td>机加工车间</td><td>1,433</td><td>600 + 114 = 714</td><td>400 + 219 + 100 = 719</td></tr>
+              <tr><td>装配车间</td><td>867</td><td>450 + 86 = 536</td><td>200 + 81 + 50 = 331</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>分割规则：</strong>人工费→LABOR作业类型，机器折旧+维护费→MACHINE作业类型，其他费用按预设比例分配。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 步骤3 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">步骤3</span>
+            <span>计算实际作业价格（KSII）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作</h5>
+            <p>实际作业价格 = 该作业类型的总成本 ÷ 实际报工数量</p>
+
+            <h5>📊 计算结果</h5>
+            <table>
+              <tr><th>成本中心</th><th>作业类型</th><th>总成本</th><th>实际报工</th><th>计划价</th><th>实际价</th></tr>
+              <tr><td>机加工车间</td><td>LABOR</td><td>714元</td><td>20小时</td><td>30.00</td><td><strong>35.70</strong></td></tr>
+              <tr><td>机加工车间</td><td>MACHINE</td><td>719元</td><td>26.6小时</td><td>15.00</td><td><strong>27.03</strong></td></tr>
+              <tr><td>装配车间</td><td>LABOR</td><td>536元</td><td>15小时</td><td>30.00</td><td><strong>35.73</strong></td></tr>
+              <tr><td>装配车间</td><td>MACHINE</td><td>331元</td><td>10小时</td><td>15.00</td><td><strong>33.10</strong></td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>分析：</strong>实际作业价格均高于计划价格，原因：①辅助费用分摊增加了成本中心总额；②实际报工量小于计划。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 步骤4 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">步骤4</span>
+            <span>生产订单重估（MFN1 / CON2）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作</h5>
+            <p>用实际作业价格替换报工时的计划价格，差额更新到生产订单，同时成本中心余额归零。</p>
+
+            <h5>📊 重估结果：订单#1001（齿轮组件）</h5>
+            <table>
+              <tr><th>成本项目</th><th>重估前（计划价）</th><th>重估后（实际价）</th><th>调整额</th></tr>
+              <tr><td>直接人工</td><td>600（20h×30）</td><td>714（20h×35.70）</td><td>+114</td></tr>
+              <tr><td>制造费用</td><td>399（26.6h×15）</td><td>719（26.6h×27.03）</td><td>+320</td></tr>
+              <tr><td>调整合计</td><td>—</td><td>—</td><td><strong>+434</strong></td></tr>
+            </table>
+
+            <h5>📊 重估结果：订单#1002（齿轮箱）</h5>
+            <table>
+              <tr><th>成本项目</th><th>重估前（计划价）</th><th>重估后（实际价）</th><th>调整额</th></tr>
+              <tr><td>直接人工</td><td>450（15h×30）</td><td>536（15h×35.73）</td><td>+86</td></tr>
+              <tr><td>制造费用</td><td>150（10h×15）</td><td>331（10h×33.10）</td><td>+181</td></tr>
+              <tr><td>调整合计</td><td>—</td><td>—</td><td><strong>+267</strong></td></tr>
+            </table>
+
+            <div class="callout-mini">
+              <strong>重估后成本中心余额：</strong>机加工车间 1,433 - 1,433 = <strong>0</strong>；装配车间 867 - 867 = <strong>0</strong>。两个生产成本中心均已结平。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 步骤5 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">步骤5</span>
+            <span>WIP计算（KKAO）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作</h5>
+            <p>对未完全交货的订单计算在制品。</p>
+
+            <h5>📊 计算结果</h5>
+            <table>
+              <tr><th>订单号</th><th>状态</th><th>是否计算WIP</th><th>WIP金额</th><th>说明</th></tr>
+              <tr><td>#1001 齿轮组件</td><td>DLV（全部交货）</td><td>否</td><td>0</td><td>已完工，计算差异</td></tr>
+              <tr><td>#1002 齿轮箱</td><td>部分交货（8/10）</td><td>是</td><td><strong>1,267元</strong></td><td>见下方明细</td></tr>
+            </table>
+
+            <h5>订单#1002 WIP计算明细</h5>
+            <div class="callout-mini">
+              <strong>WIP = 实际投入成本 - 已产出成本</strong><br>
+              = (原材料4,400 + 人工536 + 机器331) - (8台 × 500元/台)<br>
+              = 5,267 - 4,000 = <strong>1,267元</strong><br>
+              即：2台未完工的在制品成本为1,267元
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 步骤6 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">步骤6</span>
+            <span>差异计算（KKS1 / KKS2）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作</h5>
+            <p>对已完工或TECO的订单计算差异。差异 = 实际成本 - 目标成本。</p>
+
+            <h5>📊 订单#1001 差异分析</h5>
+            <table>
+              <tr><th>成本项目</th><th>实际成本</th><th>目标成本</th><th>差异</th></tr>
+              <tr><td>原材料</td><td>3,000</td><td>3,000</td><td>0</td></tr>
+              <tr><td>直接人工</td><td>714</td><td>600</td><td>+114</td></tr>
+              <tr><td>制造费用</td><td>719</td><td>400</td><td>+319</td></tr>
+              <tr><td>产出</td><td>-4,000</td><td>-4,000</td><td>0</td></tr>
+              <tr><td><strong>合计</strong></td><td><strong>433</strong></td><td><strong>0</strong></td><td><strong>+433</strong></td></tr>
+            </table>
+            <p><strong>差异类型分析：</strong></p>
+            <ul>
+              <li>人工差异+114元：作业价格差异（实际35.70 > 计划30.00），属于价格差异</li>
+              <li>机器差异+319元：作业价格差异（实际27.03 > 计划15.00），属于价格差异</li>
+            </ul>
+            <p>差异+433元将通过CO88结算结转到物料差异科目。</p>
+
+            <h5>📊 订单#1002 差异分析</h5>
+            <p>订单#1002部分交货，差异计算逻辑不同——已交货部分（8台）计算差异，未交货部分（2台）计入WIP。</p>
+            <table>
+              <tr><th>项目</th><th>金额</th><th>说明</th></tr>
+              <tr><td>WIP（2台未完工）</td><td>1,267元</td><td>结转到WIP科目</td></tr>
+              <tr><td>已交货部分差异</td><td>0元</td><td>按比例计算，差异较小</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 步骤7 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">步骤7</span>
+            <span>订单结算（CO88）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📝 操作</h5>
+            <p>将WIP和差异结转到对应科目，生成FI凭证。</p>
+
+            <h5>📊 结算凭证</h5>
+            <p><strong>订单#1001（齿轮组件，DLV状态）：</strong></p>
+            <table>
+              <tr><th>科目</th><th>借/贷</th><th>金额</th><th>说明</th></tr>
+              <tr><td>生产成本-订单差异</td><td>借</td><td>433</td><td>差异结转</td></tr>
+              <tr><td>库存商品-差异</td><td>贷</td><td>433</td><td>差异转入库存（后续由物料分类账处理）</td></tr>
+            </table>
+
+            <p><strong>订单#1002（齿轮箱，部分交货）：</strong></p>
+            <table>
+              <tr><th>科目</th><th>借/贷</th><th>金额</th><th>说明</th></tr>
+              <tr><td>在制品（WIP）</td><td>借</td><td>1,267</td><td>WIP结转到资产负债科目</td></tr>
+              <tr><td>生产成本-在制品转出</td><td>贷</td><td>1,267</td><td>从生产成本转入WIP</td></tr>
+            </table>
+
+            <h5>✅ 结算后订单余额</h5>
+            <table>
+              <tr><th>订单</th><th>结算前余额</th><th>WIP结转</th><th>差异结转</th><th>结算后余额</th></tr>
+              <tr><td>#1001</td><td>433</td><td>0</td><td>433</td><td><strong>0 ✅</strong></td></tr>
+              <tr><td>#1002</td><td>1,267</td><td>1,267</td><td>0</td><td><strong>0 ✅</strong></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 物料分类账 -->
+    <h3>第四步：物料分类账差异分摊（CKMLCP）</h3>
+    <p>订单结算后，差异（433元）结转到了库存商品-差异科目。但此时差异还停留在半成品层面，需要通过物料分类账的多层结算，将差异"上卷"到产成品，最终分摊到已销售产品的成本和期末库存中。</p>
+
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">物料账</span>
+            <span>CKMLCP完整流程（含具体数字）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📋 业务背景</h5>
+            <ul>
+              <li>SF001 齿轮组件：本月入库20个（标准价200元/个），差异+433元，消耗20个（全部用于生产齿轮箱），期末库存0个</li>
+              <li>FG001 齿轮箱：本月入库8台（标准价500元/台），消耗5台（已销售），期末库存3台</li>
+            </ul>
+
+            <h5>📝 步骤1-4：创建→允许结算→允许关闭分录→物料选择</h5>
+            <p>这些是系统预处理步骤，按顺序执行即可。</p>
+
+            <h5>📝 步骤5：确定成本序列</h5>
+            <p>系统按BOM层级排序：先处理底层（原材料），再处理上层（半成品→产成品）。</p>
+
+            <h5>📝 步骤6：单层结算（CKMH）</h5>
+            <p>处理物料自身的直接差异（如生产订单差异）。</p>
+            <table>
+              <tr><th>物料</th><th>直接差异</th><th>期末库存</th><th>本期消耗</th><th>分摊到库存</th><th>分摊到消耗</th></tr>
+              <tr><td>SF001</td><td>+433元</td><td>0个</td><td>20个</td><td>0元</td><td>433元</td></tr>
+              <tr><td>FG001</td><td>0元</td><td>3台</td><td>5台</td><td>0元</td><td>0元</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>注意：</strong>SF001期末库存为0，差异433元全部分摊到消耗（即被齿轮箱消耗）。这部分差异将通过多层结算"上卷"到齿轮箱。
+            </div>
+
+            <h5>📝 步骤7：多层结算（CKMM）</h5>
+            <p>将下层物料的差异上卷到上层物料。</p>
+            <table>
+              <tr><th>物料</th><th>直接差异</th><th>上卷差异</th><th>总差异</th><th>期末库存</th><th>消耗</th><th>分摊到库存</th><th>分摊到消耗</th></tr>
+              <tr><td>FG001</td><td>0元</td><td>433元（来自SF001）</td><td>433元</td><td>3台</td><td>5台</td><td>162.4元</td><td>270.6元</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>分摊计算：</strong>433 × (3/8) = 162.4元 → 期末库存；433 × (5/8) = 270.6元 → 已销售成本
+            </div>
+
+            <h5>📝 步骤8：过账关闭分录（CKMI）</h5>
+            <table>
+              <tr><th>会计凭证</th><th>借/贷</th><th>金额</th></tr>
+              <tr><td>库存商品-齿轮箱（期末库存差异）</td><td>借</td><td>162.4元</td></tr>
+              <tr><td>主营业务成本（差异分摊）</td><td>借</td><td>270.6元</td></tr>
+              <tr><td>库存商品-差异（结转）</td><td>贷</td><td>433元</td></tr>
+            </table>
+
+            <h5>✅ 物料分类账处理后</h5>
+            <table>
+              <tr><th>项目</th><th>标准价</th><th>差异分摊</th><th>实际成本</th></tr>
+              <tr><td>已销售的5台齿轮箱</td><td>2,500元（5×500）</td><td>270.6元</td><td>2,770.6元</td></tr>
+              <tr><td>期末库存3台齿轮箱</td><td>1,500元（3×500）</td><td>162.4元</td><td>1,662.4元</td></tr>
+              <tr><td>合计</td><td>4,000元</td><td>433元</td><td>4,433元</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>验证：</strong>4,000（标准成本）+ 433（差异）= 4,433元 = 已销成本2,770.6 + 期末库存1,662.4 = 4,433元 ✅ 数据平衡
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 成本报表 -->
+    <h3>第五步：成本报表与分析</h3>
+    <div class="accordion">
+      <div class="accordion-item open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">报表</span>
+            <span>月结后核心报表与数据验证</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📊 报表1：成本中心计划/实际对比（S_ALR_87013611）</h5>
+            <table>
+              <tr><th>成本中心</th><th>计划成本</th><th>实际成本</th><th>差异</th><th>月结后余额</th></tr>
+              <tr><td>设备维护部</td><td>—</td><td>300</td><td>—</td><td><strong>0 ✅</strong></td></tr>
+              <tr><td>质量管理部</td><td>—</td><td>200</td><td>—</td><td><strong>0 ✅</strong></td></tr>
+              <tr><td>机加工车间</td><td>—</td><td>1,433</td><td>—</td><td><strong>0 ✅</strong></td></tr>
+              <tr><td>装配车间</td><td>—</td><td>867</td><td>—</td><td><strong>0 ✅</strong></td></tr>
+            </table>
+
+            <h5>📊 报表2：生产订单成本分析（KKBC_ORD）</h5>
+            <table>
+              <tr><th>项目</th><th>订单#1001（齿轮组件）</th><th>订单#1002（齿轮箱）</th></tr>
+              <tr><td>计划成本</td><td>4,000</td><td>5,000</td></tr>
+              <tr><td>实际成本（投入）</td><td>4,433</td><td>5,267</td></tr>
+              <tr><td>产出（标准价）</td><td>4,000</td><td>4,000（8台）</td></tr>
+              <tr><td>差异/WIP</td><td>差异 433</td><td>WIP 1,267</td></tr>
+              <tr><td>结算后余额</td><td>0 ✅</td><td>0 ✅</td></tr>
+            </table>
+
+            <h5>📊 报表3：物料价格分析（CKM3）</h5>
+            <table>
+              <tr><th>项目</th><th>SF001 齿轮组件</th><th>FG001 齿轮箱</th></tr>
+              <tr><td>期初库存</td><td>0</td><td>0</td></tr>
+              <tr><td>本期收货</td><td>20个 × 200 = 4,000</td><td>8台 × 500 = 4,000</td></tr>
+              <tr><td>本期消耗</td><td>20个 × 200 = 4,000</td><td>5台 × 500 = 2,500</td></tr>
+              <tr><td>期末库存</td><td>0</td><td>3台 × 500 = 1,500</td></tr>
+              <tr><td>直接差异</td><td>+433</td><td>0</td></tr>
+              <tr><td>上卷差异</td><td>0</td><td>+433</td></tr>
+              <tr><td>实际单价（PUP）</td><td>—（无库存）</td><td>(1500+162.4)/3 ≈ 554.1元</td></tr>
+            </table>
+
+            <h5>📊 报表4：月度成本分析报告</h5>
+            <table>
+              <tr><th>指标</th><th>数值</th><th>说明</th></tr>
+              <tr><td>本月生产投入</td><td>9,700元</td><td>原材料7,400+人工1,250+机器1,050</td></tr>
+              <tr><td>本月完工入库（标准价）</td><td>8,000元</td><td>齿轮组件4,000+齿轮箱4,000</td></tr>
+              <tr><td>订单差异合计</td><td>433元</td><td>均为作业价格差异</td></tr>
+              <tr><td>在制品（WIP）</td><td>1,267元</td><td>齿轮箱2台未完工</td></tr>
+              <tr><td>已销售成本（标准价）</td><td>2,500元</td><td>5台 × 500元</td></tr>
+              <tr><td>差异分摊到销售成本</td><td>270.6元</td><td>通过物料分类账分摊</td></tr>
+              <tr><td>已销售实际成本</td><td>2,770.6元</td><td>2,500 + 270.6</td></tr>
+              <tr><td>毛利率（按标准价）</td><td>50.0%</td><td>假设售价1,000元/台 × 5台 = 5,000</td></tr>
+              <tr><td>毛利率（实际成本）</td><td>44.6%</td><td>(5,000-2,770.6)/5,000</td></tr>
+            </table>
+            <div class="callout-mini">
+              <strong>分析要点：</strong>实际毛利率比标准毛利率低5.4个百分点，主要原因是作业价格偏高（实际报工量小于计划，导致单位作业成本上升）。建议：①检查计划报工量是否合理；②分析辅助费用是否可控。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 全流程总结 -->
+    <h3>全流程数据流转图</h3>
+    <pre class="mermaid">
+graph LR
+    A["月初标准成本发布<br/>CK11N+CK24<br/>SF001: 200元/个<br/>FG001: 500元/台"] --> B["月中生产业务"]
+    B --> B1["订单#1001<br/>领料3000<br/>报工20h+26.6h<br/>收货20个×200=4000"]
+    B --> B2["订单#1002<br/>领料4400<br/>报工15h+10h<br/>收货8台×500=4000"]
+    B1 --> C["月末结算"]
+    B2 --> C
+    C --> C1["辅助分摊<br/>KSV5/KSU5<br/>500元→生产车间"]
+    C1 --> C2["成本分割<br/>KSS2<br/>人工vs机器"]
+    C2 --> C3["实际价格<br/>KSII<br/>LABOR:35.7<br/>MACHINE:27-33"]
+    C3 --> C4["订单重估<br/>MFN1<br/>成本中心→0"]
+    C4 --> C5["WIP计算<br/>KKAO<br/>订单#1002: 1267元"]
+    C5 --> C6["差异计算<br/>KKS2<br/>订单#1001: +433元"]
+    C6 --> C7["订单结算<br/>CO88<br/>WIP+差异→FI"]
+    C7 --> D["物料分类账<br/>CKMLCP"]
+    D --> D1["单层结算<br/>SF001差异433→消耗"]
+    D1 --> D2["多层结算<br/>433→库存162.4+销售270.6"]
+    D2 --> E["成本报表<br/>月度分析"]
+    E --> E1["成本中心余额=0 ✅"]
+    E --> E2["订单余额=0 ✅"]
+    E --> E3["物料差异=0 ✅"]
+    E --> E4["实际毛利率44.6%"]
+
+    style A fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style B fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style C fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style D fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style E fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    </pre>
+
+    <!-- 全流程数据勾稽表 -->
+    <h3>全流程数据勾稽验证</h3>
+    <p>以下对本案例的核心数据进行交叉验证，确保"投入 = 产出 + 差异 + WIP"的会计恒等式成立。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>勾稽项</th>
+            <th>金额（元）</th>
+            <th>计算说明</th>
+            <th>验证结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【一、成本流转恒等式】</td>
+          </tr>
+          <tr>
+            <td>总投入（A）</td>
+            <td>9,700</td>
+            <td>原材料 7,400 + 人工 1,250 + 机器 1,050</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>总产出（B）</td>
+            <td>8,000</td>
+            <td>SF001 入库 4,000 + FG001 入库 4,000</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>订单差异（C）</td>
+            <td>433</td>
+            <td>订单#1001 作业价格差异</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>在制品 WIP（D）</td>
+            <td>1,267</td>
+            <td>订单#1002 未完工 2 台</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>恒等式验证</strong></td>
+            <td><strong>A = B + C + D</strong></td>
+            <td>9,700 = 8,000 + 433 + 1,267</td>
+            <td><strong style="color:var(--success)">✅ 平衡</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【二、物料分类账差异分摊】</td>
+          </tr>
+          <tr>
+            <td>待分摊差异（E）</td>
+            <td>433</td>
+            <td>SF001 差异上卷至 FG001</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>分摊至期末库存（F）</td>
+            <td>162.40</td>
+            <td>433 × (3台 / 8台)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>分摊至销售成本（G）</td>
+            <td>270.60</td>
+            <td>433 × (5台 / 8台)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>差异分摊验证</strong></td>
+            <td><strong>E = F + G</strong></td>
+            <td>433 = 162.40 + 270.60</td>
+            <td><strong style="color:var(--success)">✅ 平衡</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【三、成本中心余额清零】</td>
+          </tr>
+          <tr>
+            <td>辅助成本中心余额</td>
+            <td>0</td>
+            <td>设备维护部 + 质量管理部 已全部分摊</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+          <tr>
+            <td>生产性成本中心余额</td>
+            <td>0</td>
+            <td>机加工 + 装配 已全部重估至订单</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【四、订单结算后余额】</td>
+          </tr>
+          <tr>
+            <td>订单#1001 结算后余额</td>
+            <td>0</td>
+            <td>差异 433 已结转</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+          <tr>
+            <td>订单#1002 结算后余额</td>
+            <td>0</td>
+            <td>WIP 1,267 已结转</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <h4>💡 实战总结</h4>
+      <p>本案例完整模拟了一个月的成本核算全流程，核心数据流转如下：</p>
+      <ul>
+        <li><strong>投入端</strong>：原材料7,400元 + 人工1,250元（实际价）+ 机器1,050元（实际价） = <strong>总投入9,700元</strong>（含辅助费用分摊）</li>
+        <li><strong>产出端</strong>：齿轮组件20个入库4,000元 + 齿轮箱8台入库4,000元 = <strong>总产出8,000元</strong>（按标准价）</li>
+        <li><strong>差异端</strong>：订单#1001差异433元（作业价格差异）+ 订单#1002 WIP 1,267元 = <strong>差异+WIP合计1,700元</strong></li>
+        <li><strong>物料分类账</strong>：差异433元分摊到销售成本270.6元 + 期末库存162.4元 = <strong>433元 ✅ 平衡</strong></li>
+      </ul>
+      <p>通过本案例可以清晰看到：SAP CO的成本核算是一个"标准价归集→实际价调整→差异分摊"的闭环过程。理解了这个闭环，就掌握了制造业成本会计的核心逻辑。</p>
+    </div>
+  </section>
+
+  <!-- 学习资源 -->
+
+  <section id="resources">
+    <h2>十三、学习资源推荐</h2>
+    <div class="resource-item">
+      <div class="res-type res-book">书</div>
+      <div>
+        <h4><a href="https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">《Controlling with SAP ERP: Business User Guide》↗</a></h4>
+        <p>SAP官方出版社SAP PRESS出品，CO模块业务用户指南，覆盖主数据、计划、实际过账、期间结账等内容，适合初学者建立系统认知。<sup><a href="#cite-6">[6]</a></sup></p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-book">书</div>
+      <div>
+        <h4><a href="https://www.sap-press.com/finance-controlling/controlling/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">《Product Cost Controlling with SAP S/4HANA》↗</a></h4>
+        <p>产品成本控制权威指南，从主数据设置到成本估算配置，逐步讲解。如果使用S/4HANA版本，这本书必不可少。<sup><a href="#cite-7">[7]</a></sup></p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-book">书</div>
+      <div>
+        <h4><a href="https://blog.csdn.net/erplabs/article/details/149870334" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">《SAP S4 FICO财务成本教程》↗</a></h4>
+        <p>中文实战教程，以MTS按库存生产模式为案例，覆盖FI、CO及MM/PP/SD集成，案例实用全面，适合国内用户。<sup><a href="#cite-8">[8]</a></sup></p>
+      </div>
+    </div>
+
+    <h3>在线课程</h3>
+    <div class="resource-item">
+      <div class="res-type res-video">课</div>
+      <div>
+        <h4><a href="https://edu.csdn.net/course/detail/38496" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP S4 HANA CO成本模块实战课程（CSDN）↗</a></h4>
+        <p>82节视频课程，涵盖成本中心、内部订单、产品成本、物料账等模块，讲师为资深财务顾问，适合系统学习。<sup><a href="#cite-9">[9]</a></sup></p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-video">课</div>
+      <div>
+        <h4><a href="https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">Udemy - SAP CO : Product Costing & COPA & Material Ledger ↗</a></h4>
+        <p>英文课程，由资深CO讲师Karanam Sreedhar授课，覆盖产品成本、物料账和获利能力分析，内容较新（2026年更新）。<sup><a href="#cite-10">[10]</a></sup></p>
+      </div>
+    </div>
+
+    <h3>社区与网站</h3>
+    <div class="resource-item">
+      <div class="res-type res-community">社</div>
+      <div>
+        <h4><a href="https://community.sap.com/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP Community（community.sap.com）↗</a></h4>
+        <p>SAP官方社区，有大量CO模块的技术博客和问答，可以搜索到各种问题的解决方案。</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-community">社</div>
+      <div>
+        <h4><a href="https://blog.csdn.net/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">CSDN SAP专栏 ↗</a> / <a href="https://www.zhihu.com/search?type=content&q=SAP%20CO" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">知乎SAP话题 ↗</a></h4>
+        <p>国内从业者分享的实战经验和教程，很多是项目中的真实案例，接地气，适合遇到问题时搜索参考。</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-community">社</div>
+      <div>
+        <h4><a href="https://help.sap.com/docs/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP Help Portal（help.sap.com）↗</a></h4>
+        <p>SAP官方帮助文档，最权威的功能说明和配置指南。可搜索S/4HANA CO模块的官方文档。</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-type res-community">社</div>
+      <div>
+        <h4><a href="https://blogs.sap.com/" target="_blank" rel="noopener" style="color:var(--ink);text-decoration:none">SAP Blogs（blogs.sap.com）↗</a></h4>
+        <p>SAP官方博客平台，全球SAP顾问分享的技术文章和最佳实践，英文资源丰富。</p>
+      </div>
+    </div>
+
+    <h3>实战练习建议</h3>
+    <div class="resource-item">
+      <div class="res-type res-practice">练</div>
+      <div>
+        <h4>建立测试环境 / IDES系统</h4>
+        <p>最好的学习方式是动手操作。向公司IT部门申请测试账号，或者使用SAP IDES系统进行练习。先在测试环境中跑通一遍完整的月结流程，再在生产系统操作。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 时间规划 -->
+
+  <section id="plan">
+    <h2>十四、6个月学习时间规划</h2>
+    <p>以下是一份建议的6个月学习计划，你可以根据自己的实际情况调整节奏：</p>
+
+    <figure class="chart-figure">
+      <figcaption>各阶段学习时间分配建议</figcaption>
+      <div id="chart-time-allocation" style="width:100%;min-height:380px"></div>
+    </figure>
+
+    <h3>每周学习建议</h3>
+    <ul>
+      <li><strong>工作日</strong>：每天1.5-2小时，以理论学习+事务码练习为主</li>
+      <li><strong>周末</strong>：每天3-4小时，进行系统性学习和流程演练</li>
+      <li><strong>月末</strong>：紧跟公司月结节奏，观察学习实际操作</li>
+    </ul>
+
+    <div class="callout">
+      <strong>🎯 学习方法建议</strong>
+      <ol>
+        <li><strong>边学边练</strong>：每学一个事务码，就在测试系统中亲手操作一遍</li>
+        <li><strong>建立笔记</strong>：用自己的话整理每个知识点，特别是业务逻辑和配置点</li>
+        <li><strong>跟岗学习</strong>：月结时主动帮忙打下手，观察前辈的操作流程，记录关键步骤</li>
+        <li><strong>理解业务</strong>：不要只记事务码，要理解"为什么要做这一步"，理解业务逻辑才能应对各种异常情况</li>
+        <li><strong>由点及面</strong>：先精通自己日常工作涉及的部分，再逐步扩展到相关模块</li>
+      </ol>
+    </div>
+
+    <h3>学习效果自测</h3>
+    <p>每学完一个阶段，可以用以下问题检验自己的掌握程度：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>阶段</th>
+            <th>自测问题</th>
+            <th>达标标准</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>基础入门</td>
+            <td>能独立查找物料主数据、查看成本中心报表、看懂FI凭证吗？</td>
+            <td>能熟练使用10个以上常用事务码</td>
+          </tr>
+          <tr>
+            <td>CO核心</td>
+            <td>能解释分配(KSV5)和分摊(KSU5)的区别吗？能独立配置一个简单的分摊循环吗？</td>
+            <td>理解成本流转逻辑，能配置简单循环</td>
+          </tr>
+          <tr>
+            <td>产品成本</td>
+            <td>能解释标准成本估算的构成吗？能说出生产订单从创建到结算的完整生命周期吗？</td>
+            <td>能独立跑通产品成本估算到订单结算的全流程</td>
+          </tr>
+          <tr>
+            <td>物料账</td>
+            <td>能解释单级处理和多级处理的区别吗？知道未分摊差异产生的常见原因吗？</td>
+            <td>能独立执行CKMLCP全流程并排查常见错误</td>
+          </tr>
+          <tr>
+            <td>月结年结</td>
+            <td>能说出完整的月结步骤顺序吗？知道每一步之后应该检查什么吗？</td>
+            <td>能独立完成月结操作并出具基本的成本分析报表</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+</div><!-- /content-area -->
+
+</div><!-- /layout-wrapper -->
+
+<div class="progress-bar" id="progressBar"></div>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<footer>
+  <div class="container">
+    <div class="sources">
+      <h2>参考来源</h2>
+      <ol>
+        <li id="cite-1">
+          <span class="src-title">ERP Focus, SAP ERP. ECC最终版本及支持终止时间说明。</span>
+          <a href="https://www.erpfocus.com/sap-erp-software-642" target="_blank" rel="noopener">https://www.erpfocus.com/sap-erp-software-642</a>
+        </li>
+        <li id="cite-2">
+          <span class="src-title">CSDN博客, SAP中BW与OFFICE 64位兼容性问题解决实例。提及SAP GUI 800客户端版本。</span>
+          <a href="https://blog.csdn.net/lj663/article/details/142361993" target="_blank" rel="noopener">https://blog.csdn.net/lj663/article/details/142361993</a>
+        </li>
+        <li id="cite-3">
+          <span class="src-title">点晴ERP, 财务管理中成本核算时的月结流程。物料分类账尾差处理及未分摊差异原因分析。</span>
+          <a href="https://www.clicksun.com.cn/mis/bbs/showapp.asp?id=22040" target="_blank" rel="noopener">https://www.clicksun.com.cn/mis/bbs/showapp.asp?id=22040</a>
+        </li>
+        <li id="cite-4">
+          <span class="src-title">CSDN文库, SAP CO月结为什么必须按四个固定步骤顺序执行。阐述CO月结层级递进与零余额控制原则。</span>
+          <a href="https://wenku.csdn.net/answer/3nephvwihh7m" target="_blank" rel="noopener">https://wenku.csdn.net/answer/3nephvwihh7m</a>
+        </li>
+        <li id="cite-5">
+          <span class="src-title">网易, 如何快速看懂SAP成本核算流程。工单结算CO88及WIP/差异会计分录说明。</span>
+          <a href="http://m.163.com/dy/article/K5Q28I2I0519BJGC.html" target="_blank" rel="noopener">http://m.163.com/dy/article/K5Q28I2I0519BJGC.html</a>
+        </li>
+        <li id="cite-6">
+          <span class="src-title">SAP PRESS, Controlling with SAP ERP: Business User Guide (3rd Edition)。CO模块业务用户权威指南。</span>
+          <a href="https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/" target="_blank" rel="noopener">https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/</a>
+        </li>
+        <li id="cite-7">
+          <span class="src-title">SAP PRESS, Product Cost Controlling with SAP S/4HANA。S/4HANA产品成本控制全面指南。</span>
+          <a href="https://www.sap-press.com/finance-controlling/controlling/" target="_blank" rel="noopener">https://www.sap-press.com/finance-controlling/controlling/</a>
+        </li>
+        <li id="cite-8">
+          <span class="src-title">CSDN博客, SAP S4 FICO财务成本教程内容介绍。MTS生产模式案例教程。</span>
+          <a href="https://blog.csdn.net/erplabs/article/details/149870334" target="_blank" rel="noopener">https://blog.csdn.net/erplabs/article/details/149870334</a>
+        </li>
+        <li id="cite-9">
+          <span class="src-title">CSDN程序员研修院, SAP S4 HANA CO成本模块实战课程。82节视频实战课程。</span>
+          <a href="https://edu.csdn.net/course/detail/38496" target="_blank" rel="noopener">https://edu.csdn.net/course/detail/38496</a>
+        </li>
+        <li id="cite-10">
+          <span class="src-title">Udemy, SAP CO : Product Costing & COPA & Material Ledger - Latest。产品成本与物料账英文课程。</span>
+          <a href="https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/" target="_blank" rel="noopener">https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</footer>
+
+<script src="./_shared/js/echarts.min.js"></script>
+<script src="./_shared/js/mermaid.min.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

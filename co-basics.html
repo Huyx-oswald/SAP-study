@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CO模块知识体系 | SAP制造业成本会计学习</title>
+<meta name="description" content="SAP CO成本控制模块完整知识体系：成本中心会计、内部订单、产品成本控制、获利能力分析CO-PA、成本对象与主数据详解。">
+<meta name="keywords" content="SAP, CO模块, 成本会计, 制造业, 标准成本, 物料分类账, 月末结账, CKMLCP, CO88, KSII, 学习规划">
+<meta name="author" content="SAP学习笔记">
+<meta property="og:title" content="CO模块知识体系 | SAP制造业成本会计学习">
+<meta property="og:description" content="SAP CO成本控制模块完整知识体系：成本中心会计、内部订单、产品成本控制、获利能力分析CO-PA、成本对象与主数据详解。">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="hero hero--compact">
+  <div class="container">
+    <h1>CO模块知识体系</h1>
+    <p class="subtitle">成本控制（CO）五大子模块与核心概念详解</p>
+  </div>
+</header>
+
+<!-- 快速导航条 -->
+<nav class="quick-nav">
+  <div class="container">
+    <a href="index.html#version">版本说明</a>
+    <a href="index.html#overview">学习总览</a>
+    <a href="index.html#phase">学习路线</a>
+    <a href="co-basics.html#co-module">CO核心</a>
+    <a href="monthly-ops.html#daily">日常核算</a>
+    <a href="monthly-ops.html#month-end">月末结账</a>
+    <a href="special-yearend.html#special-scenarios">特殊业务</a>
+    <a href="special-yearend.html#year-end">年末结账</a>
+    <a href="integration.html#cost-check">核对报错</a>
+    <a href="integration.html#cross-module">跨模块</a>
+    <a href="cases-resources.html#case-study">实战案例</a>
+    <a href="cases-resources.html#resources">学习资源</a>
+    <a href="cases-resources.html#plan">时间规划</a>
+  </div>
+</nav>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="打开导航菜单">☰</button>
+<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
+
+<div class="layout-wrapper">
+
+<aside class="sidebar">
+  <div class="sidebar-search">
+    <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <div class="nav-group-title">基础入门</div>
+  <a href="index.html#version" class="nav-link"><span class="nav-num">01</span>版本说明</a>
+  <a href="index.html#overview" class="nav-link"><span class="nav-num">02</span>学习总览</a>
+  <a href="index.html#phase" class="nav-link"><span class="nav-num">03</span>分阶段路线</a>
+  <div class="nav-group-title">CO核心知识</div>
+  <a href="co-basics.html#co-module" class="nav-link"><span class="nav-num">04</span>CO模块体系</a>
+  <a href="monthly-ops.html#daily" class="nav-link"><span class="nav-num">05</span>日常核算</a>
+  <a href="monthly-ops.html#month-end" class="nav-link"><span class="nav-num">06</span>月末结账</a>
+  <div class="nav-group-title">进阶应用</div>
+  <a href="special-yearend.html#special-scenarios" class="nav-link"><span class="nav-num">07</span>特殊业务</a>
+  <a href="special-yearend.html#year-end" class="nav-link"><span class="nav-num">08</span>年末结账</a>
+  <a href="integration.html#cost-check" class="nav-link"><span class="nav-num">09</span>核对与报错</a>
+  <div class="nav-group-title">跨模块与实战</div>
+  <a href="integration.html#cross-module" class="nav-link"><span class="nav-num">10</span>跨模块集成</a>
+  <a href="integration.html#sap-ecosystem" class="nav-link"><span class="nav-num">11</span>SAP套件集成</a>
+  <a href="cases-resources.html#case-study" class="nav-link"><span class="nav-num">12</span>实战案例</a>
+  <a href="cases-resources.html#resources" class="nav-link"><span class="nav-num">13</span>学习资源</a>
+  <a href="cases-resources.html#plan" class="nav-link"><span class="nav-num">14</span>时间规划</a>
+</aside>
+
+<div class="content-area">
+<main>
+
+  <section id="co-module">
+    <h2>四、CO模块知识体系详解</h2>
+    <p>CO（Controlling，管理会计）模块是成本会计的核心工作区域。以下是CO模块的子模块构成及与你日常工作的关系：</p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+graph TD
+    CO[CO 管理会计] --> OM[CO-OM 间接费用控制]
+    CO --> PC[CO-PC 产品成本控制]
+    CO --> PA[CO-PA 获利能力分析]
+
+    OM --> CEL[成本要素会计<br/>初级/次级成本要素]
+    OM --> CCA[成本中心会计<br/>费用归集与分摊]
+    OM --> OPA[内部订单<br/>项目/专项费用]
+    OM --> ABC[作业成本法<br/>Activity-Based Costing]
+
+    PC --> PCP[产品成本计划<br/>标准成本估算 CK11N]
+    PC --> OBJ[成本对象控制<br/>生产订单结算 CO88]
+    PC --> ML[物料分类账<br/>实际成本 CKMLCP]
+
+    PA --> KE30[获利能力报表]
+
+    style CO fill:#2563eb,stroke:#1d4ed8,stroke-width:2px,color:#fff
+    style PC fill:#059669,stroke:#047857,stroke-width:2px,color:#fff
+    style ML fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
+      </pre>
+      <figcaption>图2：CO模块子模块构成</figcaption>
+    </figure>
+
+    <h3>制造业成本会计核心事务码速查表</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>业务领域</th>
+            <th>事务码</th>
+            <th>功能说明</th>
+            <th>使用频率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="5">成本中心会计</td>
+            <td><span class="tcode">KS01/KS02/KS03</span></td>
+            <td>成本中心主数据创建/修改/显示</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">KP06</span></td>
+            <td>成本中心成本要素计划</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">KP26</span></td>
+            <td>作业类型价格计划</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">KSV5</span></td>
+            <td>分配（Distribution）</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">KSU5</span></td>
+            <td>分摊（Assessment）</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td rowspan="4">标准成本估算</td>
+            <td><span class="tcode">CK11N</span></td>
+            <td>创建标准成本估算</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">CK13N</span></td>
+            <td>显示成本估算</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">CK24</span></td>
+            <td>标记与发布标准价格</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">CKM3</span></td>
+            <td>物料价格分析（查看成本构成）</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td rowspan="4">生产订单结算</td>
+            <td><span class="tcode">MIGO</span></td>
+            <td>货物移动（发料/收货）</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">KKAO</span></td>
+            <td>在制品（WIP）计算</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">KKS1</span></td>
+            <td>订单差异计算</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">CO88</span></td>
+            <td>生产订单批量结算</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td rowspan="2">物料分类账</td>
+            <td><span class="tcode">CKMLCP</span></td>
+            <td>物料分类账期末处理（全流程）</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">CKMI</span></td>
+            <td>物料账期末结账索引</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+          <tr>
+            <td rowspan="3">期间管理</td>
+            <td><span class="tcode">MMPV</span></td>
+            <td>打开物料期间</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">OB52</span></td>
+            <td>打开/关闭会计期间</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">OKP1</span></td>
+            <td>CO期间锁定</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+          <tr>
+            <td rowspan="2">常用报表</td>
+            <td><span class="tcode">S_ALR_87013611</span></td>
+            <td>成本中心实际/计划对比</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">KE30</span></td>
+            <td>获利能力分析报表</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>核心事务码详细操作指南</h3>
+    <p>点击下方每个事务码可展开查看详细的业务逻辑、操作步骤、关键检查点和常见问题。</p>
+
+    <div class="accordion">
+
+      <!-- CK11N -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CK11N</span>
+            <span class="acc-cat">标准成本</span>
+            <span>创建标准成本估算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>根据物料主数据、BOM（物料清单）、工艺路线和成本核算变式，计算物料的标准成本。这是CO模块成本核算的起点。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>CK11N</strong></li>
+              <li>输入基本参数：物料编号、工厂代码、成本核算变式（如PC01）、成本核算日期、成本核算批量</li>
+              <li>系统自动读取BOM结构、工艺路线数据，计算材料成本和制造成本</li>
+              <li>查看成本组件分解，分析成本结构合理性</li>
+              <li>决定是否标记并发布为标准成本</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>成本核算变式选择是否正确</li>
+              <li>成本构成结构（OKTZ）是否已激活</li>
+              <li>检查是否有"成本构成结构没有被激活"等报错</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>注意：</strong>如果物料当前期间已有标准成本且已发布，需先用 CKR1 删除旧的标准成本评估，才能重新估算。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CK24 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CK24</span>
+            <span class="acc-cat">标准成本</span>
+            <span>标准价格标记与发布</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>将CK11N计算出的标准成本估算结果，标记并正式发布为物料的标准价格。分为<strong>标记（Marking）</strong>和<strong>发布（Release）</strong>两步。</p>
+            <h5>📝 操作步骤</h5>
+            <p><strong>第一步：标记价格</strong></p>
+            <ul>
+              <li>进入CK24，初始界面显示"价格更新：标记标准价格"</li>
+              <li>输入年/月、公司代码、工厂代码、成本核算变式、物料编码</li>
+              <li>点击"执行"或"标记"按钮</li>
+              <li>查看运行结果，检查是否有错误</li>
+            </ul>
+            <p><strong>第二步：发布价格</strong></p>
+            <ul>
+              <li>标记完成后，点击"发布"按钮，界面切换为发布界面</li>
+              <li>选择要发布的物料，点击"执行"或"发布"按钮</li>
+              <li>发布成功后，物料主数据中"当前"的标准价格更新</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>发布后检查MM03物料主数据，确认"当前"标准价格已更新</li>
+              <li>发布会生成价格变动凭证，若物料有库存，会生成FI凭证</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>标记 vs 发布的区别：</strong>标记是将估算结果暂存为"将来"价格，尚未生效；发布是将价格正式写入"当前"标准价格，并生成凭证。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KSV5 / KSU5 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KSV5 / KSU5</span>
+            <span class="acc-cat">成本中心</span>
+            <span>分配与分摊循环执行</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p><strong>KSV5（分配）</strong>：将发送方成本中心的<strong>初级成本要素</strong>按规则分配到接收方，接收方能看到原始成本要素。</p>
+            <p><strong>KSU5（分摊）</strong>：将发送方成本中心的成本（可含初级和次级成本要素）按<strong>统计指标</strong>分摊到接收方，接收方看不到原始成本要素。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>先创建循环：KSV1（分配）/ KSU1（分摊），配置发送方、接收方和分配规则</li>
+              <li>维护统计指标实际值（KB31N）—— 仅分摊循环需要</li>
+              <li>执行循环：KSV5 / KSU5（填写执行期间、会计年度、循环号）</li>
+              <li>先测试运行，确认无误后再正式执行</li>
+              <li>通过S_ALR_87013611检查成本中心余额是否正确</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>辅助成本中心期末余额是否结转为零</li>
+              <li>统计指标是否已正确维护（KB31N）</li>
+              <li>循环的迭代方式是否正确（迭代 vs 累计）</li>
+            </ul>
+            <h5>📊 分配 vs 分摊区别</h5>
+            <table>
+              <tr><th>特性</th><th>分配（KSV5）</th><th>分摊（KSU5）</th></tr>
+              <tr><td>成本要素类型</td><td>仅初级成本要素</td><td>初级+次级成本要素</td></tr>
+              <tr><td>接收方可见性</td><td>可看到原始成本要素</td><td>看不到原始成本要素</td></tr>
+              <tr><td>分配依据</td><td>固定比例/作业量等</td><td>统计指标（如面积、人数）</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- KSII -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KSII</span>
+            <span class="acc-cat">成本中心</span>
+            <span>实际作业价格计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>计算成本中心当月各作业类型的实际作业单价。核心公式：</p>
+            <div class="callout-mini">
+              <strong>实际作业单价 = 成本中心当月实际总费用 ÷ 实际总报工作业量</strong>
+            </div>
+            <p>计算结果写入COST表，但不会自动更新已保存的生产订单。</p>
+            <h5>📝 前置步骤</h5>
+            <ul>
+              <li>成本中心费用已归集（FI过账 + 分摊分配完成）</li>
+              <li>实际报工已完成（CO11N）</li>
+              <li>已执行KSS2（实际成本分割），将总费用拆分到各作业类型</li>
+            </ul>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>KSII</strong></li>
+              <li>输入成本中心范围、作业类型、期间、会计年度</li>
+              <li>先测试运行，检查结果后再正式执行</li>
+              <li>通过KSBT查看计划价（值类型1）和实际价（值类型4）对比</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>确保所有报工已完成（作业量不能为0，否则报错）</li>
+              <li>检查作业类型主数据中"实际价格指示符"配置</li>
+              <li>价格单位可能自动缩放为100或1000（避免单价过小）</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>与KP26的关系：</strong>KP26维护的是计划价（期初中使用），KSII计算的是实际价（月末使用）。两者的差额通过CON2/MFN1重估到生产订单。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CON2 / MFN1 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CON2 / MFN1</span>
+            <span class="acc-cat">生产订单</span>
+            <span>作业价格重估</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 为什么需要重估</h5>
+            <p>期中报工（CO11N）使用的是<strong>计划作业价格</strong>（KP26），订单成本是"计划"成本。月末KSII算出实际价后，需要通过CON2/MFN1将差额补记/冲销到生产订单，使订单成本真实化。</p>
+            <h5>📝 重估逻辑</h5>
+            <div class="callout-mini">
+              <strong>差额 = (实际作业单价 - 计划作业单价) × 作业数量</strong><br>
+              借：生产订单（借记次级成本要素）<br>
+              贷：发出作业的成本中心
+            </div>
+            <h5>📝 操作步骤</h5>
+            <p><strong>CON2（批量重估）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>CON2</strong></li>
+              <li>输入工厂、期间、会计年度</li>
+              <li>先测试运行确认无误后再正式执行</li>
+              <li>查看运行结果，处理错误记录</li>
+            </ul>
+            <p><strong>MFN1（单个订单重估）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>MFN1</strong></li>
+              <li>输入工厂、期间、订单号，执行</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>工单状态不能是CLSD（关闭），否则无法写入重估成本</li>
+              <li>检查运行日志中的错误记录</li>
+              <li>重估后成本中心余额应趋近于零</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- KKAO -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KKAO</span>
+            <span class="acc-cat">生产订单</span>
+            <span>在制品（WIP）计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>计算月末未完工生产订单的在制品（WIP）价值。WIP是订单已投入但尚未完成的部分，需要在资产负债表中确认为资产。</p>
+            <div class="callout-mini">
+              <strong>WIP = 投入 - 产出</strong><br>
+              投入 = 订单领料 + 报工作业成本<br>
+              产出 = 订单收货数量 × 产成品标准价
+            </div>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>KKAO</strong>（批量）/ <strong>KKAX</strong>（单个）</li>
+              <li>输入工厂、期间、会计年度</li>
+              <li>选择订单类型、结果分析版本（如0版本）</li>
+              <li>先测试运行，再正式执行</li>
+              <li>查看结果：在制品价值 = 投入 - 产出</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>订单必须有实际领料和报工记录</li>
+              <li>订单状态需为REL（已释放），不能是CLSD（关闭）</li>
+              <li>KKAO只计算WIP，<strong>不生成FI凭证</strong>，需后续通过CO88结算才生成凭证</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>注意：</strong>计算后看不到财务凭证是正常的，需运行CO88后才会过账到FI模块。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KKS1 / KKS2 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">KKS1 / KKS2</span>
+            <span class="acc-cat">生产订单</span>
+            <span>订单差异计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>计算生产订单的实际成本与目标成本（标准成本）之间的差异。差异计算是成本分析的核心，也是结算的前置步骤。</p>
+            <h5>📝 操作步骤</h5>
+            <p><strong>KKS1（单个订单）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>KKS1</strong></li>
+              <li>输入工厂代码、期间、订单号，执行</li>
+            </ul>
+            <p><strong>KKS2（批量计算）：</strong></p>
+            <ul>
+              <li>输入事务码 <strong>KKS2</strong></li>
+              <li>输入工厂代码、期间，选择订单类型等条件</li>
+              <li>执行，批量计算差异</li>
+            </ul>
+            <h5>📊 差异分类</h5>
+            <table>
+              <tr><th>差异类型</th><th>说明</th></tr>
+              <tr><td>投入差异</td><td>实际投入与标准投入的差额，包括价格差异和数量差异</td></tr>
+              <tr><td>产出差异</td><td>实际产出与标准产出的差额</td></tr>
+              <tr><td>资源利用差异</td><td>使用了不同的物料或作业类型</td></tr>
+            </table>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>确认订单状态正确（DLV/TECO等）</li>
+              <li>通过KOB1查看订单成本和差异分析明细</li>
+              <li>差异计算是分析步骤，不直接生成凭证，结算后才过账</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CO88 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CO88</span>
+            <span class="acc-cat">生产订单</span>
+            <span>生产订单结算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>将生产订单的最终成本（含WIP和差异）结转到相应的FI科目。根据订单状态不同，结算逻辑不同：</p>
+            <ul>
+              <li><strong>未完工订单（REL状态）</strong>：计算WIP，借记WIP资产科目，贷记生产成本科目</li>
+              <li><strong>已完工订单（TECO/DLV状态）</strong>：计算差异，结转到产成品库存和差异科目</li>
+            </ul>
+            <h5>📝 前置步骤</h5>
+            <ul>
+              <li>费用分摊分配已完成（KSU5/KSV5）</li>
+              <li>作业价格重估已完成（CON2/MFN1）</li>
+              <li>WIP计算已完成（KKAO）</li>
+              <li>差异计算已完成（KKS1/KKS2）</li>
+            </ul>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>CO88</strong></li>
+              <li>输入结算期间、公司代码、工厂、订单类型等</li>
+              <li>先测试运行（勾选"测试运行"），确认无误后再正式执行</li>
+              <li>查看运行结果和生成的凭证</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>检查生成的FI凭证是否正确</li>
+              <li>检查生产成本科目是否结平（FS10N）</li>
+              <li>订单已CLSD（关闭）无法结算，需先取消关闭</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- CKMLCP -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">CKMLCP</span>
+            <span class="acc-cat">物料分类账</span>
+            <span>物料分类账期末处理</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>物料分类账（Material Ledger）的期末结算事务码。用于月末将物料的实际成本差异按BOM结构逐级上滚，计算物料的实际成本。是标准成本法下的实际成本核算工具。</p>
+            <h5>📝 操作步骤（CKMLCP全流程）</h5>
+            <table>
+              <tr><th>步骤</th><th>操作</th><th>说明</th></tr>
+              <tr><td>1</td><td>选择期间</td><td>选择正确的工厂和期间</td></tr>
+              <tr><td>2</td><td>确定顺序</td><td>系统自动确定多级处理的物料顺序</td></tr>
+              <tr><td>3</td><td>单级处理确定</td><td>计算单级（单层）差异——物料自身的差异</td></tr>
+              <tr><td>4</td><td>多级处理确定</td><td>计算多层差异上卷——下层物料差异滚到上层</td></tr>
+              <tr><td>5</td><td>消耗重估</td><td>将差异分摊到消耗方（销售成本等）</td></tr>
+              <tr><td>6</td><td>记账清算</td><td>生成物料账过账凭证（需先MMPV开新期间）</td></tr>
+            </table>
+            <h5>📊 单级 vs 多级区别</h5>
+            <ul>
+              <li><strong>单级价格确定</strong>：只计算物料自身的差异，按消耗与库存比例分摊</li>
+              <li><strong>多级价格确定</strong>：将多层差异按BOM逐级上滚到产成品，最终确定完整实际成本</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>必须先打开新物料期间（MMPV），才能执行记账清算</li>
+              <li>检查未分配/未分摊差异，分析尾差原因</li>
+              <li>通过CKM3查看物料价格分析</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>注意：</strong>有相互物料移动的工厂必须同时结算，否则导致价格异常。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MMPV -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">MMPV</span>
+            <span class="acc-cat">期间管理</span>
+            <span>打开物料期间</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>用于打开或关闭物料账期。在月末物料分类账结算前，需确保目标期间已打开，否则物料移动无法过账。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>MMPV</strong></li>
+              <li>输入会计年度、期间、工厂范围</li>
+              <li>选择"开启"操作，执行</li>
+              <li>检查物料期间状态是否更新</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li><strong>必须逐月连续开启</strong>，不能跳跃（如从11月直接跳到1月，必须先开12月）</li>
+              <li>与财务账期（OB52）同步打开</li>
+              <li>多工厂环境下，确保所有相关工厂同时开启</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>常见报错：</strong>"只能在公司代码XXXX的期间XXXX/XX中记帐" —— 说明物料期间未打开，需用MMPV打开对应期间。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OB52 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="tcode">OB52</span>
+            <span class="acc-cat">期间管理</span>
+            <span>会计期间开关</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <h5>📌 业务逻辑</h5>
+            <p>控制财务过账期间的打开和关闭。根据期间变式确定会计期间，通过OB52控制哪些期间可以对哪些科目类型开放过账。</p>
+            <h5>📝 操作步骤</h5>
+            <ul>
+              <li>输入事务码 <strong>OB52</strong></li>
+              <li>选择期间变式（如0001）和会计年度</li>
+              <li>对目标期间行项目，设置"从期间"和"到期间"</li>
+              <li>按科目类型分别控制：A=资产、D=客户、K=供应商、M=物料、S=总账</li>
+              <li>保存</li>
+            </ul>
+            <h5>✅ 关键检查点</h5>
+            <ul>
+              <li>确认期间变式已正确分配给公司代码</li>
+              <li>确认科目类型正确（过账科目类型与OB52中维护的一致）</li>
+              <li>打开新期间前，确认上期间业务已完成</li>
+            </ul>
+            <div class="callout-mini">
+              <strong>常见报错：</strong>"Posting period is not open" —— 检查OB52中对应科目类型的期间是否已打开。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+</div><!-- /content-area -->
+
+</div><!-- /layout-wrapper -->
+
+<div class="progress-bar" id="progressBar"></div>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<footer>
+  <div class="container">
+    <div class="sources">
+      <h2>参考来源</h2>
+      <ol>
+        <li id="cite-1">
+          <span class="src-title">ERP Focus, SAP ERP. ECC最终版本及支持终止时间说明。</span>
+          <a href="https://www.erpfocus.com/sap-erp-software-642" target="_blank" rel="noopener">https://www.erpfocus.com/sap-erp-software-642</a>
+        </li>
+        <li id="cite-2">
+          <span class="src-title">CSDN博客, SAP中BW与OFFICE 64位兼容性问题解决实例。提及SAP GUI 800客户端版本。</span>
+          <a href="https://blog.csdn.net/lj663/article/details/142361993" target="_blank" rel="noopener">https://blog.csdn.net/lj663/article/details/142361993</a>
+        </li>
+        <li id="cite-3">
+          <span class="src-title">点晴ERP, 财务管理中成本核算时的月结流程。物料分类账尾差处理及未分摊差异原因分析。</span>
+          <a href="https://www.clicksun.com.cn/mis/bbs/showapp.asp?id=22040" target="_blank" rel="noopener">https://www.clicksun.com.cn/mis/bbs/showapp.asp?id=22040</a>
+        </li>
+        <li id="cite-4">
+          <span class="src-title">CSDN文库, SAP CO月结为什么必须按四个固定步骤顺序执行。阐述CO月结层级递进与零余额控制原则。</span>
+          <a href="https://wenku.csdn.net/answer/3nephvwihh7m" target="_blank" rel="noopener">https://wenku.csdn.net/answer/3nephvwihh7m</a>
+        </li>
+        <li id="cite-5">
+          <span class="src-title">网易, 如何快速看懂SAP成本核算流程。工单结算CO88及WIP/差异会计分录说明。</span>
+          <a href="http://m.163.com/dy/article/K5Q28I2I0519BJGC.html" target="_blank" rel="noopener">http://m.163.com/dy/article/K5Q28I2I0519BJGC.html</a>
+        </li>
+        <li id="cite-6">
+          <span class="src-title">SAP PRESS, Controlling with SAP ERP: Business User Guide (3rd Edition)。CO模块业务用户权威指南。</span>
+          <a href="https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/" target="_blank" rel="noopener">https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/</a>
+        </li>
+        <li id="cite-7">
+          <span class="src-title">SAP PRESS, Product Cost Controlling with SAP S/4HANA。S/4HANA产品成本控制全面指南。</span>
+          <a href="https://www.sap-press.com/finance-controlling/controlling/" target="_blank" rel="noopener">https://www.sap-press.com/finance-controlling/controlling/</a>
+        </li>
+        <li id="cite-8">
+          <span class="src-title">CSDN博客, SAP S4 FICO财务成本教程内容介绍。MTS生产模式案例教程。</span>
+          <a href="https://blog.csdn.net/erplabs/article/details/149870334" target="_blank" rel="noopener">https://blog.csdn.net/erplabs/article/details/149870334</a>
+        </li>
+        <li id="cite-9">
+          <span class="src-title">CSDN程序员研修院, SAP S4 HANA CO成本模块实战课程。82节视频实战课程。</span>
+          <a href="https://edu.csdn.net/course/detail/38496" target="_blank" rel="noopener">https://edu.csdn.net/course/detail/38496</a>
+        </li>
+        <li id="cite-10">
+          <span class="src-title">Udemy, SAP CO : Product Costing & COPA & Material Ledger - Latest。产品成本与物料账英文课程。</span>
+          <a href="https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/" target="_blank" rel="noopener">https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</footer>
+
+<script src="./_shared/js/echarts.min.js"></script>
+<script src="./_shared/js/mermaid.min.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

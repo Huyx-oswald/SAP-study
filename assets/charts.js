@@ -25,8 +25,10 @@
     });
   }
 
-  // --- Chart: 学习时间分配 ---
-  var chartTime = echarts.init(document.getElementById('chart-time-allocation'), null, { renderer: 'svg' });
+  // --- Chart: 学习时间分配（仅在含图表容器的页面初始化） ---
+  var chartEl = document.getElementById('chart-time-allocation');
+  if (chartEl && window.echarts) {
+  var chartTime = echarts.init(chartEl, null, { renderer: 'svg' });
   chartTime.setOption({
     animation: false,
     tooltip: {
@@ -84,4 +86,5 @@
   window.addEventListener('resize', function() {
     chartTime.resize();
   });
+  }
 })();

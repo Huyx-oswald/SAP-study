@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日常核算与月末结账 | SAP制造业成本会计学习</title>
+<meta name="description" content="SAP成本会计日常核算工作要点与月末结账完整流程：KP26作业价格、生产订单确认、CO88结算、物料分类账CKMLCP、差异分摊。">
+<meta name="keywords" content="SAP, CO模块, 成本会计, 制造业, 标准成本, 物料分类账, 月末结账, CKMLCP, CO88, KSII, 学习规划">
+<meta name="author" content="SAP学习笔记">
+<meta property="og:title" content="日常核算与月末结账 | SAP制造业成本会计学习">
+<meta property="og:description" content="SAP成本会计日常核算工作要点与月末结账完整流程：KP26作业价格、生产订单确认、CO88结算、物料分类账CKMLCP、差异分摊。">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="hero hero--compact">
+  <div class="container">
+    <h1>日常核算与月末结账</h1>
+    <p class="subtitle">成本会计日常事务与月结六步法实操</p>
+  </div>
+</header>
+
+<!-- 快速导航条 -->
+<nav class="quick-nav">
+  <div class="container">
+    <a href="index.html#version">版本说明</a>
+    <a href="index.html#overview">学习总览</a>
+    <a href="index.html#phase">学习路线</a>
+    <a href="co-basics.html#co-module">CO核心</a>
+    <a href="monthly-ops.html#daily">日常核算</a>
+    <a href="monthly-ops.html#month-end">月末结账</a>
+    <a href="special-yearend.html#special-scenarios">特殊业务</a>
+    <a href="special-yearend.html#year-end">年末结账</a>
+    <a href="integration.html#cost-check">核对报错</a>
+    <a href="integration.html#cross-module">跨模块</a>
+    <a href="cases-resources.html#case-study">实战案例</a>
+    <a href="cases-resources.html#resources">学习资源</a>
+    <a href="cases-resources.html#plan">时间规划</a>
+  </div>
+</nav>
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="打开导航菜单">☰</button>
+<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
+
+<div class="layout-wrapper">
+
+<aside class="sidebar">
+  <div class="sidebar-search">
+    <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  <div class="nav-group-title">基础入门</div>
+  <a href="index.html#version" class="nav-link"><span class="nav-num">01</span>版本说明</a>
+  <a href="index.html#overview" class="nav-link"><span class="nav-num">02</span>学习总览</a>
+  <a href="index.html#phase" class="nav-link"><span class="nav-num">03</span>分阶段路线</a>
+  <div class="nav-group-title">CO核心知识</div>
+  <a href="co-basics.html#co-module" class="nav-link"><span class="nav-num">04</span>CO模块体系</a>
+  <a href="monthly-ops.html#daily" class="nav-link"><span class="nav-num">05</span>日常核算</a>
+  <a href="monthly-ops.html#month-end" class="nav-link"><span class="nav-num">06</span>月末结账</a>
+  <div class="nav-group-title">进阶应用</div>
+  <a href="special-yearend.html#special-scenarios" class="nav-link"><span class="nav-num">07</span>特殊业务</a>
+  <a href="special-yearend.html#year-end" class="nav-link"><span class="nav-num">08</span>年末结账</a>
+  <a href="integration.html#cost-check" class="nav-link"><span class="nav-num">09</span>核对与报错</a>
+  <div class="nav-group-title">跨模块与实战</div>
+  <a href="integration.html#cross-module" class="nav-link"><span class="nav-num">10</span>跨模块集成</a>
+  <a href="integration.html#sap-ecosystem" class="nav-link"><span class="nav-num">11</span>SAP套件集成</a>
+  <a href="cases-resources.html#case-study" class="nav-link"><span class="nav-num">12</span>实战案例</a>
+  <a href="cases-resources.html#resources" class="nav-link"><span class="nav-num">13</span>学习资源</a>
+  <a href="cases-resources.html#plan" class="nav-link"><span class="nav-num">14</span>时间规划</a>
+</aside>
+
+<div class="content-area">
+<main>
+
+  <section id="daily">
+    <h2>五、日常成本核算工作要点</h2>
+    <p>作为制造业成本会计，你的日常工作主要围绕以下几个方面展开：</p>
+
+    <h3>1. 标准成本维护</h3>
+    <ul>
+      <li>新物料标准成本估算与发布（CK11N + CK24）</li>
+      <li>BOM/工艺路线变更后的成本重估</li>
+      <li>月度/季度标准成本滚动更新</li>
+      <li>成本构成分析：料、工、费的结构占比</li>
+    </ul>
+
+    <h3>2. 生产订单监控</h3>
+    <ul>
+      <li>检查生产订单的发料、报工是否正常</li>
+      <li>异常订单处理：差异过大、收货异常等</li>
+      <li>工单关闭前的成本完整性检查</li>
+    </ul>
+
+    <h3>3. 成本中心费用监控</h3>
+    <ul>
+      <li>各成本中心费用发生情况监控</li>
+      <li>费用异常波动分析与原因排查</li>
+      <li>部门间费用分摊的合理性检查</li>
+    </ul>
+
+    <h3>4. 差异分析</h3>
+    <ul>
+      <li>采购价格差异（PPV）分析</li>
+      <li>生产订单投入差异与产出差异分析</li>
+      <li>量差 vs 价差的分解分析</li>
+    </ul>
+
+    <div class="callout success">
+      <strong>✅ 日常工作建议</strong>
+      建立自己的"每日检查清单"：① 查看前一天的物料移动凭证是否正常；② 检查生产订单报工有无异常；③ 关注成本中心费用趋势；④ 跟踪在制工单的进度。养成每日登录系统查看的习惯，比月底一次性处理效率高得多。
+    </div>
+  </section>
+
+  <!-- 月末结账 -->
+
+  <section id="month-end">
+    <h2>六、月末结账完整流程</h2>
+    <p>月末结账是成本会计最重要的工作之一。CO月结遵循严格的<strong>层级递进、清零控制</strong>原则，步骤顺序不可颠倒。<sup><a href="#cite-4">[4]</a></sup></p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+graph TD
+    A1[月结前检查] --> A2[MM模块预关闭]
+    A2 --> A3[确认所有业务单据过账完成]
+    A3 --> B1[执行分配 KSV5]
+    B1 --> B2[执行分摊 KSU5]
+    B2 --> B3[辅助成本中心余额=0]
+    B3 --> C1[计算实际作业价格 KSII]
+    C1 --> C2[作业价格重估 CON2/MFN1]
+    C2 --> C3[成本结转至生产订单]
+    C3 --> D1[在制品计算 KKAO]
+    D1 --> D2[差异计算 KKS1/KKS2]
+    D2 --> E1[生产订单结算 CO88]
+    E1 --> E2[物料分类账 CKMLCP]
+    E2 --> E3[差异结转至销售成本/库存]
+    E3 --> F1[打开新期间 MMPV/OB52]
+    F1 --> F2[月结后检查]
+    F2 --> F3[出具成本报表]
+
+    style A1 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style A2 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style A3 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style B1 fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style B2 fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style B3 fill:#cffafe,stroke:#0891b2,stroke-width:2px,color:#164e63
+    style C1 fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style C2 fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style C3 fill:#bbf7d0,stroke:#16a34a,stroke-width:2px,color:#14532d
+    style D1 fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style D2 fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style E1 fill:#fde68a,stroke:#ca8a04,stroke-width:2px,color:#713f12
+    style E2 fill:#fcd34d,stroke:#b45309,stroke-width:2px,color:#78350f
+    style E3 fill:#fecaca,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
+    style F1 fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style F2 fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+    style F3 fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
+      </pre>
+      <figcaption>图3：制造业CO月末结账流程图</figcaption>
+    </figure>
+
+    <h3>月结详细步骤清单</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>步骤</th>
+            <th>操作内容</th>
+            <th>事务码</th>
+            <th>关键检查点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【一、月结前准备】</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>检查所有采购发票是否校验入账</td>
+            <td>MR11 / ME2N</td>
+            <td>确保GR/IR科目清理完毕</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>检查所有生产订单报工是否完成</td>
+            <td>COOIS</td>
+            <td>本期产出工单是否全部报工</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>检查物料移动是否全部过账</td>
+            <td>MB51 / MB52</td>
+            <td>确认无未过账物料凭证</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>CO期间锁定（防止期间内过账）</td>
+            <td>OKP1</td>
+            <td>锁定成本中心/订单过账</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【二、成本中心费用分配分摊】</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>执行成本中心分配</td>
+            <td>KSV5</td>
+            <td>辅助成本中心→生产性成本中心</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>执行成本中心分摊</td>
+            <td>KSU5</td>
+            <td>按统计指标分摊公共费用</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>检查辅助成本中心余额是否为0</td>
+            <td>S_ALR_87013611</td>
+            <td>辅助成本中心期末余额应为零</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【三、作业价格重估】</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>计算实际作业价格</td>
+            <td>KSII</td>
+            <td>基于实际成本/实际作业量计算</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>作业价格重估（按订单）</td>
+            <td>CON2 / MFN1</td>
+            <td>将作业价格差异结转至生产订单</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【四、在制品与差异计算】</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>在制品（WIP）计算</td>
+            <td>KKAO / KKAX</td>
+            <td>未完工工单计算在制品金额</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>订单差异计算</td>
+            <td>KKS1 / KKS2</td>
+            <td>完工工单计算总差异并分类</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【五、订单结算】</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>生产订单结算</td>
+            <td>CO88 / KO88</td>
+            <td>WIP和差异正式过账到FI模块<sup><a href="#cite-5">[5]</a></sup></td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>检查生产成本科目是否结平</td>
+            <td>FS10N / FAGLB03</td>
+            <td>生产成本科目期末余额应为零</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【六、物料分类账结算】</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>物料账：选择期间</td>
+            <td>CKMLCP</td>
+            <td>选择正确的工厂和期间</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>物料账：确定顺序</td>
+            <td>CKMLCP</td>
+            <td>确定多级处理的物料顺序</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td>物料账：单级处理确定</td>
+            <td>CKMLCP</td>
+            <td>计算单级（单层）差异</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td>物料账：多级处理确定</td>
+            <td>CKMLCP</td>
+            <td>计算多层差异上卷</td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td>物料账：消耗重估</td>
+            <td>CKMLCP</td>
+            <td>将差异分摊到消耗方</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td>打开新物料期间</td>
+            <td>MMPV</td>
+            <td>打开下一期间的物料账</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>物料账：记账清算</td>
+            <td>CKMLCP</td>
+            <td>生成物料账过账凭证</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【七、月结收尾】</td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td>检查未分摊差异</td>
+            <td>CKMLCP / CKM3</td>
+            <td>分析尾差原因，必要时手工调整<sup><a href="#cite-3">[3]</a></sup></td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td>打开/关闭会计期间</td>
+            <td>OB52</td>
+            <td>关闭旧期间，打开新期间</td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td>出具成本报表与分析</td>
+            <td>KE30 / S_ALR报表</td>
+            <td>成本分析、差异分析、毛利分析</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚠️ 重要提醒</strong>
+      月结步骤有严格的先后顺序，不可随意颠倒。例如：必须先完成成本中心分摊，才能计算实际作业价格；必须先计算WIP和差异，才能进行订单结算；必须先打开新物料期间（MMPV），才能执行物料账的记账清算。建议制作自己的月结Checklist，每次月结逐项打勾确认。
+    </div>
+  </section>
+
+  <!-- 特殊业务场景 -->
+
+</main>
+</div><!-- /content-area -->
+
+</div><!-- /layout-wrapper -->
+
+<div class="progress-bar" id="progressBar"></div>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<footer>
+  <div class="container">
+    <div class="sources">
+      <h2>参考来源</h2>
+      <ol>
+        <li id="cite-1">
+          <span class="src-title">ERP Focus, SAP ERP. ECC最终版本及支持终止时间说明。</span>
+          <a href="https://www.erpfocus.com/sap-erp-software-642" target="_blank" rel="noopener">https://www.erpfocus.com/sap-erp-software-642</a>
+        </li>
+        <li id="cite-2">
+          <span class="src-title">CSDN博客, SAP中BW与OFFICE 64位兼容性问题解决实例。提及SAP GUI 800客户端版本。</span>
+          <a href="https://blog.csdn.net/lj663/article/details/142361993" target="_blank" rel="noopener">https://blog.csdn.net/lj663/article/details/142361993</a>
+        </li>
+        <li id="cite-3">
+          <span class="src-title">点晴ERP, 财务管理中成本核算时的月结流程。物料分类账尾差处理及未分摊差异原因分析。</span>
+          <a href="https://www.clicksun.com.cn/mis/bbs/showapp.asp?id=22040" target="_blank" rel="noopener">https://www.clicksun.com.cn/mis/bbs/showapp.asp?id=22040</a>
+        </li>
+        <li id="cite-4">
+          <span class="src-title">CSDN文库, SAP CO月结为什么必须按四个固定步骤顺序执行。阐述CO月结层级递进与零余额控制原则。</span>
+          <a href="https://wenku.csdn.net/answer/3nephvwihh7m" target="_blank" rel="noopener">https://wenku.csdn.net/answer/3nephvwihh7m</a>
+        </li>
+        <li id="cite-5">
+          <span class="src-title">网易, 如何快速看懂SAP成本核算流程。工单结算CO88及WIP/差异会计分录说明。</span>
+          <a href="http://m.163.com/dy/article/K5Q28I2I0519BJGC.html" target="_blank" rel="noopener">http://m.163.com/dy/article/K5Q28I2I0519BJGC.html</a>
+        </li>
+        <li id="cite-6">
+          <span class="src-title">SAP PRESS, Controlling with SAP ERP: Business User Guide (3rd Edition)。CO模块业务用户权威指南。</span>
+          <a href="https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/" target="_blank" rel="noopener">https://www.sap-press.com/controlling-with-sap-erp-business-user-guide_4691/</a>
+        </li>
+        <li id="cite-7">
+          <span class="src-title">SAP PRESS, Product Cost Controlling with SAP S/4HANA。S/4HANA产品成本控制全面指南。</span>
+          <a href="https://www.sap-press.com/finance-controlling/controlling/" target="_blank" rel="noopener">https://www.sap-press.com/finance-controlling/controlling/</a>
+        </li>
+        <li id="cite-8">
+          <span class="src-title">CSDN博客, SAP S4 FICO财务成本教程内容介绍。MTS生产模式案例教程。</span>
+          <a href="https://blog.csdn.net/erplabs/article/details/149870334" target="_blank" rel="noopener">https://blog.csdn.net/erplabs/article/details/149870334</a>
+        </li>
+        <li id="cite-9">
+          <span class="src-title">CSDN程序员研修院, SAP S4 HANA CO成本模块实战课程。82节视频实战课程。</span>
+          <a href="https://edu.csdn.net/course/detail/38496" target="_blank" rel="noopener">https://edu.csdn.net/course/detail/38496</a>
+        </li>
+        <li id="cite-10">
+          <span class="src-title">Udemy, SAP CO : Product Costing & COPA & Material Ledger - Latest。产品成本与物料账英文课程。</span>
+          <a href="https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/" target="_blank" rel="noopener">https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</footer>
+
+<script src="./_shared/js/echarts.min.js"></script>
+<script src="./_shared/js/mermaid.min.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
