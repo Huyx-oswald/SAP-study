@@ -19,6 +19,8 @@
 </head>
 <body class="page-home">
 
+<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
+
 <nav class="topnav">
   <div class="topnav-inner">
     <button class="topnav-toggle" aria-label="打开导航菜单">☰</button>
@@ -51,10 +53,35 @@
   </div>
 </header>
 
-<div class="layout-wrapper">
+<div class="docs-shell no-toc">
 
-<div class="content-area">
-<main>
+<aside class="docs-sidebar" id="docsSidebar">
+  <div class="sb-group current">
+    <a class="sb-group-link" href="index.html"><span class="sb-num">01</span>入门总览</a>
+    <div class="sb-sub">
+      <a class="sb-item" href="#version">版本说明</a>
+      <a class="sb-item" href="#overview">学习路径总览</a>
+      <a class="sb-item" href="#phase">分阶段学习路线</a>
+    </div>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="co-basics.html"><span class="sb-num">02</span>CO模块知识体系</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="monthly-ops.html"><span class="sb-num">03</span>日常与月结</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="special-yearend.html"><span class="sb-num">04</span>特殊与年结</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="integration.html"><span class="sb-num">05</span>核对与集成</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="cases-resources.html"><span class="sb-num">06</span>案例与资源</a>
+  </div>
+</aside>
+
+<main class="docs-main">
 
   <div class="stats-strip">
     <div class="stat"><b>6</b><span>学习专栏</span></div>
@@ -1208,9 +1235,7 @@ graph TD
   <!-- CO模块体系 -->
 
 </main>
-</div><!-- /content-area -->
-
-</div><!-- /layout-wrapper -->
+</div><!-- /docs-shell -->
 
 <div class="progress-bar" id="progressBar"></div>
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
