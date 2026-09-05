@@ -5,6 +5,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAP制造业成本会计系统性学习规划</title>
+<meta name="description" content="面向制造业成本会计的SAP CO模块完整学习路线图，覆盖标准成本估算、生产订单结算、物料分类账、月末年末结账全流程，含事务码操作指南与实战案例。">
+<meta name="keywords" content="SAP, CO模块, 成本会计, 制造业, 标准成本, 物料分类账, 月末结账, CKMLCP, CO88, KSII, 学习规划">
+<meta name="author" content="SAP学习笔记">
+<meta property="og:title" content="SAP制造业成本会计系统性学习规划">
+<meta property="og:description" content="从入门到精通——面向制造企业成本核算与月末年末结账的完整学习路线图">
+<meta property="og:type" content="website">
 <style>
   @font-face {
     font-family: 'InstrumentSans';
@@ -101,6 +107,40 @@
     background: #34d399;
     box-shadow: 0 0 8px rgba(52,211,153,0.6);
   }
+
+  /* Quick Navigation Bar */
+  nav.quick-nav {
+    background: #fff;
+    border-bottom: 1px solid var(--rule);
+    overflow-x: auto;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  nav.quick-nav .container {
+    display: flex;
+    gap: 2px;
+    padding: 8px 24px;
+    max-width: 100%;
+  }
+  nav.quick-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  nav.quick-nav a:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  nav.quick-nav::-webkit-scrollbar { height: 3px; }
+  nav.quick-nav::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 2px; }
 
   /* Navigation Tabs */
   nav.toc {
@@ -1030,6 +1070,58 @@
     .content-area { padding: 20px 12px 40px; }
     .back-to-top { bottom: 16px; right: 16px; }
   }
+
+  /* Print Styles */
+  @media print {
+    .sidebar, .mobile-menu-btn, .sidebar-overlay,
+    nav.quick-nav, nav.toc, .progress-bar, .back-to-top,
+    .accordion-header, .section-collapse-control {
+      display: none !important;
+    }
+    .accordion-body {
+      max-height: none !important;
+      overflow: visible !important;
+    }
+    .accordion-item {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .layout-wrapper {
+      display: block !important;
+    }
+    .content-area {
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+    body {
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #000;
+      background: #fff;
+    }
+    section {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .table-wrap {
+      max-height: none !important;
+      overflow: visible !important;
+    }
+    .card, .callout, .resource-item {
+      break-inside: avoid;
+      box-shadow: none !important;
+    }
+    .mermaid, .diagram, .chart-figure {
+      break-inside: avoid;
+    }
+    a {
+      color: #000;
+      text-decoration: underline;
+    }
+    sup a {
+      color: #666;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1042,9 +1134,29 @@
       <div class="meta-item"><span class="dot"></span>适用版本：SAP ECC 6.0 EHP8 / S/4HANA</div>
       <div class="meta-item">学习周期：6个月</div>
       <div class="meta-item">目标岗位：成本会计 / CO关键用户</div>
+      <div class="meta-item">最后更新：2026年9月</div>
     </div>
   </div>
 </header>
+
+<!-- 快速导航条 -->
+<nav class="quick-nav">
+  <div class="container">
+    <a href="#version">版本说明</a>
+    <a href="#overview">学习总览</a>
+    <a href="#phase">学习路线</a>
+    <a href="#co-module">CO核心</a>
+    <a href="#daily">日常核算</a>
+    <a href="#month-end">月末结账</a>
+    <a href="#special-scenarios">特殊业务</a>
+    <a href="#year-end">年末结账</a>
+    <a href="#cost-check">核对报错</a>
+    <a href="#cross-module">跨模块</a>
+    <a href="#case-study">实战案例</a>
+    <a href="#resources">学习资源</a>
+    <a href="#plan">时间规划</a>
+  </div>
+</nav>
 
 <button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('show')">☰</button>
 <div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('show')"></div>
@@ -4466,7 +4578,7 @@ graph TD
               <tr><th>成本项目</th><th>计划成本</th><th>实际成本</th><th>差异</th></tr>
               <tr><td>原材料（钢材）</td><td>3,000</td><td>3,000</td><td>0</td></tr>
               <tr><td>直接人工</td><td>600（20h×30）</td><td>600（20h×30计划价）</td><td>0（月末重估后变化）</td></tr>
-              <tr><td>制造费用（机器）</td><td>400（26.6h×15）</td><td>399（26.6h×15计划价）</td><td>-1（四舍五入尾差）</td></tr>
+              <tr><td>制造费用（机器）</td><td>400（20个×20元/个）</td><td>399（26.6h×15计划价）</td><td>-1（工时尾数差异）</td></tr>
               <tr><td>产出（贷方）</td><td>-4,000</td><td>-4,000</td><td>0</td></tr>
               <tr><td><strong>订单余额</strong></td><td><strong>0</strong></td><td><strong>-1</strong></td><td><strong>-1</strong></td></tr>
             </table>
@@ -4901,7 +5013,7 @@ graph TD
             <h5>📊 报表4：月度成本分析报告</h5>
             <table>
               <tr><th>指标</th><th>数值</th><th>说明</th></tr>
-              <tr><td>本月生产投入</td><td>9,700元</td><td>原材料4,400+人工1,250+机器1,050+辅助500</td></tr>
+              <tr><td>本月生产投入</td><td>9,700元</td><td>原材料7,400+人工1,250+机器1,050</td></tr>
               <tr><td>本月完工入库（标准价）</td><td>8,000元</td><td>齿轮组件4,000+齿轮箱4,000</td></tr>
               <tr><td>订单差异合计</td><td>433元</td><td>均为作业价格差异</td></tr>
               <tr><td>在制品（WIP）</td><td>1,267元</td><td>齿轮箱2台未完工</td></tr>
@@ -4955,7 +5067,7 @@ graph LR
       <h4>💡 实战总结</h4>
       <p>本案例完整模拟了一个月的成本核算全流程，核心数据流转如下：</p>
       <ul>
-        <li><strong>投入端</strong>：原材料7,400元 + 人工1,250元（计划价）+ 机器1,050元（计划价）+ 辅助费用500元 = <strong>总投入9,700元</strong>（按计划价）</li>
+        <li><strong>投入端</strong>：原材料7,400元 + 人工1,250元（实际价）+ 机器1,050元（实际价） = <strong>总投入9,700元</strong>（含辅助费用分摊）</li>
         <li><strong>产出端</strong>：齿轮组件20个入库4,000元 + 齿轮箱8台入库4,000元 = <strong>总产出8,000元</strong>（按标准价）</li>
         <li><strong>差异端</strong>：订单#1001差异433元（作业价格差异）+ 订单#1002 WIP 1,267元 = <strong>差异+WIP合计1,700元</strong></li>
         <li><strong>物料分类账</strong>：差异433元分摊到销售成本270.6元 + 期末库存162.4元 = <strong>433元 ✅ 平衡</strong></li>
