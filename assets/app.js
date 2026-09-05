@@ -101,9 +101,28 @@
 
   // 当前页文件名 + 全站导航索引（其他页面的标题/折叠项/事务码/表头）
   var currentPage = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  var siteIndex = (window.SITE_SEARCH_INDEX || []).filter(function(e) {
-    return e.p.toLowerCase() !== currentPage;
-  });
+
+  // 全站索引按需加载：首次搜索时才注入 search-index.js，不阻塞首屏渲染
+  var siteIndex = [];
+  var siteIndexLoading = false;
+  var siteIndexLoaded = false;
+  function refreshSiteIndex() {
+    if (window.SITE_SEARCH_INDEX && !siteIndexLoaded) {
+      siteIndex = window.SITE_SEARCH_INDEX.filter(function(e) {
+        return e.p.toLowerCase() !== currentPage;
+      });
+      siteIndexLoaded = true;
+    }
+  }
+  function ensureSiteIndex() {
+    refreshSiteIndex();
+    if (siteIndexLoaded || siteIndexLoading) return;
+    siteIndexLoading = true;
+    var s = document.createElement('script');
+    s.src = 'assets/search-index.js';
+    s.onload = refreshSiteIndex;
+    document.head.appendChild(s);
+  }
   var PAGE_LABELS = {
     'index.html': '入门总览',
     'co-basics.html': 'CO基础',
@@ -204,6 +223,7 @@
       return;
     }
     if (!indexBuilt) buildIndex();
+    ensureSiteIndex();
 
     var kwLower = kw.toLowerCase();
     var isTcode = TCODE_RE.test(kw.toUpperCase());

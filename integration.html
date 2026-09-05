@@ -11,67 +11,24 @@
 <meta property="og:description" content="SAP成本核对方法与常见报错排查，CO与FI/MM/PP/SD模块集成知识点，SAP套件与外部系统集成（MES、BI、接口）。">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="assets/styles.css">
+<link rel="prefetch" href="special-yearend.html">
+<link rel="prefetch" href="cases-resources.html">
 </head>
 <body>
 
 <header class="hero hero--compact">
   <div class="container">
+    <div class="crumb"><a href="index.html">SAP制造业成本会计学习</a><span class="sep">/</span><span>核对报错与跨模块集成</span></div>
     <h1>核对报错与跨模块集成</h1>
     <p class="subtitle">差异核对、报错排查与FI/MM/PP/SD集成</p>
+    <div class="hero-search">
+      <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
+    </div>
   </div>
 </header>
 
-<!-- 快速导航条 -->
-<nav class="quick-nav">
-  <div class="container">
-    <a href="index.html#version">版本说明</a>
-    <a href="index.html#overview">学习总览</a>
-    <a href="index.html#phase">学习路线</a>
-    <a href="co-basics.html#co-module">CO核心</a>
-    <a href="monthly-ops.html#daily">日常核算</a>
-    <a href="monthly-ops.html#month-end">月末结账</a>
-    <a href="special-yearend.html#special-scenarios">特殊业务</a>
-    <a href="special-yearend.html#year-end">年末结账</a>
-    <a href="integration.html#cost-check">核对报错</a>
-    <a href="integration.html#cross-module">跨模块</a>
-    <a href="cases-resources.html#case-study">实战案例</a>
-    <a href="cases-resources.html#resources">学习资源</a>
-    <a href="cases-resources.html#plan">时间规划</a>
-  </div>
-</nav>
-
-<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="打开导航菜单">☰</button>
-<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
-
-<div class="layout-wrapper">
-
-<aside class="sidebar">
-  <div class="sidebar-search">
-    <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
-    <div class="search-results" id="searchResults"></div>
-  </div>
-  <div class="nav-group-title">基础入门</div>
-  <a href="index.html#version" class="nav-link"><span class="nav-num">01</span>版本说明</a>
-  <a href="index.html#overview" class="nav-link"><span class="nav-num">02</span>学习总览</a>
-  <a href="index.html#phase" class="nav-link"><span class="nav-num">03</span>分阶段路线</a>
-  <div class="nav-group-title">CO核心知识</div>
-  <a href="co-basics.html#co-module" class="nav-link"><span class="nav-num">04</span>CO模块体系</a>
-  <a href="monthly-ops.html#daily" class="nav-link"><span class="nav-num">05</span>日常核算</a>
-  <a href="monthly-ops.html#month-end" class="nav-link"><span class="nav-num">06</span>月末结账</a>
-  <div class="nav-group-title">进阶应用</div>
-  <a href="special-yearend.html#special-scenarios" class="nav-link"><span class="nav-num">07</span>特殊业务</a>
-  <a href="special-yearend.html#year-end" class="nav-link"><span class="nav-num">08</span>年末结账</a>
-  <a href="integration.html#cost-check" class="nav-link"><span class="nav-num">09</span>核对与报错</a>
-  <div class="nav-group-title">跨模块与实战</div>
-  <a href="integration.html#cross-module" class="nav-link"><span class="nav-num">10</span>跨模块集成</a>
-  <a href="integration.html#sap-ecosystem" class="nav-link"><span class="nav-num">11</span>SAP套件集成</a>
-  <a href="cases-resources.html#case-study" class="nav-link"><span class="nav-num">12</span>实战案例</a>
-  <a href="cases-resources.html#resources" class="nav-link"><span class="nav-num">13</span>学习资源</a>
-  <a href="cases-resources.html#plan" class="nav-link"><span class="nav-num">14</span>时间规划</a>
-</aside>
-
-<div class="content-area">
-<main>
+<main class="page-main">
 
   <section id="cost-check">
     <h2>九、成本核对与常见报错排查</h2>
@@ -1289,9 +1246,11 @@ graph TD
   <!-- 完整实战案例 -->
 
 </main>
-</div><!-- /content-area -->
 
-</div><!-- /layout-wrapper -->
+<nav class="page-pager" aria-label="上一篇与下一篇导航">
+  <a href="special-yearend.html" class="pager-prev"><span class="pg-label">← 上一篇</span><span class="pg-title">特殊业务与年末结账</span></a>
+  <a href="cases-resources.html" class="pager-next"><span class="pg-label">下一篇 →</span><span class="pg-title">实战案例与学习规划</span></a>
+</nav>
 
 <div class="progress-bar" id="progressBar"></div>
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -1346,10 +1305,8 @@ graph TD
   </div>
 </footer>
 
-<script src="./_shared/js/echarts.min.js"></script>
-<script src="./_shared/js/mermaid.min.js"></script>
-<script src="assets/charts.js"></script>
-<script src="assets/search-index.js"></script>
-<script src="assets/app.js"></script>
+<script src="./_shared/js/mermaid.min.js" defer></script>
+<script src="assets/charts.js" defer></script>
+<script src="assets/app.js" defer></script>
 </body>
 </html>
