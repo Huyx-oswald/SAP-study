@@ -893,6 +893,7 @@
 
   .sidebar-search {
     padding: 0 16px 12px;
+    position: relative;
   }
   .sidebar-search input {
     width: 100%;
@@ -909,6 +910,84 @@
     border-color: var(--accent);
     background: #fff;
     box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+  }
+
+  /* 全文搜索结果下拉面板 */
+  .search-results {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    max-height: 60vh;
+    overflow-y: auto;
+    display: none;
+    margin-top: 8px;
+  }
+  .search-results.show { display: block; }
+  .search-result-item {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover { background: var(--bg-soft); }
+  .search-result-item .sr-section {
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .search-result-item .sr-type {
+    font-size: 0.6rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .search-result-item .sr-text {
+    font-size: 0.8rem;
+    color: var(--ink);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .search-result-item .sr-text mark {
+    background: #fef08a;
+    color: inherit;
+    padding: 0 1px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .search-results .sr-empty {
+    padding: 16px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  .search-results .sr-count {
+    padding: 6px 12px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    background: var(--bg-soft);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+  }
+  /* 搜索命中临时高亮 */
+  .search-flash {
+    animation: searchFlash 2s ease-out;
+  }
+  @keyframes searchFlash {
+    0%   { background: #fef08a; box-shadow: 0 0 0 4px rgba(254,240,138,0.5); }
+    100% { background: transparent; box-shadow: 0 0 0 0 transparent; }
   }
 
   .nav-group-title {
@@ -1165,7 +1244,8 @@
 
 <aside class="sidebar">
   <div class="sidebar-search">
-    <input type="text" placeholder="搜索章节..." oninput="filterNav(this.value)">
+    <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
   </div>
   <div class="nav-group-title">基础入门</div>
   <a href="#version" class="nav-link"><span class="nav-num">01</span>版本说明</a>
@@ -5921,33 +6001,188 @@ graph LR
   });
 })();
 
-// === 侧边栏搜索过滤 ===
-function filterNav(keyword) {
-  const kw = keyword.trim().toLowerCase();
-  const links = document.querySelectorAll('.sidebar a.nav-link');
-  const groupTitles = document.querySelectorAll('.sidebar .nav-group-title');
-  links.forEach(function(link) {
-    const text = link.textContent.toLowerCase();
-    if (kw === '' || text.includes(kw)) {
-      link.style.display = '';
-    } else {
-      link.style.display = 'none';
-    }
-  });
-  // 隐藏没有可见链接的分组标题
-  groupTitles.forEach(function(title) {
-    let next = title.nextElementSibling;
-    let hasVisible = false;
-    while (next && !next.classList.contains('nav-group-title')) {
-      if (next.style.display !== 'none' && next.classList.contains('nav-link')) {
-        hasVisible = true;
-        break;
+// === 全文搜索（事务码 + 关键词） ===
+(function() {
+  var searchInput = document.getElementById('globalSearch');
+  var resultsBox = document.getElementById('searchResults');
+  if (!searchInput || !resultsBox) return;
+
+  // SAP 事务码模式：2-4个大写字母 + 1-4位数字，末尾可带字母
+  var TCODE_RE = /^[A-Z]{2,4}\d{1,4}[A-Z]?$/;
+
+  var searchIndex = [];
+  var indexBuilt = false;
+
+  function buildIndex() {
+    searchIndex = [];
+    var sections = document.querySelectorAll('main section[id]');
+    var selectors = [
+      { sel: 'h2, h3, h4', type: '标题' },
+      { sel: '.accordion-header', type: '折叠项' },
+      { sel: 'th, td', type: '表格' },
+      { sel: '.sap-field-row, .sap-mockup-note', type: '界面' },
+      { sel: 'p, li', type: '正文' }
+    ];
+    for (var s = 0; s < sections.length; s++) {
+      var section = sections[s];
+      var secId = section.id;
+      var h2 = section.querySelector(':scope > h2');
+      var secTitle = h2 ? h2.textContent.replace(/\s+/g, ' ').trim() : secId;
+      for (var i = 0; i < selectors.length; i++) {
+        var sel = selectors[i];
+        var els = section.querySelectorAll(sel.sel);
+        for (var j = 0; j < els.length; j++) {
+          var el = els[j];
+          var text = el.textContent.replace(/\s+/g, ' ').trim();
+          if (!text || text.length < 2) continue;
+          searchIndex.push({ text: text, el: el, sectionId: secId, sectionTitle: secTitle, type: sel.type });
+        }
       }
-      next = next.nextElementSibling;
     }
-    title.style.display = hasVisible ? '' : 'none';
+    indexBuilt = true;
+  }
+
+  function makeSnippet(text, keyword) {
+    var kw = keyword.toLowerCase();
+    var idx = text.toLowerCase().indexOf(kw);
+    if (idx < 0) return text;
+    var start = Math.max(0, idx - 40);
+    var end = Math.min(text.length, idx + keyword.length + 40);
+    var snippet = text.substring(start, end);
+    if (start > 0) snippet = '…' + snippet;
+    if (end < text.length) snippet = snippet + '…';
+    var sIdx = snippet.toLowerCase().indexOf(kw);
+    return snippet.substring(0, sIdx) +
+      '<mark>' + snippet.substring(sIdx, sIdx + keyword.length) + '</mark>' +
+      snippet.substring(sIdx + keyword.length);
+  }
+
+  function jumpTo(item) {
+    var el = item.el;
+    if (!el) return;
+    // 向上展开所有折叠面板和折叠章节
+    var node = el;
+    while (node && node !== document.body) {
+      if (node.classList) {
+        if (node.classList.contains('accordion-item')) node.classList.add('open');
+        if (node.tagName === 'SECTION' && node.classList.contains('section-collapsed')) {
+          node.classList.remove('section-collapsed');
+        }
+      }
+      node = node.parentElement;
+    }
+    if (typeof saveCollapseState === 'function') saveCollapseState();
+
+    setTimeout(function() {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('search-flash');
+      setTimeout(function() { el.classList.remove('search-flash'); }, 2000);
+    }, 60);
+
+    resultsBox.classList.remove('show');
+    if (window.innerWidth <= 1024) {
+      document.querySelector('.sidebar').classList.remove('open');
+      document.querySelector('.sidebar-overlay').classList.remove('show');
+    }
+  }
+
+  var debounceTimer;
+  function doSearch(keyword) {
+    var kw = keyword.trim();
+    if (!kw) {
+      resultsBox.classList.remove('show');
+      resultsBox.innerHTML = '';
+      return;
+    }
+    if (!indexBuilt) buildIndex();
+
+    var kwLower = kw.toLowerCase();
+    var isTcode = TCODE_RE.test(kw.toUpperCase());
+
+    var results = [];
+    var seen = new Set();
+    for (var i = 0; i < searchIndex.length; i++) {
+      var item = searchIndex[i];
+      var textLower = item.text.toLowerCase();
+      var idx = textLower.indexOf(kwLower);
+      if (idx < 0) continue;
+      if (seen.has(item.el)) continue;
+      seen.add(item.el);
+
+      var score = 0;
+      // 事务码精确命中最高优先级
+      if (isTcode) {
+        var tcodes = item.text.match(/[A-Z]{2,4}\d{1,4}[A-Z]?/g) || [];
+        var kwUp = kw.toUpperCase();
+        for (var t = 0; t < tcodes.length; t++) {
+          if (tcodes[t] === kwUp) { score += 2000; break; }
+          if (tcodes[t].indexOf(kwUp) === 0) score += 1500;
+        }
+      }
+      // 类型权重
+      if (item.type === '标题') score += 100;
+      else if (item.type === '折叠项') score += 80;
+      else if (item.type === '界面') score += 50;
+      else if (item.type === '表格') score += 40;
+      else score += 10;
+      // 开头匹配加分
+      if (idx === 0) score += 30;
+      // 短文本更精确
+      if (item.text.length < 80) score += 20;
+
+      results.push({ item: item, score: score });
+    }
+
+    results.sort(function(a, b) { return b.score - a.score; });
+
+    var top = results.slice(0, 30);
+    if (top.length === 0) {
+      resultsBox.innerHTML = '<div class="sr-empty">未找到匹配内容</div>';
+    } else {
+      var html = '<div class="sr-count">找到 ' + results.length + ' 条结果，显示前 ' + top.length + ' 条</div>';
+      for (var r = 0; r < top.length; r++) {
+        var snippet = makeSnippet(top[r].item.text, kw);
+        html += '<div class="search-result-item" data-i="' + r + '">' +
+          '<div class="sr-section"><span>' + top[r].item.sectionTitle + '</span>' +
+          '<span class="sr-type">' + top[r].item.type + '</span></div>' +
+          '<div class="sr-text">' + snippet + '</div></div>';
+      }
+      resultsBox.innerHTML = html;
+      var items = resultsBox.querySelectorAll('.search-result-item');
+      for (var k = 0; k < items.length; k++) {
+        (function(idx) {
+          items[idx].addEventListener('click', function() { jumpTo(top[idx].item); });
+        })(k);
+      }
+    }
+    resultsBox.classList.add('show');
+  }
+
+  searchInput.addEventListener('input', function() {
+    var val = this.value;
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function() { doSearch(val); }, 150);
   });
-}
+
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      var first = resultsBox.querySelector('.search-result-item');
+      if (first) first.click();
+    } else if (e.key === 'Escape') {
+      resultsBox.classList.remove('show');
+      this.blur();
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) {
+      resultsBox.classList.remove('show');
+    }
+  });
+
+  if (document.readyState === 'complete') buildIndex();
+  else window.addEventListener('load', buildIndex);
+})();
 
 // === 章节折叠 ===
 document.querySelectorAll('main section > h2').forEach(function(h2) {
