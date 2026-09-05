@@ -61,53 +61,6 @@
     padding: 0 24px;
   }
 
-  /* Header */
-  header.hero {
-    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #0891b2 100%);
-    color: #fff;
-    padding: 60px 0 50px;
-    position: relative;
-    overflow: hidden;
-  }
-  header.hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 40%);
-  }
-  header.hero .container { position: relative; z-index: 1; }
-  header.hero h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    letter-spacing: -0.02em;
-  }
-  header.hero .subtitle {
-    font-size: 1.05rem;
-    opacity: 0.9;
-    max-width: 600px;
-  }
-  header.hero .meta {
-    margin-top: 24px;
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  header.hero .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.9rem;
-    opacity: 0.85;
-  }
-  header.hero .meta-item .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #34d399;
-    box-shadow: 0 0 8px rgba(52,211,153,0.6);
-  }
-
   /* Navigation Tabs */
   nav.toc {
     background: var(--bg2);
@@ -1109,9 +1062,7 @@
 
   @media (max-width: 768px) {
     .two-col { grid-template-columns: 1fr; }
-    header.hero h1 { font-size: 1.5rem; }
     section h2 { font-size: 1.25rem; }
-    header.hero { padding: 40px 0 30px; }
     .content-area { padding: 20px 12px 40px; }
     .back-to-top { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); right: 16px; }
     /* 增强：移动端可读性与布局 */
@@ -1127,8 +1078,6 @@
     .mermaid svg { max-width: none; height: auto; }
     .chart-figure { padding: 12px; }
     .chart-figure figcaption { font-size: 0.85rem; }
-    /* Hero meta 纵向排列 */
-    header.hero .meta { flex-direction: column; gap: 8px; }
     /* SAP 模拟允许横向滚动 */
     .sap-mockup { overflow-x: auto; }
     .sap-field-row { flex-wrap: wrap; }
@@ -1139,9 +1088,6 @@
   /* 小屏手机 (≤480px) */
   @media (max-width: 480px) {
     .container { padding: 0 14px; }
-    header.hero h1 { font-size: 1.3rem; line-height: 1.3; }
-    header.hero .subtitle { font-size: 0.92rem; }
-    header.hero { padding: 32px 0 24px; }
     section h2 { font-size: 1.15rem; }
     section h3 { font-size: 1rem; }
     .content-area { padding: 16px 10px 36px; }
@@ -1420,15 +1366,6 @@
     border-radius: 0 0 var(--radius) var(--radius);
   }
 
-  /* === 多页面站点：子页紧凑头部 === */
-  .hero--compact { padding: 26px 0 20px; }
-  .hero--compact h1 { font-size: 1.55rem; margin-bottom: 6px; }
-  .hero--compact .subtitle { font-size: 0.95rem; margin: 0; }
-  .hero--compact .meta { display: none; }
-  @media (max-width: 768px) {
-    .hero--compact { padding: 20px 0 16px; }
-    .hero--compact h1 { font-size: 1.25rem; }
-  }
   /* 搜索结果：跨页来源标记 */
   .sr-page {
     font-size: 0.72rem;
@@ -1449,62 +1386,6 @@
   @keyframes page-in {
     from { opacity: 0; }
     to { opacity: 1; }
-  }
-
-  /* === 首页 Hub：英雄区搜索 === */
-  .page-home .content-area {
-    max-width: 1000px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .hero-search {
-    position: relative;
-    max-width: 560px;
-    margin: 26px auto 0;
-    text-align: left;
-  }
-  .hero-search input {
-    width: 100%;
-    padding: 12px 18px 12px 44px;
-    border: 1px solid rgba(255,255,255,0.35);
-    border-radius: 999px;
-    font-size: 0.95rem;
-    background: rgba(255,255,255,0.14);
-    color: #fff;
-    backdrop-filter: blur(6px);
-    transition: background var(--transition), border-color var(--transition);
-  }
-  .hero-search input::placeholder { color: rgba(255,255,255,0.75); }
-  .hero-search input:focus {
-    outline: none;
-    background: rgba(255,255,255,0.22);
-    border-color: rgba(255,255,255,0.6);
-  }
-  .hero-search::before {
-    content: '';
-    position: absolute;
-    left: 18px; top: 50%;
-    width: 14px; height: 14px;
-    transform: translateY(-60%);
-    border: 2px solid rgba(255,255,255,0.8);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .hero-search::after {
-    content: '';
-    position: absolute;
-    left: 29px; top: calc(50% + 4px);
-    width: 7px; height: 2px;
-    background: rgba(255,255,255,0.8);
-    transform: rotate(45deg);
-    pointer-events: none;
-  }
-  .hero-search .search-results {
-    position: absolute;
-    top: 100%; left: 0; right: 0;
-    z-index: 30;
-    margin-top: 8px;
-    color: var(--ink);
   }
 
   /* === 首页 Hub：统计条 === */
@@ -1705,7 +1586,6 @@
     .col-grid { grid-template-columns: 1fr; gap: 12px; }
     .page-pager { grid-template-columns: 1fr; }
     .page-pager .pager-next { text-align: left; }
-    .hero-search { max-width: 100%; }
   }
 
   /* === 主题页：无侧边栏正文布局 === */
@@ -1935,26 +1815,27 @@
   /* 翻页器位于正文列内 */
   .docs-main .page-pager { margin: 44px 0 4px; }
 
-  /* === 首页：浅色头部 === */
-  .home-head { padding: 44px 0 6px; }
-  .home-head h1 {
-    font-size: 2.1rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    text-align: center;
-    margin-bottom: 10px;
+  /* 首页标题区元信息行（位于中栏，与子页标题结构一致） */
+  .page-meta {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin: -8px 0 26px;
   }
-  .home-head .subtitle {
-    text-align: center;
+  .page-meta .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
     color: var(--muted);
-    font-size: 1.02rem;
-    max-width: 640px;
-    margin: 0 auto;
+    font-size: 0.85rem;
   }
-  .home-head .meta { justify-content: center; margin-top: 18px; }
-  .home-head .meta-item { color: var(--muted); font-size: 0.88rem; opacity: 1; }
-  .home-head .meta-item .dot { background: var(--accent); box-shadow: none; }
+  .page-meta .meta-item .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
 
   /* === 响应式 === */
   @media (max-width: 1280px) {
@@ -1982,7 +1863,6 @@
     .docs-sidebar.open { transform: none; }
     .sb-sub { display: block; }
     .page-title { font-size: 1.5rem; }
-    .home-head h1 { font-size: 1.6rem; }
   }
   @media (max-width: 480px) {
     .topnav-inner { padding: 0 12px; gap: 10px; }
