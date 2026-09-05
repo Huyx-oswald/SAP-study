@@ -1779,6 +1779,244 @@
         </div>
       </div>
 
+      <!-- CK24 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CK24 - 标记与发布标准价格</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>标记/发布标准价格估算</span>
+                <span class="sap-tx">CK24</span>
+              </div>
+              <div class="sap-menubar">
+                <span>编辑</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">🚩 标记价格</span>
+                <span class="sap-btn">📢 发布价格</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">工厂</span><span class="sap-input">P100 上海加工厂</span></div>
+                <div class="sap-field-row"><span class="sap-label">物料</span><span class="sap-input">SF001 / FG001</span></div>
+                <div class="sap-field-row"><span class="sap-label">期间</span><span class="sap-input">09</span></div>
+                <div class="sap-field-row"><span class="sap-label">会计年度</span><span class="sap-input">2026</span></div>
+
+                <div class="sap-section-hdr">待标记/发布的成本估算</div>
+                <table class="sap-table">
+                  <tr><th>物料</th><th>描述</th><th>标准成本</th><th>状态</th><th>标记</th><th>发布</th></tr>
+                  <tr><td>SF001</td><td>齿轮组件</td><td>200.00</td><td class="sap-ok">无错误</td><td><input type="checkbox" checked></td><td><input type="checkbox" checked></td></tr>
+                  <tr><td>FG001</td><td>齿轮箱</td><td>500.00</td><td class="sap-ok">无错误</td><td><input type="checkbox" checked></td><td><input type="checkbox" checked></td></tr>
+                </table>
+
+                <div class="sap-section-hdr">发布后物料价格变化</div>
+                <table class="sap-table">
+                  <tr><th>物料</th><th>旧标准价</th><th>新标准价</th><th>库存数量</th><th>价格差异</th></tr>
+                  <tr><td>SF001</td><td>180.00</td><td>200.00</td><td>0</td><td>0.00</td></tr>
+                  <tr><td>FG001</td><td>480.00</td><td>500.00</td><td>0</td><td>0.00</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>标准价格已发布</span>
+                <span class="sap-ok">✅ 物料主数据已更新</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：CK24 分两步执行——先<strong>标记（Mark）</strong>（在物料主数据中标记未来价格），再<strong>发布（Release）</strong>（更新当前标准价）。期间必须在物料期间（MMPV）打开的范围内。发布时若物料有库存，会产生价格差异凭证（借/贷库存差异科目）。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MMPV -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>MMPV - 物料期间管理（关账/开账）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>物料期间管理</span>
+                <span class="sap-tx">MMPV</span>
+              </div>
+              <div class="sap-menubar">
+                <span>编辑</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📅 关闭期间</span>
+                <span class="sap-btn">📊 日志</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">公司代码</span><span class="sap-input">1000</span></div>
+                <div class="sap-field-row"><span class="sap-label">期间</span><span class="sap-input">09</span></div>
+                <div class="sap-field-row"><span class="sap-label">年度</span><span class="sap-input">2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">选项</span><span class="sap-input-readonly">✓ 检查并关闭期间  ✓ 允许前期过账</span></div>
+
+                <div class="sap-section-hdr">期间状态</div>
+                <table class="sap-table">
+                  <tr><th>期间</th><th>年度</th><th>状态</th><th>说明</th></tr>
+                  <tr><td>08</td><td>2026</td><td class="sap-ok">已关闭</td><td>前次月结已关账</td></tr>
+                  <tr class="sap-highlight"><td>09</td><td>2026</td><td>当前期间（可过账）</td><td>本次操作目标</td></tr>
+                  <tr><td>10</td><td>2026</td><td>未开启</td><td>未来期间</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">执行日志</div>
+                <table class="sap-table">
+                  <tr><th>消息类型</th><th>消息文本</th></tr>
+                  <tr><td class="sap-ok">成功</td><td>公司代码 1000：期间 08/2026 已关闭，期间 09/2026 已打开</td></tr>
+                  <tr><td>信息</td><td>允许在前期（08/2026）过账，直至 OB52 关闭 FI 期间</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>期间切换完成</span>
+                <span class="sap-ok">✅ 当前期间 09/2026</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：MMPV 每月初执行，关闭上月、打开本月。需与 FI 期间（OB52）和 CO 期间（OKP1）协调。关账后若需补账，可通过 MMRV 允许前期过账，但仅限物料账；FI 侧仍需 OB52 配合。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KKAO -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>KKAO - 在制品（WIP）计算</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>计算在制品：初始屏幕</span>
+                <span class="sap-tx">KKAO</span>
+              </div>
+              <div class="sap-menubar">
+                <span>编辑</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📊 结果分析</span>
+                <span class="sap-btn">📤 过账 WIP</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">工厂</span><span class="sap-input">P100</span></div>
+                <div class="sap-field-row"><span class="sap-label">订单</span><span class="sap-input">1000000001 ~ 1000000002</span></div>
+                <div class="sap-field-row"><span class="sap-label">期间</span><span class="sap-input">09</span></div>
+                <div class="sap-field-row"><span class="sap-label">年度</span><span class="sap-input">2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">结果分析版本</span><span class="sap-input">0</span></div>
+                <div class="sap-field-row"><span class="sap-label">处理选项</span><span class="sap-input-readonly">✓ 测试运行  ✓ 明细清单</span></div>
+
+                <div class="sap-section-hdr">WIP 计算结果</div>
+                <table class="sap-table">
+                  <tr><th>订单</th><th>物料</th><th>状态</th><th>投入</th><th>产出</th><th>WIP</th></tr>
+                  <tr><td>1000000001</td><td>SF001</td><td class="sap-ok">DLV（已交付）</td><td>3,999</td><td>4,000</td><td>0.00</td></tr>
+                  <tr class="sap-highlight"><td>1000000002</td><td>FG001</td><td>REL（已释放）</td><td>1,267</td><td>0</td><td><strong>1,267.00</strong></td></tr>
+                  <tr class="sap-total"><td colspan="5">WIP 合计</td><td>1,267.00</td></tr>
+                </table>
+
+                <div class="sap-section-hdr">订单#1002 WIP 构成</div>
+                <table class="sap-table">
+                  <tr><th>成本要素</th><th>描述</th><th>金额</th></tr>
+                  <tr><td>RM001</td><td>钢材（8台×50kg×50）</td><td>4,000.00</td></tr>
+                  <tr><td>LABOR</td><td>人工工时（15h×实际价）</td><td>535.50</td></tr>
+                  <tr><td>MACHINE</td><td>机器工时（10h×实际价）</td><td>332.50</td></tr>
+                  <tr><td colspan="2">减：收货产出（6台×500）</td><td>-3,000.00</td></tr>
+                  <tr class="sap-total"><td colspan="2">在制品 WIP</td><td>1,267.00</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>测试运行完成</span>
+                <span class="sap-ok">✅ WIP = 1,267.00（订单#1002）</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：KKAO 按订单状态决定处理方式——<strong>已交付（DLV）/技术完成（TECO）</strong>的订单不计算 WIP，转为计算差异；<strong>未交付</strong>的订单按"投入 - 产出"计算 WIP。WIP 通过 CO88 结算过账到 FI（借：WIP 存货 / 贷：WIP 更改）。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KKS2 -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>KKS2 - 差异计算（单个订单）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>差异计算：订单</span>
+                <span class="sap-tx">KKS2</span>
+              </div>
+              <div class="sap-menubar">
+                <span>编辑</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📊 差异明细</span>
+                <span class="sap-btn">📋 保存</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">订单</span><span class="sap-input">1000000001</span></div>
+                <div class="sap-field-row"><span class="sap-label">期间</span><span class="sap-input">09</span></div>
+                <div class="sap-field-row"><span class="sap-label">年度</span><span class="sap-input">2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">目标成本版本</span><span class="sap-input">0（标准成本估算）</span></div>
+                <div class="sap-field-row"><span class="sap-label">处理选项</span><span class="sap-input-readonly">✓ 测试运行  ✓ 显示消息</span></div>
+
+                <div class="sap-section-hdr">差异计算结果 - 订单#1001（SF001 齿轮组件）</div>
+                <table class="sap-table">
+                  <tr><th>差异类别</th><th>目标成本</th><th>实际成本</th><th>差异</th></tr>
+                  <tr><td>原材料成本（钢材 RM001）</td><td>3,000.00</td><td>3,000.00</td><td>0.00</td></tr>
+                  <tr><td>人工成本（LABOR）</td><td>600.00</td><td>714.00</td><td style="color:#dc2626">+114.00</td></tr>
+                  <tr><td>机器成本（MACHINE）</td><td>399.00</td><td>718.00</td><td style="color:#dc2626">+319.00</td></tr>
+                  <tr class="sap-total"><td>合计</td><td>3,999.00</td><td>4,432.00</td><td style="color:#dc2626"><strong>+433.00</strong></td></tr>
+                </table>
+
+                <div class="sap-section-hdr">差异明细分类</div>
+                <table class="sap-table">
+                  <tr><th>差异类型</th><th>金额</th><th>原因</th></tr>
+                  <tr><td>输入方价格差异（作业）</td><td>433.00</td><td>实际作业价（人工35.7/机器27-33）高于计划价（人工30/机器15）</td></tr>
+                  <tr><td>输入方数量差异</td><td>0.00</td><td>实际工时与标准工时一致</td></tr>
+                  <tr><td>资源利用差异</td><td>0.00</td><td>无替代资源</td></tr>
+                  <tr><td>输出方差异</td><td>0.00</td><td>收货数量=订单数量（20个）</td></tr>
+                  <tr class="sap-total"><td>总差异</td><td>433.00</td><td>全部为作业价格差异</td></tr>
+                </table>
+              </div>
+              <div class="sap-statusbar">
+                <span>差异计算完成</span>
+                <span class="sap-ok">✅ 订单差异 = 433.00</span>
+              </div>
+            </div>
+
+            <div class="sap-mockup-note">💡 提示：KKS2 计算差异的前提是订单状态为 DLV（已交付）或 TECO（技术完成）。差异类别分为<strong>输入方差异</strong>（价格差异、数量差异、资源利用差异）和<strong>输出方差异</strong>（收货价格差异、剩余差异）。本例中 433 元全部为输入方作业价格差异，因实际作业价高于计划价。</div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="callout">
@@ -1832,6 +2070,138 @@ graph TD
         <h4>月结年结实战</h4>
         <p>掌握完整月末结账流程，理解每一步的业务含义、操作方法和常见问题排查。</p>
       </div>
+    </div>
+
+    <!-- ECC 与 S/4HANA 差异对照 -->
+    <h3>ECC 与 S/4HANA 差异对照表</h3>
+    <p>当前主流版本为 S/4HANA，但大量企业仍在使用 ECC。理解两者在成本会计相关模块的差异，有助于在不同系统环境下准确操作。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>对比维度</th>
+            <th>SAP ECC</th>
+            <th>SAP S/4HANA</th>
+            <th>对成本会计的影响</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>数据模型</strong></td>
+            <td>分散表：FI（BKPF/BSEG）、CO（COEP/COBK/COSS/COSP）、CO-PA（CE4xxxx）、ML（CKMLPP/CKMLCR）各自独立</td>
+            <td><strong>Universal Journal（ACDOCA 表）</strong>：FI/CO/ML/CO-PA 数据统一存储，单一数据源</td>
+            <td>S/4HANA 中无需做 FI-CO 对账，数据实时一致；ECC 需定期执行 KALC 等对账</td>
+          </tr>
+          <tr>
+            <td><strong>总账架构</strong></td>
+            <td>ECC 6.0 起使用 New GL（FAGLFLEXT 汇总表），支持平行账、文档拆分</td>
+            <td>Universal Journal 取代 New GL，FAGLFLEXT 被 ACDOCA 替代</td>
+            <td>S/4HANA 中财务报表维度（如利润中心、段）实时可查，无需重建汇总表</td>
+          </tr>
+          <tr>
+            <td><strong>物料分类账 (ML)</strong></td>
+            <td><strong>可选激活</strong>，用于实际成本核算；不激活则用标准成本+差异科目</td>
+            <td><strong>强制激活</strong>（S/4HANA 1610 起），实际成本成为默认能力</td>
+            <td>S/4HANA 必须配置 ML；ECC 中可根据业务需要决定是否启用</td>
+          </tr>
+          <tr>
+            <td><strong>CO-PA 获利分析</strong></td>
+            <td>支持<strong>成本核算型 (Costing-based)</strong> 和<strong>会计科目型 (Account-based)</strong> 两种，前者更常用</td>
+            <td>推荐<strong>会计科目型（Margin Analysis）</strong>；成本核算型保留但不建议新实施使用</td>
+            <td>S/4HANA 中 Margin Analysis 直接过账到 ACDOCA，实时出获利报表；ECC 中成本核算型需期末数据传输（KE27/KE28）</td>
+          </tr>
+          <tr>
+            <td><strong>成本中心会计</strong></td>
+            <td>计划用 KP06/KP26，实际过账到 COEP，报表读 COSS/COSP</td>
+            <td>计划可使用 Fiori 应用，实际数据直接入 ACDOCA；COEP 仍存在但为兼容性视图</td>
+            <td>S/4HANA 中成本中心余额可实时从 ACDOCA 聚合，无需等待期间结算</td>
+          </tr>
+          <tr>
+            <td><strong>在制品 (WIP)</strong></td>
+            <td>通过 KKAO/KKAX 计算，结果存储在 COSB 表，结算到 FI 通过 CO88</td>
+            <td>计算逻辑相同，但结果直接写入 ACDOCA；新引入"事件型 WIP"（Event-Based WIP，需激活）</td>
+            <td>S/4HANA 事件型 WIP 可实时计算，无需月末批量跑 KKAO</td>
+          </tr>
+          <tr>
+            <td><strong>差异计算与结算</strong></td>
+            <td>KKS1/KKS2 计算差异，CO88 结算，差异分输入方差异/输出方差异</td>
+            <td>事务码保留；S/4HANA 1909 起引入"事件型结算"，可实时结算订单</td>
+            <td>传统批次结算逻辑在 S/4HANA 中仍完整支持，事件型为增强选项</td>
+          </tr>
+          <tr>
+            <td><strong>期间开关</strong></td>
+            <td>MMPV（物料期间）+ OB52（FI 期间）+ OKP1（CO 期间）</td>
+            <td>事务码保留；新增 Fiori 应用"Manage Posting Periods"统一管理</td>
+            <td>事务码在两版本中通用，操作逻辑一致</td>
+          </tr>
+          <tr>
+            <td><strong>用户界面</strong></td>
+            <td>以 SAP GUI 为主，部分 Web GUI</td>
+            <td><strong>SAP Fiori</strong> 为默认 UI，提供基于角色的应用；SAP GUI 仍可用</td>
+            <td>需熟悉 Fiori 应用与传统事务码的对应关系（见下文对照表）</td>
+          </tr>
+          <tr>
+            <td><strong>报表工具</strong></td>
+            <td>SAP Query、ALV 报表、BIW/BOBJ</td>
+            <td>SAP Analytics Cloud (SAC) 集成、Embedded Analytics、CDS View</td>
+            <td>S/4HANA 中可基于 CDS View 实时构建成本分析报表，无需数据仓库</td>
+          </tr>
+          <tr>
+            <td><strong>物料价格评估</strong></td>
+            <td>标准价 (S) / 移动平均价 (V)；ML 激活后可算实际价</td>
+            <td>增加 <strong>S/4HANA 库存评估</strong>（如基于库存的实际成本），支持多估值方法</td>
+            <td>S/4HANA 对库存估值的灵活性更高，支持多会计准则并行估值</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>💡 学习建议：</strong>无论使用哪个版本，<strong>成本会计的业务逻辑（标准价归集 → 实际价调整 → 差异分摊）完全一致</strong>。差异主要在底层数据模型和前端工具上。建议先掌握业务逻辑，再根据所在系统版本学习具体操作。</p>
+    </div>
+
+    <!-- Fiori 与 GUI 事务码对应 -->
+    <h3>SAP Fiori 应用与传统 GUI 事务码对应表</h3>
+    <p>S/4HANA 中 Fiori 应用逐渐替代传统事务码。下表列出成本会计日常高频操作的 Fiori 应用与对应 GUI 事务码。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>业务功能</th>
+            <th>SAP Fiori 应用（S/4HANA）</th>
+            <th>传统 GUI 事务码</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>标准成本估算</strong></td><td>Cost Estimate with Quantity Structure / Process Material Cost Estimates</td><td>CK11N</td><td>Fiori 支持批量处理和状态跟踪</td></tr>
+          <tr><td><strong>标记与发布标准价</strong></td><td>Release Cost Estimates / Post Standard Price</td><td>CK24 / CKME</td><td>Fiori 提供审批工作流集成</td></tr>
+          <tr><td><strong>成本估算显示</strong></td><td>Display Material Cost Estimate</td><td>CK13N</td><td>Fiori 界面更直观，支持多维钻取</td></tr>
+          <tr><td><strong>生产订单创建</strong></td><td>Create Production Order (Fiori) / Process Production Orders</td><td>CO01</td><td>PP-FIORI 应用，支持移动端</td></tr>
+          <tr><td><strong>生产订单报工</strong></td><td>Confirm Production Order Operation</td><td>CO11N</td><td>Fiori 报工支持扫码和触摸屏</td></tr>
+          <tr><td><strong>货物移动</strong></td><td>Post Goods Movement / Goods Movement (MIGO-like)</td><td>MIGO</td><td>Fiori 版 MIGO 支持角色化视图</td></tr>
+          <tr><td><strong>成本中心实际/计划</strong></td><td>Display Cost Center Actual/Plan</td><td>S_ALR_87013611 / KSB1</td><td>Fiori 支持实时数据和自定义视图</td></tr>
+          <tr><td><strong>成本中心计划</strong></td><td>Plan Cost Centers (Costs and Allocations)</td><td>KP06 / KP26</td><td>Fiori 计划支持 Excel 导入和版本对比</td></tr>
+          <tr><td><strong>实际价格计算</strong></td><td>Calculate Actual Activity Price (Fiori)</td><td>KSII</td><td>Fiori 提供运行日志和错误分析</td></tr>
+          <tr><td><strong>订单重估</strong></td><td>Revaluate Orders at Actual Activity Prices</td><td>MFN1 / CON2</td><td>—</td></tr>
+          <tr><td><strong>在制品计算</strong></td><td>Work in Process by Order</td><td>KKAO / KKAX</td><td>Fiori 支持订单级 WIP 实时查看（事件型 WIP）</td></tr>
+          <tr><td><strong>差异计算</strong></td><td>Calculate Variances for Product Cost Collector / Order</td><td>KKS1 / KKS2</td><td>—</td></tr>
+          <tr><td><strong>订单结算</strong></td><td>Settle Product Cost Orders</td><td>CO88 / KO88</td><td>—</td></tr>
+          <tr><td><strong>物料分类账结算</strong></td><td>Actual Costing / Material Ledger Cockpit (Fiori)</td><td>CKMLCP</td><td>Fiori Cockpit 提供步骤可视化和状态监控</td></tr>
+          <tr><td><strong>物料价格分析</strong></td><td>Material Price Analysis</td><td>CKM3</td><td>Fiori 支持多层上卷追溯可视化</td></tr>
+          <tr><td><strong>期间管理</strong></td><td>Manage Posting Periods</td><td>OB52 / MMPV / OKP1</td><td>Fiori 统一管理 FI/MM/CO 期间</td></tr>
+          <tr><td><strong>CO-PA 获利报表</strong></td><td>Profitability Analysis (Margin Analysis)</td><td>KE30</td><td>Fiori 中 Margin Analysis 基于 ACDOCA 实时数据</td></tr>
+          <tr><td><strong>总账余额显示</strong></td><td>Display G/L Account Balances</td><td>FS10N / FAGLB03</td><td>Fiori 支持多维度实时筛选</td></tr>
+          <tr><td><strong>物料凭证查询</strong></td><td>Display Material Documents</td><td>MB51</td><td>—</td></tr>
+          <tr><td><strong>生产订单信息系统</strong></td><td>Production Order Information System</td><td>COOIS</td><td>Fiori 版支持更灵活的布局和导出</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>💡 提示：</strong>S/4HANA 中 Fiori 应用并非完全替代 GUI 事务码——部分底层配置（如 KEA0、KEDR 等）仍需在 GUI 中完成。建议<strong>优先学习 GUI 事务码（业务逻辑通用），再了解 Fiori 应用的差异</strong>。在 Fiori 中搜索应用时，可直接输入事务码名称（如"CK11N"）找到对应应用。</p>
     </div>
   </section>
 
@@ -3971,6 +4341,86 @@ graph TD
       </div>
     </div>
 
+    <!-- CO-PA 完整操作流程 -->
+    <h3>CO-PA 获利能力分析完整操作流程</h3>
+    <p>以下为成本核算型 CO-PA（Costing-based CO-PA）从配置到日常分析的完整操作步骤。基于会计科目型（Margin Analysis）在 S/4HANA 中为推荐方案，核心步骤类似但部分事务码不同。</p>
+
+    <h4>步骤一：配置经营范围（Operating Concern）</h4>
+    <p>经营范围是 CO-PA 的最高组织单元，定义了获利分析的维度框架。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>事务码</th><th>操作</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>KEA0</td><td>维护经营范围</td><td>创建经营范围，分配公司代码和控制范围；定义特征（Characteristic）如产品、客户、地区、销售组织</td></tr>
+          <tr><td>KEA6</td><td>定义值字段（Value Field）</td><td>定义收入、成本、数量、折扣等值字段，如 VV010（收入）、VV020（销售成本）、VV030（折扣）</td></tr>
+          <tr><td>KEA5</td><td>定义特征属性</td><td>设置特征的技术属性、派生规则</td></tr>
+          <tr><td>KEI2</td><td>值字段分配</td><td>将 SD 条件类型（如 PR00 收入、VPRS 成本）映射到 CO-PA 值字段</td></tr>
+          <tr><td>KEDR</td><td>特征派生（Derivation）</td><td>定义特征值的派生规则，如从客户主数据派生地区、行业</td></tr>
+          <tr><td>OKB9</td><td>自动科目分配</td><td>配置成本要素默认的获利段，确保 FI 过账自动产生 CO-PA 凭证</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>步骤二：日常业务数据过账</h4>
+    <p>CO-PA 数据主要来源于 SD 开票和 FI 过账，系统自动生成 CO-PA 行项目。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>业务场景</th><th>事务码</th><th>CO-PA 过账逻辑</th></tr></thead>
+        <tbody>
+          <tr><td>销售开票确认收入</td><td>VF01 / VF02</td><td>开票时将收入、税金、成本（VPRS 条件）按条件类型→值字段映射写入 CO-PA，产生获利段（Profitability Segment）</td></tr>
+          <tr><td>发货结转成本</td><td>VL02N（发货过账）</td><td>601 移动类型过账时，销售成本（VPRS）传入 CO-PA；若成本核算型，成本在开票时从 SD 条件取数</td></tr>
+          <tr><td>FI 直接过账到 CO-PA</td><td>FB50 / FB01</td><td>在成本要素行项目中输入获利段（PSG），直接过账到 CO-PA</td></tr>
+          <tr><td>手动调整 CO-PA</td><td>KE21N</td><td>手动录入 CO-PA 行项目，用于修正或补充分析数据</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>步骤三：月末实际成本传输（成本核算型特有）</h4>
+    <p>物料分类账运行后，需将实际成本差异传输到 CO-PA，使销售成本更新为实际成本。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>事务码</th><th>操作</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>CKMLCP</td><td>物料分类账结算</td><td>计算实际成本并将差异分摊到消耗（含销售成本）</td></tr>
+          <tr><td>KE27</td><td>定期评估（实际成本传输）</td><td>将 ML 计算的实际成本差异传输到 CO-PA 的值字段，覆盖标准成本</td></tr>
+          <tr><td>KE28</td><td>自上而下的分配（Top-Down）</td><td>将汇总的差异按参考数据（如收入比例）分摊到明细获利段</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>步骤四：获利能力分析报表</h4>
+    <p>月结完成后，通过报表分析各维度的获利情况。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>事务码</th><th>报表</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>KE30</td><td>获利分析报表</td><td>核心报表，按特征/值字段定义的表单查看多维获利数据，支持下钻</td></tr>
+          <tr><td>KE31</td><td>创建获利分析表单</td><td>定义 KE30 使用的报表结构（行列格式）</td></tr>
+          <tr><td>KE34</td><td>创建获利分析报表</td><td>基于表单创建可执行的报表</td></tr>
+          <tr><td>KE24</td><td>CO-PA 行项目报表</td><td>查看逐笔过账的 CO-PA 凭证明细，用于对账和排查</td></tr>
+          <tr><td>KE91</td><td>创建特征派生</td><td>查看派生规则执行结果</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>步骤五：常见问题排查</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>问题现象</th><th>排查方向</th><th>解决方法</th></tr></thead>
+        <tbody>
+          <tr><td>开票后无 CO-PA 凭证</td><td>经营范围未激活 / 值字段未分配条件类型</td><td>KEA0 检查激活状态 → KEI2 检查条件类型映射 → KE4I 检查 SD 条件类型分配</td></tr>
+          <tr><td>CO-PA 收入与 FI 收入不一致</td><td>期间不同步 / 冲销凭证未同步 / 手工调整遗漏</td><td>KE24 对比 FI 行项目 → 检查 KE21N 手工调整 → 确认过账期间一致</td></tr>
+          <tr><td>销售成本为零或标准成本</td><td>VPRS 条件未配置 / ML 实际成本未传输</td><td>VK13 检查 VPRS 条件 → 运行 KE27 传输实际成本 → 检查 KE27 日志</td></tr>
+          <tr><td>特征值缺失（如地区为空）</td><td>派生规则未配置 / 主数据未维护</td><td>KEDR 检查派生规则 → 客户/物料主数据维护特征值 → KEDR 测试派生</td></tr>
+          <tr><td>KE30 报表无数据</td><td>表单选择条件错误 / 数据未传输</td><td>KE31 检查表单特征/值字段 → 缩小选择范围测试 → KE24 确认有行项目</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>💡 关键理解：</strong>CO-PA 的核心价值在于<strong>收入与成本的配比分析</strong>。收入来自 SD 开票（条件类型 PR00），成本来自物料标准价（条件类型 VPRS），月末通过 KE27 将 ML 实际成本差异传入，从而得到<strong>实际毛利</strong>。分析维度由特征（Characteristic）决定，数值由值字段（Value Field）承载。</p>
+    </div>
+
     <!-- 跨模块问题排查 -->
     <h3>跨模块常见问题及排查方法</h3>
     <div class="accordion">
@@ -5062,6 +5512,115 @@ graph LR
     style D fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
     style E fill:#ede9fe,stroke:#7c3aed,stroke-width:2px,color:#4c1d95
     </pre>
+
+    <!-- 全流程数据勾稽表 -->
+    <h3>全流程数据勾稽验证</h3>
+    <p>以下对本案例的核心数据进行交叉验证，确保"投入 = 产出 + 差异 + WIP"的会计恒等式成立。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>勾稽项</th>
+            <th>金额（元）</th>
+            <th>计算说明</th>
+            <th>验证结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【一、成本流转恒等式】</td>
+          </tr>
+          <tr>
+            <td>总投入（A）</td>
+            <td>9,700</td>
+            <td>原材料 7,400 + 人工 1,250 + 机器 1,050</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>总产出（B）</td>
+            <td>8,000</td>
+            <td>SF001 入库 4,000 + FG001 入库 4,000</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>订单差异（C）</td>
+            <td>433</td>
+            <td>订单#1001 作业价格差异</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>在制品 WIP（D）</td>
+            <td>1,267</td>
+            <td>订单#1002 未完工 2 台</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>恒等式验证</strong></td>
+            <td><strong>A = B + C + D</strong></td>
+            <td>9,700 = 8,000 + 433 + 1,267</td>
+            <td><strong style="color:var(--success)">✅ 平衡</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【二、物料分类账差异分摊】</td>
+          </tr>
+          <tr>
+            <td>待分摊差异（E）</td>
+            <td>433</td>
+            <td>SF001 差异上卷至 FG001</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>分摊至期末库存（F）</td>
+            <td>162.40</td>
+            <td>433 × (3台 / 8台)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>分摊至销售成本（G）</td>
+            <td>270.60</td>
+            <td>433 × (5台 / 8台)</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>差异分摊验证</strong></td>
+            <td><strong>E = F + G</strong></td>
+            <td>433 = 162.40 + 270.60</td>
+            <td><strong style="color:var(--success)">✅ 平衡</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【三、成本中心余额清零】</td>
+          </tr>
+          <tr>
+            <td>辅助成本中心余额</td>
+            <td>0</td>
+            <td>设备维护部 + 质量管理部 已全部分摊</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+          <tr>
+            <td>生产性成本中心余额</td>
+            <td>0</td>
+            <td>机加工 + 装配 已全部重估至订单</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【四、订单结算后余额】</td>
+          </tr>
+          <tr>
+            <td>订单#1001 结算后余额</td>
+            <td>0</td>
+            <td>差异 433 已结转</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+          <tr>
+            <td>订单#1002 结算后余额</td>
+            <td>0</td>
+            <td>WIP 1,267 已结转</td>
+            <td><strong style="color:var(--success)">✅</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div class="callout">
       <h4>💡 实战总结</h4>
