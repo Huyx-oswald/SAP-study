@@ -1826,8 +1826,6 @@
     padding: 26px 24px 64px;
     align-items: start;
   }
-  /* 首页无右侧目录：两栏 */
-  .docs-shell.no-toc { grid-template-columns: 250px minmax(0, 1fr); }
 
   /* === 左侧专栏树 === */
   .docs-sidebar {
