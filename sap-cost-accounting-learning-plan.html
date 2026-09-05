@@ -1081,7 +1081,7 @@
   /* 返回顶部 */
   .back-to-top {
     position: fixed;
-    bottom: 30px;
+    bottom: calc(30px + env(safe-area-inset-bottom, 0px));
     right: 30px;
     width: 44px;
     height: 44px;
@@ -1101,7 +1101,7 @@
     justify-content: center;
   }
   .back-to-top.visible { opacity: 1; visibility: visible; }
-  .back-to-top:hover { background: #4338ca; transform: translateY(-3px); }
+  .back-to-top:hover { background: #4338ca; }
 
   /* 移动端汉堡按钮 */
   .mobile-menu-btn {
@@ -1156,7 +1156,7 @@
     section h2 { font-size: 1.25rem; }
     header.hero { padding: 40px 0 30px; }
     .content-area { padding: 20px 12px 40px; }
-    .back-to-top { bottom: 16px; right: 16px; }
+    .back-to-top { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); right: 16px; }
     /* 增强：移动端可读性与布局 */
     body { font-size: 16px; }
     section h3 { font-size: 1.05rem; }
@@ -1206,7 +1206,7 @@
     .sap-label { min-width: 80px; font-size: 10px; }
     .sap-input, .sap-input-readonly { min-width: 100px; font-size: 10px; }
     /* 返回顶部按钮缩小 */
-    .back-to-top { width: 38px; height: 38px; bottom: 12px; right: 12px; }
+    .back-to-top { width: 38px; height: 38px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); right: 12px; }
     /* 搜索结果 */
     .search-result-item { padding: 8px 10px; }
     .search-result-item .sr-text { font-size: 0.78rem; }
@@ -1340,16 +1340,19 @@
     opacity: 0;
     transition: opacity var(--transition);
   }
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-  }
-  .card:hover::before { opacity: 1; }
   .card .card-icon {
     border-radius: var(--radius-sm);
     transition: transform var(--transition);
   }
-  .card:hover .card-icon { transform: scale(1.08); }
+  /* 装饰性悬浮位移仅在支持悬停的设备（鼠标）启用，避免触屏 tap 后粘滞 */
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover .card-icon { transform: scale(1.08); }
+  }
 
   /* 表格：斑马纹 + 粘性表头毛玻璃 */
   .table-wrap {
@@ -1366,8 +1369,10 @@
   tbody tr:nth-child(even) {
     background: rgba(37, 99, 235, 0.025);
   }
-  tbody tr:hover {
-    background: var(--accent-soft) !important;
+  @media (hover: hover) and (pointer: fine) {
+    tbody tr:hover {
+      background: var(--accent-soft) !important;
+    }
   }
   td { transition: background var(--transition); }
   /* 所有非 SAP 模拟表格的表头统一为渐变 */
@@ -1404,9 +1409,11 @@
     box-shadow: var(--shadow-sm);
     transition: transform var(--transition), box-shadow var(--transition);
   }
-  .callout:hover {
-    transform: translateX(2px);
-    box-shadow: var(--shadow);
+  @media (hover: hover) and (pointer: fine) {
+    .callout:hover {
+      transform: translateX(2px);
+      box-shadow: var(--shadow);
+    }
   }
 
   /* 事务码标签：更精致 */
@@ -1449,9 +1456,11 @@
   .back-to-top {
     transition: all var(--transition) !important;
   }
-  .back-to-top:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: var(--shadow-lg) !important;
+  @media (hover: hover) and (pointer: fine) {
+    .back-to-top:hover {
+      transform: translateY(-3px) !important;
+      box-shadow: var(--shadow-lg) !important;
+    }
   }
 
   /* SAP GUI 模拟：边框圆角与阴影 */
@@ -1501,8 +1510,8 @@
   </div>
 </nav>
 
-<button class="mobile-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('show')">☰</button>
-<div class="sidebar-overlay" onclick="document.querySelector('.sidebar').classList.remove('open');this.classList.remove('show')"></div>
+<button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="打开导航菜单">☰</button>
+<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
 
 <div class="layout-wrapper">
 
@@ -6254,14 +6263,34 @@ graph LR
   // 初始高亮
   onScroll();
 
+  // 移动端侧边栏抽屉统一控制：开关 class + 锁定背景滚动（触屏抽屉体验）
+  window.setSidebar = function(open) {
+    var sb = document.querySelector('.sidebar');
+    var ov = document.querySelector('.sidebar-overlay');
+    if (!sb || !ov) return;
+    sb.classList.toggle('open', open);
+    ov.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  window.toggleSidebar = function() {
+    var sb = document.querySelector('.sidebar');
+    window.setSidebar(!sb || !sb.classList.contains('open'));
+  };
+
   // 点击导航链接后关闭移动端侧边栏
   links.forEach(function(link) {
     link.addEventListener('click', function() {
       if (window.innerWidth <= 1024) {
-        document.querySelector('.sidebar').classList.remove('open');
-        document.querySelector('.sidebar-overlay').classList.remove('show');
+        window.setSidebar(false);
       }
     });
+  });
+
+  // 视口从移动端放大到桌面端时，解除可能残留的滚动锁定
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 1024 && document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+    }
   });
 })();
 
