@@ -10,7 +10,7 @@
 <meta property="og:title" content="SAP制造业成本会计系统性学习规划">
 <meta property="og:description" content="面向制造业成本会计的SAP CO模块完整学习路线图，覆盖标准成本估算、生产订单结算、物料分类账、月末年末结账全流程，含事务码操作指南与实战案例。">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/styles.css?v=20260905c">
 <link rel="prefetch" href="co-basics.html">
 <link rel="prefetch" href="monthly-ops.html">
 <link rel="prefetch" href="special-yearend.html">
@@ -19,14 +19,29 @@
 </head>
 <body class="page-home">
 
-<header class="hero">
+<nav class="topnav">
+  <div class="topnav-inner">
+    <button class="topnav-toggle" aria-label="打开导航菜单">☰</button>
+    <a class="brand" href="index.html">SAP制造业成本会计学习</a>
+    <nav class="topnav-links" aria-label="专栏导航">
+      <a href="index.html" class="active">入门总览</a>
+      <a href="co-basics.html">CO知识体系</a>
+      <a href="monthly-ops.html">日常与月结</a>
+      <a href="special-yearend.html">特殊与年结</a>
+      <a href="integration.html">核对与集成</a>
+      <a href="cases-resources.html">案例与资源</a>
+    </nav>
+    <div class="topnav-search">
+      <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+</nav>
+
+<header class="home-head">
   <div class="container">
     <h1>SAP制造业成本会计系统性学习规划</h1>
     <p class="subtitle">从入门到精通——面向制造企业成本核算与月末年末结账的完整学习路线图</p>
-    <div class="hero-search">
-      <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词，如 CK11N、物料账..." autocomplete="off">
-      <div class="search-results" id="searchResults"></div>
-    </div>
     <div class="meta">
       <div class="meta-item"><span class="dot"></span>适用版本：SAP ECC 6.0 EHP8 / S/4HANA</div>
       <div class="meta-item">学习周期：6个月</div>
@@ -1252,7 +1267,7 @@ graph TD
 
 <script src="./_shared/js/echarts.min.js" defer></script>
 <script src="./_shared/js/mermaid.min.js" defer></script>
-<script src="assets/charts.js" defer></script>
-<script src="assets/app.js" defer></script>
+<script src="assets/charts.js?v=20260905c" defer></script>
+<script src="assets/app.js?v=20260905c" defer></script>
 </body>
 </html>

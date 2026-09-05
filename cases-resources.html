@@ -10,25 +10,64 @@
 <meta property="og:title" content="实战案例、学习资源与时间规划 | SAP制造业成本会计学习">
 <meta property="og:description" content="从标准成本估算到月结出表的完整实战案例，SAP CO学习资源推荐（书籍、视频课程、官方文档）与6个月系统学习时间规划。">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/styles.css?v=20260905c">
 <link rel="prefetch" href="integration.html">
 <link rel="prefetch" href="index.html">
 </head>
 <body>
 
-<header class="hero hero--compact">
-  <div class="container">
-    <div class="crumb"><a href="index.html">SAP制造业成本会计学习</a><span class="sep">/</span><span>实战案例与学习规划</span></div>
-    <h1>实战案例与学习规划</h1>
-    <p class="subtitle">完整实战案例 · 资源推荐 · 6个月学习计划</p>
-    <div class="hero-search">
+<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <button class="topnav-toggle" aria-label="打开导航菜单">☰</button>
+    <a class="brand" href="index.html">SAP制造业成本会计学习</a>
+    <nav class="topnav-links" aria-label="专栏导航">
+      <a href="index.html">入门总览</a>
+      <a href="co-basics.html">CO知识体系</a>
+      <a href="monthly-ops.html">日常与月结</a>
+      <a href="special-yearend.html">特殊与年结</a>
+      <a href="integration.html">核对与集成</a>
+      <a href="cases-resources.html" class="active">案例与资源</a>
+    </nav>
+    <div class="topnav-search">
       <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
       <div class="search-results" id="searchResults"></div>
     </div>
   </div>
-</header>
+</nav>
 
-<main class="page-main">
+<div class="docs-shell">
+<aside class="docs-sidebar" id="docsSidebar">
+  <div class="sb-group">
+    <a class="sb-group-link" href="index.html"><span class="sb-num">01</span>入门总览</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="co-basics.html"><span class="sb-num">02</span>CO模块知识体系</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="monthly-ops.html"><span class="sb-num">03</span>日常与月结</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="special-yearend.html"><span class="sb-num">04</span>特殊与年结</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="integration.html"><span class="sb-num">05</span>核对与集成</a>
+  </div>
+  <div class="sb-group current">
+    <a class="sb-group-link" href="cases-resources.html"><span class="sb-num">06</span>案例与资源</a>
+    <div class="sb-sub">
+      <a class="sb-item" href="#case-study">完整实战案例</a>
+      <a class="sb-item" href="#resources">学习资源推荐</a>
+      <a class="sb-item" href="#plan">6个月时间规划</a>
+    </div>
+  </div>
+</aside>
+
+<main class="docs-main">
+  <div class="crumb"><a href="index.html">首页</a><span class="sep">/</span><span>实战案例与学习规划</span></div>
+  <h1 class="page-title">实战案例与学习规划</h1>
+  <p class="page-subtitle">完整实战案例 · 资源推荐 · 6个月学习计划</p>
 
   <section id="case-study">
     <h2>十二、完整实战案例：从标准成本到月结出表</h2>
@@ -961,12 +1000,17 @@ graph LR
     </div>
   </section>
 
-</main>
-
 <nav class="page-pager" aria-label="上一篇与下一篇导航">
   <a href="integration.html" class="pager-prev"><span class="pg-label">← 上一篇</span><span class="pg-title">核对报错与跨模块集成</span></a>
   <a href="index.html" class="pager-next"><span class="pg-label">下一篇 →</span><span class="pg-title">返回总览</span></a>
 </nav>
+</main>
+
+<aside class="docs-toc">
+  <div class="toc-title">本页目录</div>
+  <nav id="tocList" class="toc-list"></nav>
+</aside>
+</div><!-- /docs-shell -->
 
 <div class="progress-bar" id="progressBar"></div>
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -1022,7 +1066,7 @@ graph LR
 </footer>
 
 <script src="./_shared/js/mermaid.min.js" defer></script>
-<script src="assets/charts.js" defer></script>
-<script src="assets/app.js" defer></script>
+<script src="assets/charts.js?v=20260905c" defer></script>
+<script src="assets/app.js?v=20260905c" defer></script>
 </body>
 </html>

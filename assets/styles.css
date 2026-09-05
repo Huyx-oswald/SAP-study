@@ -1,35 +1,36 @@
 
   @font-face {
     font-family: 'InstrumentSans';
-    src: url('./_shared/fonts/InstrumentSans-Regular.ttf') format('truetype');
+    src: url('../_shared/fonts/InstrumentSans-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: 'InstrumentSans';
-    src: url('./_shared/fonts/InstrumentSans-Bold.ttf') format('truetype');
+    src: url('../_shared/fonts/InstrumentSans-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
   }
   @font-face {
     font-family: 'ArsenalSC';
-    src: url('./_shared/fonts/ArsenalSC-Regular.ttf') format('truetype');
+    src: url('../_shared/fonts/ArsenalSC-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
   }
 
   :root {
-    --bg: #f8f9fb;
+    --bg: #ffffff;
+    --bg-soft: #f6f6f7;
     --bg2: #ffffff;
-    --ink: #1a2332;
-    --muted: #6b7a90;
-    --rule: #e2e8f0;
-    --accent: #2563eb;
-    --accent2: #0891b2;
-    --accent-soft: #eff6ff;
+    --ink: #3c3c43;
+    --muted: #63666e;
+    --rule: #e2e2e3;
+    --accent: #0756ab;
+    --accent2: #0a6bd1;
+    --accent-soft: rgba(7,86,171,0.08);
     --success: #059669;
     --warning: #d97706;
     --danger: #dc2626;
@@ -51,7 +52,7 @@
     background: var(--bg);
     color: var(--ink);
     line-height: 1.7;
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .container {
@@ -1717,4 +1718,275 @@
   .page-main section { scroll-margin-top: 64px; }
   @media (max-width: 480px) {
     .page-main { padding: 24px 16px 40px; }
+  }
+
+  /* ============================================================
+     文档式三栏布局：顶栏 + 左侧专栏树 + 正文 + 右侧目录
+     ============================================================ */
+
+  /* === 顶部导航栏 === */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    background: rgba(255,255,255,0.88);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .topnav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: var(--ink);
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+  .topnav-links {
+    display: flex;
+    gap: 2px;
+    margin-left: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .topnav-links::-webkit-scrollbar { display: none; }
+  .topnav-links a {
+    padding: 6px 11px;
+    font-size: 0.86rem;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: color var(--transition), background var(--transition);
+  }
+  .topnav-links a:hover { color: var(--accent); background: var(--accent-soft); }
+  .topnav-links a.active { color: var(--accent); font-weight: 600; background: var(--accent-soft); }
+  .topnav-search { position: relative; width: 220px; flex-shrink: 0; }
+  .topnav-search input {
+    width: 100%;
+    padding: 7px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    background: var(--bg-soft);
+    color: var(--ink);
+    font-family: inherit;
+    transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  }
+  .topnav-search input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(7,86,171,0.12);
+  }
+  .topnav-search .search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 360px;
+    max-height: 65vh;
+    overflow-y: auto;
+    z-index: 50;
+    display: none;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+  }
+  .topnav-search .search-results.show { display: block; }
+  .topnav-toggle {
+    display: none;
+    border: 1px solid var(--rule);
+    background: #fff;
+    border-radius: 8px;
+    width: 34px; height: 34px;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--ink);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* === 三栏骨架 === */
+  .docs-shell {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr) 230px;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 26px 24px 64px;
+    align-items: start;
+  }
+
+  /* === 左侧专栏树 === */
+  .docs-sidebar {
+    position: sticky;
+    top: calc(3.5rem + 26px);
+    max-height: calc(100vh - 3.5rem - 26px);
+    overflow-y: auto;
+    font-size: 0.86rem;
+    padding-bottom: 20px;
+  }
+  .sb-group { margin-bottom: 2px; }
+  .sb-group-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: color var(--transition), background var(--transition);
+  }
+  .sb-group-link:hover { color: var(--accent); background: var(--accent-soft); }
+  .sb-num {
+    font-family: 'ArsenalSC', 'InstrumentSans', sans-serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    width: 18px;
+    flex-shrink: 0;
+  }
+  .sb-group.current > .sb-group-link { color: var(--accent); background: var(--accent-soft); }
+  .sb-group.current > .sb-group-link .sb-num { color: var(--accent); }
+  .sb-sub { display: none; padding: 3px 0 5px 12px; }
+  .sb-group.current .sb-sub { display: block; }
+  .sb-item {
+    display: block;
+    padding: 4px 8px 4px 16px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.82rem;
+    border-left: 2px solid var(--rule);
+    transition: color var(--transition), border-color var(--transition);
+  }
+  .sb-item:hover { color: var(--accent); border-left-color: var(--accent); }
+  .sb-item.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+
+  /* === 正文列 === */
+  .docs-main { min-width: 0; padding-top: 4px; }
+  .page-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin: 4px 0 6px;
+  }
+  .page-subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .docs-main .crumb { color: var(--muted); opacity: 1; }
+  .docs-main .crumb a { color: var(--muted); border-bottom-color: var(--rule); }
+  .docs-main .crumb a:hover { color: var(--accent); border-bottom-color: var(--accent); opacity: 1; }
+  .docs-main section h2 {
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 10px;
+  }
+  .docs-main section h2::after { display: none; }
+
+  /* === 右侧目录 === */
+  .docs-toc {
+    position: sticky;
+    top: calc(3.5rem + 26px);
+    max-height: calc(100vh - 3.5rem - 30px);
+    overflow-y: auto;
+    font-size: 0.84rem;
+    padding: 2px 0 20px;
+  }
+  .toc-title {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+  }
+  .toc-item {
+    display: block;
+    padding: 3px 0 3px 12px;
+    color: var(--muted);
+    text-decoration: none;
+    border-left: 2px solid var(--rule);
+    line-height: 1.45;
+    transition: color var(--transition), border-color var(--transition);
+  }
+  .toc-item.lv3 { padding-left: 26px; font-size: 0.8rem; }
+  .toc-item:hover { color: var(--accent); }
+  .toc-item.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+
+  /* 翻页器位于正文列内 */
+  .docs-main .page-pager { margin: 44px 0 4px; }
+
+  /* === 首页：浅色头部 === */
+  .home-head { padding: 44px 0 6px; }
+  .home-head h1 {
+    font-size: 2.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .home-head .subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1.02rem;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .home-head .meta { justify-content: center; margin-top: 18px; }
+  .home-head .meta-item { color: var(--muted); font-size: 0.88rem; opacity: 1; }
+  .home-head .meta-item .dot { background: var(--accent); box-shadow: none; }
+
+  /* === 响应式 === */
+  @media (max-width: 1280px) {
+    .docs-shell { grid-template-columns: 250px minmax(0, 1fr); gap: 32px; }
+    .docs-toc { display: none; }
+  }
+  @media (max-width: 1024px) {
+    .topnav-links { display: none; }
+    .topnav-toggle { display: block; }
+    .topnav-search { margin-left: auto; width: 170px; }
+    .docs-shell { grid-template-columns: 1fr; padding: 20px 16px 48px; }
+    .docs-sidebar {
+      position: fixed;
+      left: 0; top: 3.5rem; bottom: 0;
+      width: 286px;
+      max-height: none;
+      background: #fff;
+      z-index: 250;
+      transform: translateX(-105%);
+      transition: transform 0.3s ease;
+      box-shadow: 0 8px 30px rgba(15,23,42,0.12);
+      padding: 14px 12px 30px;
+      overflow-y: auto;
+    }
+    .docs-sidebar.open { transform: none; }
+    .sb-sub { display: block; }
+    .page-title { font-size: 1.5rem; }
+    .home-head h1 { font-size: 1.6rem; }
+  }
+  @media (max-width: 480px) {
+    .topnav-inner { padding: 0 12px; gap: 10px; }
+    .brand { font-size: 0.88rem; }
+    .topnav-search { width: 132px; }
+    .page-title { font-size: 1.3rem; }
+    .docs-main .crumb { font-size: 0.72rem; }
   }

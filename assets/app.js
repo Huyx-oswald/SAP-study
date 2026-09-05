@@ -1,9 +1,27 @@
 // === 侧边栏导航交互 ===
 (function() {
-  const links = document.querySelectorAll('.sidebar a.nav-link');
+  const links = document.querySelectorAll('.docs-sidebar a.sb-item');
   const sections = document.querySelectorAll('main section[id]');
   const progressBar = document.getElementById('progressBar');
   const backToTop = document.getElementById('backToTop');
+
+  // === 右侧目录（TOC）：扫描正文 h2/h3 生成 ===
+  const tocList = document.getElementById('tocList');
+  const tocHeaders = [];
+  if (tocList) {
+    const main = document.querySelector('.docs-main');
+    const hs = main ? main.querySelectorAll('section h2, section h3') : [];
+    let html = '';
+    hs.forEach(function(h, i) {
+      const txt = h.textContent.replace(/\s+/g, ' ').replace(/^[一二三四五六七八九十]+、\s*/, '').trim();
+      if (!txt) return;
+      if (!h.id) h.id = 'toc-' + i;
+      h.style.scrollMarginTop = 'calc(3.5rem + 14px)';
+      tocHeaders.push(h);
+      html += '<a class="toc-item ' + (h.tagName === 'H2' ? 'lv2' : 'lv3') + '" href="#' + h.id + '">' + txt + '</a>';
+    });
+    tocList.innerHTML = html;
+  }
 
   // 滚动监听：高亮当前章节 + 进度条 + 返回顶部
   function onScroll() {
@@ -19,7 +37,7 @@
       backToTop.classList.remove('visible');
     }
 
-    // 高亮当前章节
+    // 高亮当前章节（左侧专栏树）
     let current = '';
     sections.forEach(function(sec) {
       const rect = sec.getBoundingClientRect();
@@ -27,21 +45,21 @@
         current = sec.id;
       }
     });
-    if (!current && sections.length > 0) {
-      // 如果在第一个section之前
-      if (window.scrollY < sections[0].offsetTop) {
-        current = sections[0].id;
-      }
-    }
     links.forEach(function(link) {
-      if (link.hash === '#' + current) {
-        link.classList.add('active');
-        // 确保active项在侧边栏可见
-        link.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-      } else {
-        link.classList.remove('active');
-      }
+      link.classList.toggle('on', link.hash === '#' + current);
     });
+
+    // 高亮当前标题（右侧目录）
+    if (tocList) {
+      let activeId = '';
+      for (var ti = 0; ti < tocHeaders.length; ti++) {
+        if (tocHeaders[ti].getBoundingClientRect().top <= 100) activeId = tocHeaders[ti].id;
+      }
+      const tocItems = tocList.querySelectorAll('.toc-item');
+      tocItems.forEach(function(item) {
+        item.classList.toggle('on', item.getAttribute('href') === '#' + activeId);
+      });
+    }
   }
 
   // 节流
@@ -61,7 +79,7 @@
 
   // 移动端侧边栏抽屉统一控制：开关 class + 锁定背景滚动（触屏抽屉体验）
   window.setSidebar = function(open) {
-    var sb = document.querySelector('.sidebar');
+    var sb = document.querySelector('.docs-sidebar');
     var ov = document.querySelector('.sidebar-overlay');
     if (!sb || !ov) return;
     sb.classList.toggle('open', open);
@@ -69,9 +87,11 @@
     document.body.style.overflow = open ? 'hidden' : '';
   };
   window.toggleSidebar = function() {
-    var sb = document.querySelector('.sidebar');
+    var sb = document.querySelector('.docs-sidebar');
     window.setSidebar(!sb || !sb.classList.contains('open'));
   };
+  var navToggle = document.querySelector('.topnav-toggle');
+  if (navToggle) navToggle.addEventListener('click', window.toggleSidebar);
 
   // 点击导航链接后关闭移动端侧边栏
   links.forEach(function(link) {
@@ -119,7 +139,7 @@
     if (siteIndexLoaded || siteIndexLoading) return;
     siteIndexLoading = true;
     var s = document.createElement('script');
-    s.src = 'assets/search-index.js';
+    s.src = 'assets/search-index.js?v=20260905a';
     s.onload = refreshSiteIndex;
     document.head.appendChild(s);
   }
