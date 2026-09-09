@@ -3273,392 +3273,392 @@ window.SITE_SEARCH_INDEX = [
  {
   "p": "cost-analysis.html",
   "a": "scenario",
-  "s": "一、业务场景：接单决策成本测算",
+  "s": "业务场景：接单决策成本测算",
   "t": "报价成本核算",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "scenario",
-  "s": "一、业务场景：接单决策成本测算",
+  "s": "业务场景：接单决策成本测算",
   "t": "接单决策成本测算",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "scenario",
-  "s": "一、业务场景：接单决策成本测算",
+  "s": "业务场景：接单决策成本测算",
   "t": "四类取数来源总览",
   "y": "表格"
  },
  {
   "p": "cost-analysis.html",
   "a": "material-price",
-  "s": "二、原材料价格取数",
+  "s": "原材料价格取数",
   "t": "原材料价格取数",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "material-price",
-  "s": "二、原材料价格取数",
+  "s": "原材料价格取数",
   "t": "MM03 物料主数据显示",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "material-price",
-  "s": "二、原材料价格取数",
+  "s": "原材料价格取数",
   "t": "ME13 采购信息记录显示",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "material-price",
-  "s": "二、原材料价格取数",
+  "s": "原材料价格取数",
   "t": "CKM3 物料价格分析",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "material-price",
-  "s": "二、原材料价格取数",
+  "s": "原材料价格取数",
   "t": "MR21 价格变更",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "material-price",
-  "s": "二、原材料价格取数",
+  "s": "原材料价格取数",
   "t": "S_ALR_87013199 物料价格分析报表",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "material-price",
-  "s": "二、原材料价格取数",
+  "s": "原材料价格取数",
   "t": "ME1P 采购信息记录价格清单",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "工序作业价格取数",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "计划作业价格取数（报价主用）",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KP06 成本要素/作业投入计划",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KP26 作业输出/价格计划",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KSPI 迭代计划价计算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KL01 作业类型主数据",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "实际作业价格取数（月结复核用）",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KSS2 成本中心实际费用分割",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KSII 实际作业价计算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KSBT 成本中心报表",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "CON2 实际价重估订单",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KB21N 作业实际数量计上",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "S_ALR_87013611 成本中心计划/实际/差异报表",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "KP26 - 作业输出/价格计划（机加工车间） ▼",
   "y": "折叠项"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "能耗费用取数",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "作为活动类型方式",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "作为成本要素归集方式",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "能耗取数关键事务码",
   "y": "表格"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "报价成本估算执行",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "CK11N 物料成本估算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "CK51N 销售订单成本估算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "CK40N 批量估算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "KKPAN 无数量结构估算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "CK13N 显示成本估算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "CK51N - 销售订单成本估算（订单号 100045 / 报价决策） ▼",
   "y": "折叠项"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "OKKN 成本核算变式",
   "y": "配置"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis",
-  "s": "六、成本分析开展方法",
+  "s": "成本分析开展方法",
   "t": "成本分析开展方法",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis",
-  "s": "六、成本分析开展方法",
+  "s": "成本分析开展方法",
   "t": "成本分析五步法",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis",
-  "s": "六、成本分析开展方法",
+  "s": "成本分析开展方法",
   "t": "9类差异（投入5类+产出4类）",
   "y": "表格"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "成本分析取数事务码总表",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "CO03 生产订单显示",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "KOB1 订单行项目",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "KKBC_ORD 订单成本对象报表",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "KKS1/KKS2 差异计算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "CKMLCP 物料分类账结算",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "KE30 CO-PA报表",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "取数链路记忆口诀",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "activity-price",
-  "s": "三、工序作业价格取数",
+  "s": "工序作业价格取数",
   "t": "常见错误对照表（作业价取数）",
   "y": "表格"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "能耗抄表与计量环节（实际作业量从哪来）",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "KB21C 分摊作业量到各接收订单/成本中心",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "KB21 细分作业凭证",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "CO11N/CO19 生产报工自动带出工时/机时/能耗",
   "y": "事务码"
  },
  {
   "p": "cost-analysis.html",
   "a": "energy-cost",
-  "s": "四、能耗费用取数",
+  "s": "能耗费用取数",
   "t": "图4：能耗抄表→作业量计上→实际单价计算链路",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "quotation",
-  "s": "五、报价成本估算执行",
+  "s": "报价成本估算执行",
   "t": "接单决策矩阵（成本+目标利润 vs 客户报价）",
   "y": "表格"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis",
-  "s": "六、成本分析开展方法",
+  "s": "成本分析开展方法",
   "t": "图5：成本管理PDCA闭环",
   "y": "标题"
  },
  {
   "p": "cost-analysis.html",
   "a": "analysis-tc",
-  "s": "七、成本分析取数事务码总表",
+  "s": "成本分析取数事务码总表",
   "t": "主要使用角色",
   "y": "表格"
  }

@@ -91,7 +91,7 @@
   </div>
 
   <section id="scenario">
-    <h2>一、业务场景：接单决策成本测算</h2>
+    <h2>业务场景：接单决策成本测算</h2>
     <p>市场拿到一个新订单，总经理需要决策是否接单。成本会计的任务是根据大致的BOM和工艺路线，快速测算订单成本，为定价与接单决策提供依据。本节梳理成本构成与四类取数来源。</p>
 
     <div class="callout">
@@ -166,7 +166,7 @@ graph LR
   </section>
 
   <section id="material-price">
-    <h2>二、原材料价格取数</h2>
+    <h2>原材料价格取数</h2>
     <p>原材料价格主要从物料主数据与采购主数据取数，<strong>评估变式（Valuation Variant）</strong> 中配置取价策略序列，系统按优先级自动取价。报价测算时，建议优先使用<strong>采购信息记录净价</strong>或<strong>移动平均价</strong>（反映最新实际采购价），其次才用标准价。</p>
 
     <h3>取价策略序列（评估变式配置）</h3>
@@ -226,7 +226,7 @@ graph LR
   </section>
 
   <section id="activity-price">
-    <h2>三、工序作业价格取数</h2>
+    <h2>工序作业价格取数</h2>
     <p>这是本场景的核心问题：<strong>工时费用和能耗费用的单价从哪里取</strong>。在SAP中，工序作业成本通过<strong>活动类型（Activity Type）</strong> × <strong>成本中心</strong> 维护单价，工艺路线中作业消耗量乘以该单价即得工序成本。作业单价分计划价与实际价两套体系。</p>
 
     <figure class="diagram">
@@ -394,7 +394,7 @@ graph TD
   </section>
 
   <section id="energy-cost">
-    <h2>四、能耗费用取数</h2>
+    <h2>能耗费用取数</h2>
     <p>能耗（电、水、蒸汽、压缩空气、燃气等）是制造费用的重要组成，也是工序作业成本的关键来源。SAP中有两种主流处理方式，报价取数均通过作业单价体现。</p>
 
     <div class="two-col">
@@ -476,7 +476,7 @@ graph LR
   </section>
 
   <section id="quotation">
-    <h2>五、报价成本估算执行</h2>
+    <h2>报价成本估算执行</h2>
     <p>四类取数就绪后，通过成本估算事务码把BOM、工艺路线、作业价格、材料价格、加成率组装成完整报价成本。核心事务码：CK11N（物料成本估算，带数量结构）、CK51N（销售订单成本估算，按订单BOM）、CK40N（批量）。</p>
 
     <h3>成本核算变式与评估变式</h3>
@@ -616,7 +616,7 @@ graph LR
   </section>
 
   <section id="analysis">
-    <h2>六、成本分析开展方法</h2>
+    <h2>成本分析开展方法</h2>
     <p>成本分析的目的是找出成本偏差的根因、归集责任、支持改善决策。SAP提供从物料、订单、成本中心、获利能力四个层面的完整分析工具链。开展成本分析建议遵循"五步法"。</p>
 
     <figure class="diagram">
@@ -716,7 +716,7 @@ graph TB
   </section>
 
   <section id="analysis-tc">
-    <h2>七、成本分析取数事务码总表</h2>
+    <h2>成本分析取数事务码总表</h2>
     <p>下表汇总成本分析全链路取数事务码，按分析维度分组，便于实操时快速定位。</p>
 
     <div class="table-wrap">

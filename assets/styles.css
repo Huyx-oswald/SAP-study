@@ -1853,10 +1853,10 @@
 
   /* === 响应式 === */
   @media (max-width: 1280px) {
-    .docs-shell { grid-template-columns: 250px minmax(0, 1fr); gap: 32px; }
-    .docs-toc { display: none; }
+    .docs-shell { grid-template-columns: 220px minmax(0, 1fr) 200px; gap: 24px; }
   }
   @media (max-width: 1024px) {
+    .docs-toc { display: none; }
     .topnav-links { display: none; }
     .topnav-toggle { display: block; }
     .topnav-search { margin-left: auto; width: 170px; }
