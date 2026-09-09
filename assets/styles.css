@@ -301,6 +301,7 @@
     border: 1px solid var(--rule);
     border-radius: 10px;
     padding: 20px;
+    overflow-x: auto; /* 长流程图横向滚动防护 */
   }
   .diagram figcaption {
     font-size: 0.85rem;
@@ -455,6 +456,19 @@
     font-size: 0.95rem;
     background: var(--bg2);
     transition: background 0.2s;
+    /* a11y: 键盘可聚焦与反馈 */
+    outline: none;
+    border: 0;
+    width: 100%;
+    text-align: left;
+  }
+  .accordion-header:focus-visible {
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 2px var(--accent);
+  }
+  .accordion-header[tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
   }
   .accordion-header:hover {
     background: var(--accent-soft);

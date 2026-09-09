@@ -476,3 +476,17 @@ try {
     handleDeepLink();
   }
 })();
+
+// === 折叠项键盘可访问性增强（a11y） ===
+// 给 .accordion-header 加 tabindex 与 Enter/Space 触发，配合 CSS :focus-visible
+document.querySelectorAll('.accordion-header').forEach(function(hdr) {
+  if (!hdr.hasAttribute('tabindex')) hdr.setAttribute('tabindex', '0');
+  hdr.setAttribute('role', 'button');
+  hdr.setAttribute('tabindex', '0');
+  hdr.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      hdr.parentElement.classList.toggle('open');
+    }
+  });
+});

@@ -3598,5 +3598,68 @@ window.SITE_SEARCH_INDEX = [
   "s": "七、成本分析取数事务码总表",
   "t": "取数链路记忆口诀",
   "y": "标题"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "activity-price",
+  "s": "三、工序作业价格取数",
+  "t": "常见错误对照表（作业价取数）",
+  "y": "表格"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "energy-cost",
+  "s": "四、能耗费用取数",
+  "t": "能耗抄表与计量环节（实际作业量从哪来）",
+  "y": "标题"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "energy-cost",
+  "s": "四、能耗费用取数",
+  "t": "KB21C 分摊作业量到各接收订单/成本中心",
+  "y": "事务码"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "energy-cost",
+  "s": "四、能耗费用取数",
+  "t": "KB21 细分作业凭证",
+  "y": "事务码"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "energy-cost",
+  "s": "四、能耗费用取数",
+  "t": "CO11N/CO19 生产报工自动带出工时/机时/能耗",
+  "y": "事务码"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "energy-cost",
+  "s": "四、能耗费用取数",
+  "t": "图4：能耗抄表→作业量计上→实际单价计算链路",
+  "y": "标题"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "quotation",
+  "s": "五、报价成本估算执行",
+  "t": "接单决策矩阵（成本+目标利润 vs 客户报价）",
+  "y": "表格"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "analysis",
+  "s": "六、成本分析开展方法",
+  "t": "图5：成本管理PDCA闭环",
+  "y": "标题"
+ },
+ {
+  "p": "cost-analysis.html",
+  "a": "analysis-tc",
+  "s": "七、成本分析取数事务码总表",
+  "t": "主要使用角色",
+  "y": "表格"
  }
 ];

@@ -326,6 +326,7 @@ graph TD
                   <tr><td>CC2000</td><td>WATER 工业水</td><td>2,000</td><td>t</td><td>0.00</td><td>4.50</td><td><b>4.50 元/t</b></td></tr>
                 </table>
                 <div class="sap-field-row"><span class="sap-label">说明</span><span class="sap-input-readonly">平均价 = (固定价 + 变动价)；报价取"平均价"列。KSPI迭代后此值可被自动计算覆盖。</span></div>
+                <div class="sap-statusbar"><span>4 行已读取</span><span class="sap-ok">✓ 作业价格已保存 (版本0/2026年9期)</span></div>
               </div>
             </div>
           </div>
@@ -373,6 +374,23 @@ graph TD
       <strong>报价取数要点</strong>
       报价阶段取<strong>计划作业价</strong>（KP26平均价列或KSPI迭代后值）。若历史数据可信，也可参考上期 KSII 算出的实际作业价。切勿直接用 KP06 单列费用除以任意产量——必须用 KSPI 统一迭代后的单价，否则会漏算成本中心间相互服务的成本分摊。
     </div>
+
+    <h3>常见错误对照表（作业价取数）</h3>
+    <p>以下四类错误在报价测算中高频出现，列出错误做法、后果与正确路径，便于自查：</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>错误做法</th><th>后果</th><th>正确路径</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>KP06 单列费用 ÷ 任意产量</td><td>漏算跨中心服务分摊，单价偏低</td><td>用 KSPI 迭代后的统一单价</td></tr>
+          <tr><td>直接取 KP26 固定价作单价</td><td>漏变动部分，报价偏低</td><td>取 KP26「平均价」列（固定+变动）</td></tr>
+          <tr><td>用上期实际价不校验</td><td>若上期有异常费用，单价失真</td><td>参考 KSII 但用 S_ALR_87013611 复盘差异</td></tr>
+          <tr><td>取旧版次计划价</td><td>用 0 版以外的版本导致与正式估算不一致</td><td>统一用版本 0（计划/实际）</td></tr>
+          <tr><td>忽略活动类型单位换算</td><td>工艺路线用分钟、KP26 用小时，量纲错位</td><td>统一作业单位（h/kWh/t）后引用</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section id="energy-cost">
@@ -416,6 +434,44 @@ graph TD
     <div class="callout success">
       <strong>能耗取数实操建议</strong>
       报价测算能耗时，先确认本企业能耗是按活动类型（方式一）还是成本要素（方式二）管理。若是方式一，直接从 <span class="tcode">KSBT</span> 取动力车间各能源作业类型的平均价；若是方式二，则能耗已隐含在加工费作业单价中，需用 <span class="tcode">S_ALR_87013611</span> 复盘历史单耗（元/产品单位）作为参考系数估算。建议长期改造为方式一以提升成本透明度。
+    </div>
+
+    <h3>能耗抄表与计量环节（实际作业量从哪来）</h3>
+    <p>报价取数用的是<strong>计划作业价</strong>，但月结算实际价时需要"实际作业量"作分母，这个量从抄表/计量环节来。能耗因无BOM直接消耗关系，必须通过作业凭证计上到接收方，常见三种来源：</p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+graph LR
+    M1[电表/水表抄表] -->|月度抄见量| C[动力车间归集]
+    M2[车间能耗计量仪] -->|分项计量| C
+    M3[DCS/MES系统] -->|自动采集| C
+    C -->|实际作业量计上| KB[KB21N/KB21C 作业量计上]
+    KB -->|发送方=动力中心 接收方=生产订单/工序| KS[KSII 算实际电单价]
+    KS -->|实际总费用÷实际总电量| P[实际电单价 元/kWh]
+
+    style KB fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
+    style KS fill:#0756ab,stroke:#0a6bd1,stroke-width:2px,color:#fff
+      </pre>
+      <figcaption>图4：能耗抄表→作业量计上→实际单价计算链路</figcaption>
+    </figure>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>计量来源</th><th>录入方式</th><th>事务码</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>总表抄表</td><td>手工录入动力车间总作业量</td><td><span class="tcode">KB21N</span></td><td>月度抄见电量(kWh)/水量(t)计上到动力成本中心</td></tr>
+          <tr><td>分项计量</td><td>按车间/工序分录</td><td><span class="tcode">KB21C</span></td><td>分摊作业量到各接收订单/成本中心，支持按比例分</td></tr>
+          <tr><td>细分作业凭证</td><td>直接FI凭证带作业量</td><td><span class="tcode">KB21</span></td><td>初级成本要素凭证同时记金额和作业量</td></tr>
+          <tr><td>DCS/MES自动</td><td>接口传入</td><td><span class="tcode">CO11N/CO19</span></td><td>生产报工时自动带出工时/机时/能耗</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <strong>抄表环节易错点</strong>
+      抄表量须与 FI 电费发票金额<strong>同月口径</strong>，否则 KSII 算出的电单价会失真（分子是本月费用、分母却用了上月或下月电量）。跨月电量需在 <span class="tcode">KB21N</span> 按月分摊。动力车间自用电应在计上前扣除或作为内部作业消耗处理，避免电量虚高导致单价偏低。
     </div>
   </section>
 
@@ -513,11 +569,44 @@ graph TD
                   <tr style="background:#0756ab;color:#fff;"><td><b>报价总成本</b></td><td>—</td><td><b>2,067.93</b></td><td><b>206.79</b></td><td><b>100%</b></td></tr>
                 </table>
                 <div class="sap-field-row"><span class="sap-label">决策提示</span><span class="sap-input-readonly">客户报价 2,400 元 → 单件毛利 33.21元（毛利率16%）→ 可接单</span></div>
+                <div class="sap-statusbar"><span>成本估算 ZQT1 / 2026-09-06</span><span class="sap-ok">✓ 估算完成，单件成本 206.79 元，毛利率 16%</span></div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <h3>接单决策矩阵（成本+目标利润 vs 客户报价）</h3>
+    <p>报价成本算出后，需与客户报价、目标利润率对照做决策。下表给出四种典型情境的判定，并把事后可用的 SAP 分析工具对接到决策，形成"事前报价→事后分析"闭环。</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>情境</th><th>报价成本 vs 客户价</th><th>毛利率</th><th>决策</th><th>事后分析工具</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:#d1fae5;">
+            <td>A 高利润可接</td><td>报价 206.79 ＜ 客户价 240</td><td>16%</td>
+            <td><strong style="color:#047857;">✓ 接单</strong></td>
+            <td><span class="tcode">CO03</span>+<span class="tcode">KE30</span> 回看实际成本与订单边际贡献</td>
+          </tr>
+          <tr style="background:#dbeafe;">
+            <td>B 微利临界</td><td>报价 206.79 vs 客户价 215</td><td>3.8%</td>
+            <td><strong style="color:#1d4ed8;">△ 谈判/压成本</strong></td>
+            <td><span class="tcode">KKS2</span> 定位差异大类，看能否降作业单价</td>
+          </tr>
+          <tr style="background:#fef3c7;">
+            <td>C 成本倒挂</td><td>报价 206.79 ＞ 客户价 200</td><td>-3.4%</td>
+            <td><strong style="color:#b45309;">✗ 不接或重组BOM</strong></td>
+            <td><span class="tcode">CK11N</span> 重算替代料/工艺，<span class="tcode">ME13</span> 找更优供应商</td>
+          </tr>
+          <tr style="background:#ffe4e6;">
+            <td>D 战略亏损</td><td>报价 206.79 vs 客户价 180</td><td>-12.6%</td>
+            <td><strong style="color:#be123c;">✗ 放弃/特批</strong></td>
+            <td><span class="tcode">CO-PA</span> 看长期客户LTV是否覆盖单笔亏损</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="callout">
@@ -598,6 +687,32 @@ graph LR
 
     <h3>第五步：改善与反馈</h3>
     <p>把分析结论反馈到三处：①修订主数据（BOM/Routing/作业价 KP26）；②优化业务执行（降低损耗、提高OEE）；③调整预算与标准（下期 CK40N 重估标准价）。形成"标准→执行→差异→改善→新标准"的闭环。</p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+graph TB
+    P[Plan 计划阶段] -->|KP06/KP26/KSPI 定计划价| M[CK40N/CK11N 发布标准成本]
+    D[Do 执行阶段] -->|KB21N 计上实际作业量| E[CON2 实际价重估订单]
+    M --> E
+    E --> C[Check 检查阶段]
+    C -->|KKS2 算9类差异| CK[CKM3/CKMLCP 物料实际成本]
+    C -->|S_ALR_87013611 中心差异| CK
+    CK --> A[Act 改善阶段]
+    A -->|修订主数据 KP26/Routing| P
+    A -->|调整下期标准 CK40N| M
+
+    style P fill:#0756ab,stroke:#0a6bd1,stroke-width:2px,color:#fff
+    style D fill:#059669,stroke:#047857,stroke-width:2px,color:#fff
+    style C fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
+    style A fill:#be123c,stroke:#9f1239,stroke-width:2px,color:#fff
+      </pre>
+      <figcaption>图5：成本管理PDCA闭环——从主数据→标准→执行→差异→改善→新标准</figcaption>
+    </figure>
+
+    <div class="callout success">
+      <strong>闭环要点</strong>
+      PDCA 的关键在「Act 反哺」——把差异分析结论真正落到 KP26 作业价、BOM 用量、Routing 工时三项主数据的修订上，否则差异分析只停留在报告、不产生改善。建议每月结账后召开<strong>成本评审会</strong>，由成本会计、车间、采购共同认责9类差异并形成修订动作清单。
+    </div>
   </section>
 
   <section id="analysis-tc">
@@ -607,37 +722,39 @@ graph LR
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>分析维度</th><th>事务码</th><th>功能</th><th>典型取数字段</th></tr>
+          <tr><th>分析维度</th><th>事务码</th><th>功能</th><th>典型取数字段</th><th>主要使用角色</th></tr>
         </thead>
         <tbody>
-          <tr><td rowspan="4">物料实际成本</td><td><span class="tcode">CKM3</span></td><td>物料价格分析（多级）</td><td>价格差异、消耗差异、实际单价</td></tr>
-          <tr><td><span class="tcode">CKM3N</span></td><td>物料价格分析（新）</td><td>按物料/期间明细</td></tr>
-          <tr><td><span class="tcode">CKMLCP</span></td><td>物料分类账结算</td><td>实际成本计算结果</td></tr>
-          <tr><td><span class="tcode">CKMLQS</span></td><td>实际BOM结构查询</td><td>投入物料+作业的数量金额</td></tr>
-          <tr><td rowspan="5">生产订单成本</td><td><span class="tcode">CO03</span></td><td>生产订单显示</td><td>成本标签页：计划vs实际</td></tr>
-          <tr><td><span class="tcode">KOB1</span></td><td>订单行项目</td><td>按成本要素的明细</td></tr>
-          <tr><td><span class="tcode">KKBC_ORD</span></td><td>订单成本对象报表</td><td>成本组件、WIP、差异</td></tr>
-          <tr><td><span class="tcode">KKAO/KKAX</span></td><td>在制品计算</td><td>WIP金额</td></tr>
-          <tr><td><span class="tcode">KO88/CO88</span></td><td>订单结算</td><td>结算到物料/PA</td></tr>
-          <tr><td rowspan="4">差异分析</td><td><span class="tcode">KKS1</span></td><td>差异计算-订单（后台）</td><td>9类差异金额</td></tr>
-          <tr><td><span class="tcode">KKS2</span></td><td>差异计算-订单（前台）</td><td>9类差异明细</td></tr>
-          <tr><td><span class="tcode">KKS5/KKS6</span></td><td>差异计算-期间</td><td>期间维度差异</td></tr>
-          <tr><td><span class="tcode">KK3S</span></td><td>成本对象报表</td><td>对象层差异汇总</td></tr>
-          <tr><td rowspan="5">成本中心</td><td><span class="tcode">S_ALR_87013611</span></td><td>计划/实际/差异报表</td><td>中心层费用、作业量、差异</td></tr>
-          <tr><td><span class="tcode">KSB1</span></td><td>成本中心行项目</td><td>实际费用明细</td></tr>
-          <tr><td><span class="tcode">KSBT</span></td><td>成本中心报表</td><td>值类型1计划价/4实际价</td></tr>
-          <tr><td><span class="tcode">KSII</span></td><td>实际作业价计算</td><td>实际作业单价</td></tr>
-          <tr><td><span class="tcode">KB21N</span></td><td>作业实际数量计上</td><td>实际作业量</td></tr>
-          <tr><td rowspan="3">物料价格</td><td><span class="tcode">MM03</span></td><td>物料主数据</td><td>STPRS/VERPR/VPRSV/改价日期</td></tr>
-          <tr><td><span class="tcode">MR21</span></td><td>价格变更</td><td>调价记录</td></tr>
-          <tr><td><span class="tcode">S_ALR_87013199</span></td><td>物料价格分析报表</td><td>期间变动物料清单</td></tr>
-          <tr><td rowspan="2">获利能力</td><td><span class="tcode">KE30</span></td><td>CO-PA报表</td><td>按产品/客户/地区边际贡献</td></tr>
-          <tr><td><span class="tcode">KE24</span></td><td>CO-PA行项目</td><td>获利能力段明细</td></tr>
-          <tr><td rowspan="2">报价取数</td><td><span class="tcode">ME13/ME1P</span></td><td>采购信息记录/清单</td><td>供应商净价</td></tr>
-          <tr><td><span class="tcode">KP26/KSPI</span></td><td>计划作业价维护/计算</td><td>计划作业单价</td></tr>
+          <tr><td rowspan="4">物料实际成本</td><td><span class="tcode">CKM3</span></td><td>物料价格分析（多级）</td><td>价格差异、消耗差异、实际单价</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">CKM3N</span></td><td>物料价格分析（新）</td><td>按物料/期间明细</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">CKMLCP</span></td><td>物料分类账结算</td><td>实际成本计算结果</td><td><span class="badge amber">CO顾问</span></td></tr>
+          <tr><td><span class="tcode">CKMLQS</span></td><td>实际BOM结构查询</td><td>投入物料+作业的数量金额</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td rowspan="5">生产订单成本</td><td><span class="tcode">CO03</span></td><td>生产订单显示</td><td>成本标签页：计划vs实际</td><td><span class="badge teal">车间计划</span></td></tr>
+          <tr><td><span class="tcode">KOB1</span></td><td>订单行项目</td><td>按成本要素的明细</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">KKBC_ORD</span></td><td>订单成本对象报表</td><td>成本组件、WIP、差异</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">KKAO/KKAX</span></td><td>在制品计算</td><td>WIP金额</td><td><span class="badge amber">CO顾问</span></td></tr>
+          <tr><td><span class="tcode">KO88/CO88</span></td><td>订单结算</td><td>结算到物料/PA</td><td><span class="badge amber">CO顾问</span></td></tr>
+          <tr><td rowspan="4">差异分析</td><td><span class="tcode">KKS1</span></td><td>差异计算-订单（后台）</td><td>9类差异金额</td><td><span class="badge amber">CO顾问</span></td></tr>
+          <tr><td><span class="tcode">KKS2</span></td><td>差异计算-订单（前台）</td><td>9类差异明细</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">KKS5/KKS6</span></td><td>差异计算-期间</td><td>期间维度差异</td><td><span class="badge amber">CO顾问</span></td></tr>
+          <tr><td><span class="tcode">KK3S</span></td><td>成本对象报表</td><td>对象层差异汇总</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td rowspan="5">成本中心</td><td><span class="tcode">S_ALR_87013611</span></td><td>计划/实际/差异报表</td><td>中心层费用、作业量、差异</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">KSB1</span></td><td>成本中心行项目</td><td>实际费用明细</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">KSBT</span></td><td>成本中心报表</td><td>值类型1计划价/4实际价</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td><span class="tcode">KSII</span></td><td>实际作业价计算</td><td>实际作业单价</td><td><span class="badge amber">CO顾问</span></td></tr>
+          <tr><td><span class="tcode">KB21N</span></td><td>作业实际数量计上</td><td>实际作业量</td><td><span class="badge teal">车间统计</span></td></tr>
+          <tr><td rowspan="3">物料价格</td><td><span class="tcode">MM03</span></td><td>物料主数据</td><td>STPRS/VERPR/VPRSV/改价日期</td><td><span class="badge green">采购/物料</span></td></tr>
+          <tr><td><span class="tcode">MR21</span></td><td>价格变更</td><td>调价记录</td><td><span class="badge amber">CO顾问</span></td></tr>
+          <tr><td><span class="tcode">S_ALR_87013199</span></td><td>物料价格分析报表</td><td>期间变动物料清单</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td rowspan="2">获利能力</td><td><span class="tcode">KE30</span></td><td>CO-PA报表</td><td>按产品/客户/地区边际贡献</td><td><span class="badge rose">财务经理</span></td></tr>
+          <tr><td><span class="tcode">KE24</span></td><td>CO-PA行项目</td><td>获利能力段明细</td><td><span class="badge blue">成本会计</span></td></tr>
+          <tr><td rowspan="2">报价取数</td><td><span class="tcode">ME13/ME1P</span></td><td>采购信息记录/清单</td><td>供应商净价</td><td><span class="badge green">采购</span></td></tr>
+          <tr><td><span class="tcode">KP26/KSPI</span></td><td>计划作业价维护/计算</td><td>计划作业单价</td><td><span class="badge amber">CO顾问</span></td></tr>
         </tbody>
       </table>
     </div>
+
+    <p>角色说明：<span class="badge blue">成本会计</span>日常核算与分析主力；<span class="badge amber">CO顾问</span>负责后台配置与月结作业价计算；<span class="badge teal">车间</span>负责报工与作业量计上；<span class="badge green">采购</span>维护物料价格与信息记录；<span class="badge rose">财务经理</span>关注盈利分析与决策。</p>
 
     <div class="callout success">
       <strong>取数链路记忆口诀</strong>
