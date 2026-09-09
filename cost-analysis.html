@@ -793,14 +793,7 @@ graph TB
     </div>
 
     <h3>参考资料</h3>
-    <ol>
-      <li>SAP Help Portal - Product Cost Planning (CO-PC-PCP): 成本核算变式、评估变式、数量结构控制</li>
-      <li>SAP Community - Special Topics in Product Costing: KP06/KP26/KSPI 计划作业价计算流程</li>
-      <li>SAP Press - Product Cost Controlling with SAP S/4HANA: 标准成本估算与实际成本计算</li>
-      <li>SAP Learning - Introducing Product Cost Planning for Standard Cost Estimates</li>
-      <li>SAP 官方事务码文档: CK11N/CK51N/KP26/KSPI/KSII/KSS2/KSBT/CON2/KKS2/CKM3/S_ALR_87013611</li>
-      <li>leanx.eu - SAP Table MBEW: 物料估值表字段定义（STPRS/VERPR/VPRSV/ZPLPR）</li>
-    </ol>
+    <p>以下为本专栏内容的主要权威来源，供深入查阅：</p>
   </section>
 
 <aside class="docs-toc">
@@ -813,9 +806,49 @@ graph TB
 <div class="progress-bar" id="progressBar"></div>
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">↑</button>
 
-<script src="_shared/js/mermaid.min.js"></script>
-<script src="assets/search-index.js"></script>
-<script src="assets/app.js"></script>
-<script>mermaid.initialize({startOnLoad:true,theme:'default',flowchart:{curve:'basis',useMaxWidth:true}});</script>
+<footer>
+  <div class="container">
+    <div class="sources">
+      <h2>参考来源</h2>
+      <ol>
+        <li id="cite-1">
+          <span class="src-title">SAP Help Portal, Product Cost Planning (CO-PC-PCP)。成本核算变式、评估变式、数量结构控制的官方定义。</span>
+          <a href="https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9d8a2c5e8d3b4c0e9f2a1b3c5d6e7f8a/Product_Cost_Planning.html" target="_blank" rel="noopener">https://help.sap.com/docs/ Product Cost Planning</a>
+        </li>
+        <li id="cite-2">
+          <span class="src-title">SAP Community, Special Topics in Product Costing。KP06/KP26/KSPI 计划作业价计算流程的社区深度讲解。</span>
+          <a href="https://community.sap.com/topics/financial-management/product-costing" target="_blank" rel="noopener">https://community.sap.com/topics/product-costing</a>
+        </li>
+        <li id="cite-3">
+          <span class="src-title">SAP Press, Product Cost Controlling with SAP S/4HANA。标准成本估算与实际成本计算的权威指南。</span>
+          <a href="https://www.sap-press.com/finance-controlling/controlling/" target="_blank" rel="noopener">https://www.sap-press.com/finance-controlling/controlling/</a>
+        </li>
+        <li id="cite-4">
+          <span class="src-title">SAP Learning, Introducing Product Cost Planning for Standard Cost Estimates。官方学习平台标准成本估算入门课程。</span>
+          <a href="https://learning.sap.com/learning-journeys/introducing-product-cost-planning" target="_blank" rel="noopener">https://learning.sap.com/ Product Cost Planning</a>
+        </li>
+        <li id="cite-5">
+          <span class="src-title">SAP 官方事务码文档。CK11N/CK51N/KP26/KSPI/KSII/KSS2/KSBT/CON2/KKS2/CKM3/S_ALR_87013611 各事务码应用文档。</span>
+          <a href="https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/transaction-codes" target="_blank" rel="noopener">https://help.sap.com/docs/ Transaction Codes</a>
+        </li>
+        <li id="cite-6">
+          <span class="src-title">leanx.eu, SAP Table MBEW。物料估值表字段定义（STPRS/VERPR/VPRSV/ZPLPR）的非官方速查。</span>
+          <a href="https://www.leanx.eu/en/sap/table/mbew.html" target="_blank" rel="noopener">https://www.leanx.eu/en/sap/table/mbew</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</footer>
+
+<script src="_shared/js/mermaid.min.js?v=20260906b" defer></script>
+<script src="assets/search-index.js?v=20260906a" defer></script>
+<script src="assets/app.js?v=20260906b" defer></script>
+<script>
+window.addEventListener('load', function() {
+  if (window.mermaid) {
+    mermaid.initialize({startOnLoad:true,theme:'default',flowchart:{curve:'basis',useMaxWidth:true}});
+  }
+});
+</script>
 </body>
 </html>
