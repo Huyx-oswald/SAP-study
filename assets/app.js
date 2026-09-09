@@ -25,16 +25,19 @@
 
   // 滚动监听：高亮当前章节 + 进度条 + 返回顶部
   function onScroll() {
+    if (!progressBar && !backToTop) return;
     const scrollY = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
-    progressBar.style.width = progress + '%';
+    if (progressBar) progressBar.style.width = progress + '%';
 
     // 返回顶部按钮
-    if (scrollY > 400) {
-      backToTop.classList.add('visible');
-    } else {
-      backToTop.classList.remove('visible');
+    if (backToTop) {
+      if (scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
     }
 
     // 高亮当前章节（左侧专栏树）
@@ -139,7 +142,7 @@
     if (siteIndexLoaded || siteIndexLoading) return;
     siteIndexLoading = true;
     var s = document.createElement('script');
-    s.src = 'assets/search-index.js?v=20260905a';
+    s.src = 'assets/search-index.js?v=20260906a';
     s.onload = refreshSiteIndex;
     document.head.appendChild(s);
   }
@@ -149,7 +152,8 @@
     'monthly-ops.html': '日常与月结',
     'special-yearend.html': '特殊与年结',
     'integration.html': '排错与集成',
-    'cases-resources.html': '案例与资源'
+    'cases-resources.html': '案例与资源',
+    'cost-analysis.html': '报价与分析'
   };
 
   var searchIndex = [];
