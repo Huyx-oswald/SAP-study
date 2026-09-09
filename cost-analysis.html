@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>报价成本核算与成本分析 | SAP制造业成本会计学习</title>
+<meta name="description" content="面向接单决策的报价成本核算流程：原材料历史价格取数、工序作业价格（KP26/KSII）与能耗费用取数，以及成本分析开展方法与SAP取数事务码（CKM3/CO03/KKS2/S_ALR_87013611）。">
+<meta name="keywords" content="SAP, 报价成本核算, 接单决策, 作业价格, KP26, KSII, KSPI, KSS2, 能耗费用, 成本分析, CKM3, CO03, KKS2, 差异分析, 事务码取数">
+<meta name="author" content="SAP学习笔记">
+<meta property="og:title" content="报价成本核算与成本分析 | SAP制造业成本会计学习">
+<meta property="og:description" content="面向接单决策的报价成本核算流程：原材料历史价格取数、工序作业价格（KP26/KSII）与能耗费用取数，以及成本分析开展方法与SAP取数事务码（CKM3/CO03/KKS2/S_ALR_87013611）。">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/styles.css?v=20260906a">
+<link rel="prefetch" href="cases-resources.html">
+<link rel="prefetch" href="index.html">
+</head>
+<body>
+
+<div class="sidebar-overlay" onclick="setSidebar(false)"></div>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <button class="topnav-toggle" aria-label="打开导航菜单">☰</button>
+    <a class="brand" href="index.html">SAP制造业成本会计学习</a>
+    <nav class="topnav-links" aria-label="专栏导航">
+      <a href="index.html">入门总览</a>
+      <a href="co-basics.html">CO知识体系</a>
+      <a href="monthly-ops.html">日常与月结</a>
+      <a href="special-yearend.html">特殊与年结</a>
+      <a href="integration.html">核对与集成</a>
+      <a href="cases-resources.html">案例与资源</a>
+      <a href="cost-analysis.html" class="active">报价与分析</a>
+    </nav>
+    <div class="topnav-search">
+      <input type="text" id="globalSearch" placeholder="搜索事务码 / 关键词..." autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+</nav>
+
+<div class="docs-shell">
+<aside class="docs-sidebar" id="docsSidebar">
+  <div class="sb-group">
+    <a class="sb-group-link" href="index.html"><span class="sb-num">01</span>入门总览</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="co-basics.html"><span class="sb-num">02</span>CO模块知识体系</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="monthly-ops.html"><span class="sb-num">03</span>日常与月结</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="special-yearend.html"><span class="sb-num">04</span>特殊与年结</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="integration.html"><span class="sb-num">05</span>核对与集成</a>
+  </div>
+  <div class="sb-group">
+    <a class="sb-group-link" href="cases-resources.html"><span class="sb-num">06</span>案例与资源</a>
+  </div>
+  <div class="sb-group current">
+    <a class="sb-group-link" href="cost-analysis.html"><span class="sb-num">07</span>报价核算与成本分析</a>
+    <div class="sb-sub">
+      <a class="sb-item" href="#scenario">业务场景与取数总览</a>
+      <a class="sb-item" href="#material-price">原材料价格取数</a>
+      <a class="sb-item" href="#activity-price">工序作业价格取数</a>
+      <a class="sb-item" href="#energy-cost">能耗费用取数</a>
+      <a class="sb-item" href="#quotation">报价成本估算执行</a>
+      <a class="sb-item" href="#analysis">成本分析开展方法</a>
+      <a class="sb-item" href="#analysis-tc">成本分析取数事务码</a>
+    </div>
+  </div>
+</aside>
+
+<main class="docs-main">
+  <div class="crumb"><a href="index.html">首页</a><span class="sep">/</span><span>报价核算与成本分析</span></div>
+  <h1 class="page-title">报价成本核算与成本分析</h1>
+  <p class="page-subtitle">接单决策成本测算 · 作业价格取数 · 成本分析开展方法与SAP取数</p>
+  <div class="page-meta">
+    <div class="meta-item"><span class="dot"></span>适用版本：SAP ECC 6.0 EHP8 / S/4HANA</div>
+    <div class="meta-item">核心模块：CO-PC 产品成本控制</div>
+    <div class="meta-item">关键事务码：CK11N / CK51N / KP26 / KSII</div>
+    <div class="meta-item">最后更新：2026年9月</div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="stat"><b>1</b><span>业务场景</span></div>
+    <div class="stat"><b>4</b><span>取数来源</span></div>
+    <div class="stat"><b>2</b><span>SAP界面模拟</span></div>
+    <div class="stat"><b>20+</b><span>取数事务码</span></div>
+  </div>
+
+  <section id="scenario">
+    <h2>一、业务场景：接单决策成本测算</h2>
+    <p>市场拿到一个新订单，总经理需要决策是否接单。成本会计的任务是根据大致的BOM和工艺路线，快速测算订单成本，为定价与接单决策提供依据。本节梳理成本构成与四类取数来源。</p>
+
+    <div class="callout">
+      <strong>业务背景</strong>
+      该场景属于"按订单设计/按订单生产"的<strong>报价成本估算</strong>，与正式标准成本估算（CK11N发布到物料标准价）的区别在于：报价估算通常不发布价格，仅用于决策测算；若使用销售订单BOM，可用 CK51N 做销售订单成本估算并保留结果。
+    </div>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+graph LR
+    A[市场接单] --> B[总经理决策:是否接单?]
+    B --> C[成本会计:依据BOM+工艺路线核价]
+    C --> D1[1.原材料价格取数]
+    C --> D2[2.工序作业价格取数]
+    C --> D3[3.能耗费用取数]
+    C --> D4[4.制造费用/外协取数]
+    D1 --> E[CK11N/CK51N 成本估算]
+    D2 --> E
+    D3 --> E
+    D4 --> E
+    E --> F[报价成本汇总]
+    F --> G{成本+目标利润 vs 订单价}
+    G -->|可接| H[接单并建销售订单BOM]
+    G -->|不可接| I[谈判/放弃]
+
+    style C fill:#0756ab,stroke:#0a6bd1,stroke-width:2px,color:#fff
+    style E fill:#059669,stroke:#047857,stroke-width:2px,color:#fff
+    style F fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
+      </pre>
+      <figcaption>图1：接单决策成本测算流程与四类取数来源</figcaption>
+    </figure>
+
+    <h3>四类取数来源总览</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>成本要素</th>
+            <th>取数来源</th>
+            <th>主事务码</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>原材料成本</td>
+            <td>物料最新价格 / 采购信息记录</td>
+            <td><span class="tcode">MM03</span> <span class="tcode">ME13</span> <span class="tcode">CKM3</span></td>
+            <td>标准价/移动平均价/信息记录净价，按评估变式策略优先级取</td>
+          </tr>
+          <tr>
+            <td>工序作业成本（工时/机时）</td>
+            <td>成本中心作业类型计划价或实际价</td>
+            <td><span class="tcode">KP26</span> <span class="tcode">KSPI</span> <span class="tcode">KSII</span> <span class="tcode">KSBT</span></td>
+            <td>计划价由KP26维护、KSPI迭代计算；实际价由KSS2分割+KSII计算</td>
+          </tr>
+          <tr>
+            <td>能耗费用（电/水/气）</td>
+            <td>能源成本中心归集 → 作业类型单价</td>
+            <td><span class="tcode">KP06</span> <span class="tcode">KP26</span> <span class="tcode">KSII</span></td>
+            <td>电kWh/水kg作为活动类型，或作为成本要素归集后分割到活动类型</td>
+          </tr>
+          <tr>
+            <td>制造费用/外协</td>
+            <td>成本计算表（Overhead）/ 采购信息记录</td>
+            <td><span class="tcode">OKY2</span> <span class="tcode">ME13</span></td>
+            <td>按基数为材料或加工费加成；外协取采购信息记录或外协作业价</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="material-price">
+    <h2>二、原材料价格取数</h2>
+    <p>原材料价格主要从物料主数据与采购主数据取数，<strong>评估变式（Valuation Variant）</strong> 中配置取价策略序列，系统按优先级自动取价。报价测算时，建议优先使用<strong>采购信息记录净价</strong>或<strong>移动平均价</strong>（反映最新实际采购价），其次才用标准价。</p>
+
+    <h3>取价策略序列（评估变式配置）</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>优先级</th><th>取价来源</th><th>事务码</th><th>适用场景</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>采购信息记录净价</td><td><span class="tcode">ME13</span></td><td>有稳定供应商报价，最贴近最新采购价</td></tr>
+          <tr><td>2</td><td>物料移动平均价</td><td><span class="tcode">MM03</span></td><td>常用料，反映近期加权平均实际采购价</td></tr>
+          <tr><td>3</td><td>物料标准价</td><td><span class="tcode">MM03</span></td><td>财年预算价，相对稳定但不一定最新</td></tr>
+          <tr><td>4</td><td>物料未来计划价</td><td><span class="tcode">MM03</span> / MBEW-ZPLPR</td><td>已计划下期调整的价格</td></tr>
+          <tr><td>5</td><td>库位批次价/估价类型价</td><td><span class="tcode">MBEW</span> 表</td><td>启用批次估价时</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>核心事务码与表</h3>
+    <div class="card-grid">
+      <div class="card blue">
+        <div class="card-icon">MM03</div>
+        <h4>物料主数据显示</h4>
+        <p>会计视图1：标准价（STPRS）、移动平均价（VERPR）、价格控制（VPRSV：S标准/V移动平均）、价格变更日期。报价测算主要看此处。</p>
+      </div>
+      <div class="card teal">
+        <div class="card-icon">ME13</div>
+        <h4>采购信息记录显示</h4>
+        <p>供应商-物料-工厂组合的净价、有效期、起订量、条件记录。最新供应商报价应优先取自此处。</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">CKM3</div>
+        <h4>物料价格分析</h4>
+        <p>启用物料分类账后，可查物料多级价格差异、实际单位成本构成，分析材料价格变动对成本的影响。</p>
+      </div>
+      <div class="card amber">
+        <div class="card-icon">MBEW</div>
+        <h4>物料估值表</h4>
+        <p>物料估值数据存储表，含 STPRS标准价、VERPR移动平均价、ZPLPR未来计划价、VPRSV价格控制、LAETR最后价格变更日期，便于批量取数。</p>
+      </div>
+      <div class="card purple">
+        <div class="card-icon">MR21</div>
+        <h4>价格变更</h4>
+        <p>手工调整物料价格（标准价或移动平均价）。报价取数时应注意物料是否近期被MR21调价。</p>
+      </div>
+      <div class="card rose">
+        <div class="card-icon">S_ALR_87013199</div>
+        <h4>物料价格分析报表</h4>
+        <p>按期间筛选标准价格变动物料清单，批量核查近期材料价格调整情况，确保报价取数基于最新价。</p>
+      </div>
+    </div>
+
+    <div class="callout success">
+      <strong>取数建议</strong>
+      报价测算时先用 <span class="tcode">ME1P</span>（采购信息记录价格清单）导出关键料最新信息记录净价；对无信息记录的料用 <span class="tcode">MM03</span> 取移动平均价；启用物料账的料可用 <span class="tcode">CKM3</span> 查实际成本构成作参考。务必检查"最后价格变更日期"是否近期。
+    </div>
+  </section>
+
+  <section id="activity-price">
+    <h2>三、工序作业价格取数</h2>
+    <p>这是本场景的核心问题：<strong>工时费用和能耗费用的单价从哪里取</strong>。在SAP中，工序作业成本通过<strong>活动类型（Activity Type）</strong> × <strong>成本中心</strong> 维护单价，工艺路线中作业消耗量乘以该单价即得工序成本。作业单价分计划价与实际价两套体系。</p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+graph TD
+    subgraph 计划价体系
+        P1[KP06 成本要素计划] -->|成本中心计划费用|
+        P2[KP26 作业输出/价格计划] -->|计划作业量+计划价|
+        P1 --> P3
+        P2 --> P3
+        P3[KSPI 迭代计划价计算] -->|计划总费用/计划作业量=计划作业单价|
+    end
+    subgraph 实际价体系
+        A1[FI实际费用归集至成本中心] --> A2[KSS2 实际费用分割]
+        A3[KB21N 作业实际数量计上] --> A2
+        A2 --> A4[KSII 实际作业价计算]
+        A4 -->|实际总费用/实际作业量=实际作业单价|
+    end
+    P3 --> Q[报价取数:计划价为主]
+    A4 --> R[月结取数:实际价复核]
+    Q --> CK[CK11N 估算 工序成本=作业价×作业量]
+    R --> CON2[CON2 实际价重估订单]
+
+    style P3 fill:#0756ab,stroke:#0a6bd1,stroke-width:2px,color:#fff
+    style A4 fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
+    style CK fill:#059669,stroke:#047857,stroke-width:2px,color:#fff
+      </pre>
+      <figcaption>图2：工序作业价格取数双体系（计划价 vs 实际价）</figcaption>
+    </figure>
+
+    <h3>计划作业价格取数（报价主用）</h3>
+    <p>报价成本核算主要使用<strong>计划作业价</strong>，因为它在期初已确定、稳定可预期，适合决策测算。三步走：KP06计划费用 → KP26计划作业量 → KSPI算计划单价。</p>
+
+    <div class="card-grid">
+      <div class="card blue">
+        <div class="card-icon">KP06</div>
+        <h4>成本要素/作业投入计划</h4>
+        <p>按成本中心×成本要素（或作业类型）维护计划费用：人工资、折旧、电费、维修费等。这是作业单价的分子来源。</p>
+      </div>
+      <div class="card teal">
+        <div class="card-icon">KP26</div>
+        <h4>作业输出/价格计划</h4>
+        <p>按成本中心×作业类型维护计划作业输出量（如计划总工时、机时）和计划单价（固定价+变动价）。这是作业单价的分母来源。</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">KSPI</div>
+        <h4>迭代计划价计算</h4>
+        <p>系统自动算：计划作业单价 = 计划总费用（KP06）÷ 计划作业量（KP26）。考虑成本中心间相互提供服务，迭代计算直至收敛。</p>
+      </div>
+      <div class="card amber">
+        <div class="card-icon">KL01</div>
+        <h4>作业类型主数据</h4>
+        <p>定义作业类型（如人工工时LABOR、机器工时MACHINE、电kWh、水kg），含作业单位、分摊成本要素、实际价指示符。KL01/KL02/KL03维护。</p>
+      </div>
+    </div>
+
+    <!-- SAP界面模拟：KP26 -->
+    <h3>附：作业价格计划界面模拟（KP26）</h3>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>KP26 - 作业输出/价格计划（机加工车间）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>更改作业类型/价格计划：初始屏幕</span>
+                <span class="sap-tx">KP26</span>
+              </div>
+              <div class="sap-menubar">
+                <span>转向</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 周期性</span>
+                <span class="sap-btn">📊 概览</span>
+                <span class="sap-btn">📄 明细</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">版本</span><span class="sap-input">0 计划/实际</span></div>
+                <div class="sap-field-row"><span class="sap-label">从期间</span><span class="sap-input">9</span><span class="sap-label">到期间</span><span class="sap-input">9</span></div>
+                <div class="sap-field-row"><span class="sap-label">会计年度</span><span class="sap-input">2026</span></div>
+                <div class="sap-field-row"><span class="sap-label">成本中心</span><span class="sap-input">CC1000 机加工车间</span></div>
+                <div class="sap-field-row"><span class="sap-label">作业类型</span><span class="sap-input">LABOR 到 MACHINE</span></div>
+
+                <div class="sap-section-hdr">作业价格明细（版本0 / 2026年9期）</div>
+                <table class="sap-table">
+                  <tr><th>成本中心</th><th>作业类型</th><th>计划作业量</th><th>单位</th><th>固定价</th><th>变动价</th><th>平均价</th></tr>
+                  <tr><td>CC1000</td><td>LABOR 人工工时</td><td>2,000</td><td>h</td><td>30.00</td><td>5.00</td><td><b>35.00 元/h</b></td></tr>
+                  <tr><td>CC1000</td><td>MACHINE 机器工时</td><td>3,000</td><td>h</td><td>12.00</td><td>3.00</td><td><b>15.00 元/h</b></td></tr>
+                  <tr><td>CC2000</td><td>ELEC 电力</td><td>50,000</td><td>kWh</td><td>0.00</td><td>0.80</td><td><b>0.80 元/kWh</b></td></tr>
+                  <tr><td>CC2000</td><td>WATER 工业水</td><td>2,000</td><td>t</td><td>0.00</td><td>4.50</td><td><b>4.50 元/t</b></td></tr>
+                </table>
+                <div class="sap-field-row"><span class="sap-label">说明</span><span class="sap-input-readonly">平均价 = (固定价 + 变动价)；报价取"平均价"列。KSPI迭代后此值可被自动计算覆盖。</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>实际作业价格取数（月结复核用）</h3>
+    <p>实际价用于月末复核与订单重估：FI实际费用归集 → KSS2费用分割 → KSII算实际单价 → CON2重估订单。报价阶段一般不取实际价（因为本期还没结束、实际价未出），但<strong>历史实际价</strong>可作下期报价参考。</p>
+
+    <div class="card-grid">
+      <div class="card blue">
+        <div class="card-icon">KSS2</div>
+        <h4>成本中心实际费用分割</h4>
+        <p>把成本中心归集的实际费用按分割结构（OKES定义、OKEW分配）分到各作业类型，使每类作业承担相应费用。是KSII的前置步骤。</p>
+      </div>
+      <div class="card teal">
+        <div class="card-icon">KSII</div>
+        <h4>实际作业价计算</h4>
+        <p>实际作业单价 = 实际总费用（KSS2分割后）÷ 实际作业总量（KB21N计上）。迭代计算跨成本中心相互服务，更新次级成本要素43类金额。</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">KSBT</div>
+        <h4>成本中心报表</h4>
+        <p>值类型1=计划价（KP26），值类型4=实际价（KSII）。一键对比计划vs实际作业单价，核查差异来源，是月结复核的核心报表。</p>
+      </div>
+      <div class="card amber">
+        <div class="card-icon">CON2</div>
+        <h4>实际价重估订单</h4>
+        <p>用KSII算出的实际价重新评估订单已用作业量，把计划价与实际价的差额补计到生产订单，使订单成本由计划价转为实际价口径。</p>
+      </div>
+      <div class="card purple">
+        <div class="card-icon">KB21N</div>
+        <h4>作业实际数量计上</h4>
+        <p>把成本中心实际提供的作业量（如实际工时/机时/电耗）计上到接收方订单/成本中心，是KSII算实际价的分母来源。</p>
+      </div>
+      <div class="card rose">
+        <div class="card-icon">S_ALR_87013611</div>
+        <h4>成本中心计划/实际/差异报表</h4>
+        <p>成本中心层面看计划费用vs实际费用、计划作业量vs实际作业量、差异，定位作业单价偏差根因（费用超支还是产量不足）。</p>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>报价取数要点</strong>
+      报价阶段取<strong>计划作业价</strong>（KP26平均价列或KSPI迭代后值）。若历史数据可信，也可参考上期 KSII 算出的实际作业价。切勿直接用 KP06 单列费用除以任意产量——必须用 KSPI 统一迭代后的单价，否则会漏算成本中心间相互服务的成本分摊。
+    </div>
+  </section>
+
+  <section id="energy-cost">
+    <h2>四、能耗费用取数</h2>
+    <p>能耗（电、水、蒸汽、压缩空气、燃气等）是制造费用的重要组成，也是工序作业成本的关键来源。SAP中有两种主流处理方式，报价取数均通过作业单价体现。</p>
+
+    <div class="two-col">
+      <div class="card blue">
+        <div class="card-icon">方</div>
+        <h4>方式一：作为活动类型</h4>
+        <p>把电定义为作业类型 ELEC（单位kWh）、水为 WATER（单位t），由能源成本中心（如动力车间）作为发送方提供。流程与人工/机时一致：</p>
+        <p><span class="tcode">KP06</span> 计划动力车间总费用 → <span class="tcode">KP26</span> 计划供电量(kWh)/单价 → <span class="tcode">KSPI</span> 算电单价（元/kWh）。</p>
+        <p>工艺路线中作业步骤关联 ELEC 作业类型及消耗量，CK11N 自动取电单价×消耗量计入能耗成本。这是<strong>最规范、最推荐</strong>的方式。</p>
+      </div>
+      <div class="card teal">
+        <div class="card-icon">B</div>
+        <h4>方式二：作为成本要素归集</h4>
+        <p>电费作为初级成本要素（如 600000 电费）归集到动力成本中心，再通过<strong>分割结构</strong>（OKES）按比例分摊到主作业类型（人工/机时）。这种方式能耗"打包"在加工费里，无法在成本估算明细中单独列示电费。</p>
+        <p>若要在报价单中<strong>单独显示能耗</strong>，必须采用方式一定义为活动类型。</p>
+      </div>
+    </div>
+
+    <h3>能耗取数关键事务码</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>步骤</th><th>事务码</th><th>作用</th><th>取数字段</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1. 维护能源作业类型</td><td><span class="tcode">KL01</span></td><td>定义 ELEC/WATER/STEAM 等</td><td>作业单位、分摊成本要素</td></tr>
+          <tr><td>2. 计划能源成本</td><td><span class="tcode">KP06</span></td><td>计划动力车间费用</td><td>各成本要素计划金额</td></tr>
+          <tr><td>3. 计划能源产量/价</td><td><span class="tcode">KP26</span></td><td>计划供电量kWh及单价</td><td>计划作业量、平均价</td></tr>
+          <tr><td>4. 迭代算能源单价</td><td><span class="tcode">KSPI</span></td><td>算电单价 = 总费用/总电量</td><td>计算后单价</td></tr>
+          <tr><td>5. 工艺路线引用</td><td><span class="tcode">CA01/CA02</span></td><td>作业步骤关联ELEC消耗量</td><td>作业数量</td></tr>
+          <tr><td>6. 报价取电价</td><td><span class="tcode">KSBT</span></td><td>查动力车间电单价</td><td>值类型1计划价/4实际价</td></tr>
+          <tr><td>7. 历史能耗复盘</td><td><span class="tcode">S_ALR_87013611</span></td><td>看动力中心计划/实际/差异</td><td>实际单价、单耗差异</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout success">
+      <strong>能耗取数实操建议</strong>
+      报价测算能耗时，先确认本企业能耗是按活动类型（方式一）还是成本要素（方式二）管理。若是方式一，直接从 <span class="tcode">KSBT</span> 取动力车间各能源作业类型的平均价；若是方式二，则能耗已隐含在加工费作业单价中，需用 <span class="tcode">S_ALR_87013611</span> 复盘历史单耗（元/产品单位）作为参考系数估算。建议长期改造为方式一以提升成本透明度。
+    </div>
+  </section>
+
+  <section id="quotation">
+    <h2>五、报价成本估算执行</h2>
+    <p>四类取数就绪后，通过成本估算事务码把BOM、工艺路线、作业价格、材料价格、加成率组装成完整报价成本。核心事务码：CK11N（物料成本估算，带数量结构）、CK51N（销售订单成本估算，按订单BOM）、CK40N（批量）。</p>
+
+    <h3>成本核算变式与评估变式</h3>
+    <p>估算前先在 SPRO 配置好<strong>成本核算变式（OKKN）</strong>，它包含四个关键组件：</p>
+    <div class="card-grid">
+      <div class="card blue">
+        <div class="card-icon">变</div>
+        <h4>成本核算类型</h4>
+        <p>决定结果更新到哪个价格字段（标准价/商业价/税务估价）。报价通常选不更新价格的类型，仅作测算。</p>
+      </div>
+      <div class="card teal">
+        <div class="card-icon">评</div>
+        <h4>评估变式</h4>
+        <p>定义材料价、作业价、加成的取价策略序列（见第二节）。报价建议优先信息记录净价→移动平均价→标准价。</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">日</div>
+        <h4>日期控制</h4>
+        <p>定义估算有效期区间，决定取哪个时点的价格。报价建议设为"当前日期"，取最新价。</p>
+      </div>
+      <div class="card amber">
+        <div class="card-icon">量</div>
+        <h4>数量结构控制</h4>
+        <p>决定用哪个BOM/Routing展开。报价用销售订单BOM（专用）或工程BOM（粗略）。仅展开"成本核算下达"状态的BOM。</p>
+      </div>
+    </div>
+
+    <!-- SAP界面模拟：CK51N 销售订单成本估算 -->
+    <h3>附：销售订单成本估算界面模拟（CK51N）</h3>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-left">
+            <span class="acc-cat">界面</span>
+            <span>CK51N - 销售订单成本估算（订单号 100045 / 报价决策）</span>
+          </div>
+          <span class="acc-arrow">▼</span>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="sap-mockup">
+              <div class="sap-titlebar">
+                <span>创建销售订单成本估算</span>
+                <span class="sap-tx">CK51N</span>
+              </div>
+              <div class="sap-menubar">
+                <span>订单</span><span>跳转</span><span>环境</span><span>帮助</span>
+              </div>
+              <div class="sap-toolbar">
+                <span class="sap-btn">↻ 执行</span>
+                <span class="sap-btn">📋 保存</span>
+                <span class="sap-btn">📊 成本组件</span>
+                <span class="sap-btn">📄 项目明细</span>
+                <span class="sap-btn">💰 报价汇总</span>
+              </div>
+              <div class="sap-body">
+                <div class="sap-field-row"><span class="sap-label">销售订单</span><span class="sap-input">100045 客户 ABC 公司</span></div>
+                <div class="sap-field-row"><span class="sap-label">项目</span><span class="sap-input">10 / 10 EA 齿轮组件定制款</span></div>
+                <div class="sap-field-row"><span class="sap-label">工厂</span><span class="sap-input">P100 上海加工厂</span></div>
+                <div class="sap-field-row"><span class="sap-label">成本核算变式</span><span class="sap-input">ZQT1 报价成本估算（不更新价格）</span></div>
+                <div class="sap-field-row"><span class="sap-label">成本核算日期</span><span class="sap-input">2026-09-06</span></div>
+                <div class="sap-field-row"><span class="sap-label">订单批量</span><span class="sap-input-readonly">10 EA</span></div>
+
+                <div class="sap-section-hdr">成本构成（基于订单BOM + 工艺路线展开）</div>
+                <div class="sap-tree">
+                  <div class="level0">▼ 齿轮组件定制款 10 EA <span class="cost">报价成本: 2,150.00 元（单件215.00元）</span></div>
+                  <div class="level1">▼ M 钢材 RM001（30 kg = 3kg×10件） <span class="cost">1,500.00 元</span></div>
+                  <div class="level2">取数: 移动平均价 50.00 元/kg（MM03 会计视图，最后改价2026-08-30）</div>
+                  <div class="level1">▼ M 外协件 RM009（10 件） <span class="cost">200.00 元</span></div>
+                  <div class="level2">取数: 采购信息记录净价 20.00 元/件（ME13，供应商A，有效期2026-09-01）</div>
+                  <div class="level1">▼ E 人工工时 LABOR（10 h = 1h×10件） <span class="cost">350.00 元</span></div>
+                  <div class="level2">取数: 计划作业价 35.00 元/h（KP26，机加工车间CC1000，平均价列）</div>
+                  <div class="level1">▼ E 机器工时 MACHINE（13.3 h） <span class="cost">199.50 元</span></div>
+                  <div class="level2">取数: 计划作业价 15.00 元/h（KP26，机加工车间CC1000）</div>
+                  <div class="level1">▼ E 电力 ELEC（800 kWh） <span class="cost">640.00 元</span></div>
+                  <div class="level2">取数: 计划作业价 0.80 元/kWh（KP26，动力车间CC2000）</div>
+                  <div class="level1">▼ 加成 制造费用（按加工费15%） <span class="cost">(350+199.5+640)×15% = 178.43 元</span></div>
+                  <div class="level2">取数: 成本计算表 ZOH1（OKY2 配置，基数为作业成本）</div>
+                </div>
+
+                <table class="sap-table">
+                  <tr><th>成本组件</th><th>取数来源</th><th>金额（元）</th><th>单件</th><th>占比</th></tr>
+                  <tr><td>原材料</td><td>MM03移动平均价</td><td>1,500.00</td><td>150.00</td><td>69.8%</td></tr>
+                  <tr><td>外协件</td><td>ME13信息记录</td><td>200.00</td><td>20.00</td><td>9.3%</td></tr>
+                  <tr><td>直接人工</td><td>KP26计划作业价</td><td>350.00</td><td>35.00</td><td>16.3%</td></tr>
+                  <tr><td>机器工时</td><td>KP26计划作业价</td><td>199.50</td><td>19.95</td><td>9.3%</td></tr>
+                  <tr><td>能耗（电）</td><td>KP26计划作业价</td><td>640.00</td><td>64.00</td><td>—</td></tr>
+                  <tr><td>小计 加工费</td><td>—</td><td><b>1,189.50</b></td><td>118.95</td><td>—</td></tr>
+                  <tr><td>制造费用加成</td><td>OKY2成本计算表</td><td>178.43</td><td>17.84</td><td>8.3%</td></tr>
+                  <tr style="background:#0756ab;color:#fff;"><td><b>报价总成本</b></td><td>—</td><td><b>2,067.93</b></td><td><b>206.79</b></td><td><b>100%</b></td></tr>
+                </table>
+                <div class="sap-field-row"><span class="sap-label">决策提示</span><span class="sap-input-readonly">客户报价 2,400 元 → 单件毛利 33.21元（毛利率16%）→ 可接单</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>报价估算事务码选择</strong>
+      <span class="tcode">CK11N</span> 物料成本估算（基于物料BOM，适合MTS标准品报价）；<span class="tcode">CK51N</span> 销售订单成本估算（基于销售订单BOM，适合MTO定制报价，本场景首选）；<span class="tcode">CK40N</span> 批量估算（多物料）；<span class="tcode">KKPAN</span> 无数量结构估算（无BOM时手工录入成本要素，最粗略）。估算结果用 <span class="tcode">CK13N</span> 显示，报价通常不执行 <span class="tcode">CK24</span> 标记发布。
+    </div>
+  </section>
+
+  <section id="analysis">
+    <h2>六、成本分析开展方法</h2>
+    <p>成本分析的目的是找出成本偏差的根因、归集责任、支持改善决策。SAP提供从物料、订单、成本中心、获利能力四个层面的完整分析工具链。开展成本分析建议遵循"五步法"。</p>
+
+    <figure class="diagram">
+      <pre class="mermaid">
+graph LR
+    S1[1.确定分析对象] --> S2[2.取数与口径对齐]
+    S2 --> S3[3.差异分解]
+    S3 --> S4[4.根因定位]
+    S4 --> S5[5.改善与反馈]
+
+    S1 -->|"产品/订单/中心/客户"| A1[CKM3 物料层面]
+    S1 -->|"生产订单"| A2[KKS2 订单层面]
+    S1 -->|"部门费用"| A3[S_ALR_87013611 成本中心层面]
+    S1 -->|"盈利"| A4[KE30 CO-PA层面]
+
+    style S1 fill:#0756ab,stroke:#0a6bd1,stroke-width:2px,color:#fff
+    style S3 fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
+    style S5 fill:#059669,stroke:#047857,stroke-width:2px,color:#fff
+      </pre>
+      <figcaption>图3：成本分析五步法与四层取数视图</figcaption>
+    </figure>
+
+    <h3>第一步：确定分析对象与口径</h3>
+    <p>明确分析对象（某产品/某订单/某成本中心/某客户群），并对齐口径：是标准成本口径还是实际成本口径？是否启用物料分类账实际成本？期间范围？只有口径一致，对比才有意义。</p>
+
+    <h3>第二步：取数与口径对齐</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>分析层面</th><th>核心事务码</th><th>取数内容</th></tr></thead>
+        <tbody>
+          <tr><td>物料实际成本</td><td><span class="tcode">CKM3</span> <span class="tcode">CKMLCP</span></td><td>物料多级价格差异、实际单位成本构成、消耗结构</td></tr>
+          <tr><td>生产订单成本</td><td><span class="tcode">CO03</span> <span class="tcode">KOB1</span> <span class="tcode">KKBC_ORD</span></td><td>订单计划vs实际成本、行项目明细、成本组件</td></tr>
+          <tr><td>成本中心费用</td><td><span class="tcode">S_ALR_87013611</span> <span class="tcode">KSB1</span></td><td>中心计划vs实际vs差异、明细行项目、作业单价</td></tr>
+          <tr><td>差异分类</td><td><span class="tcode">KKS2</span> <span class="tcode">KKS1</span></td><td>9类差异（输入价/量、资源使用、废品、产出价、批量、混合价等）</td></tr>
+          <tr><td>获利能力</td><td><span class="tcode">KE30</span> <span class="tcode">KE24</span></td><td>按产品/客户/地区维度的边际贡献、毛利率</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>第三步：差异分解（核心）</h3>
+    <p>SAP生产订单差异分析把标准vs实际的差异自动分解为9类，定位责任：</p>
+    <div class="two-col">
+      <div class="card blue">
+        <div class="card-icon">入</div>
+        <h4>投入侧差异（5类）</h4>
+        <ul>
+          <li><b>投入价格差异</b>：作业单价或采购价偏离标准（KSII实际价≠计划价）</li>
+          <li><b>投入数量差异</b>：BOM/Routing用量偏离标准（如多用材料、多耗工时）</li>
+          <li><b>资源使用差异</b>：使用了BOM/Routing外的替代料或作业</li>
+          <li><b>剩余投入差异</b>：无法归入以上的投入差异</li>
+          <li><b>废品差异</b>：产出报废导致的成本损失</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-icon">出</div>
+        <h4>产出侧差异（4类）</h4>
+        <ul>
+          <li><b>混合价差异</b>：同一物料多版本标准价混用</li>
+          <li><b>产出价格差异</b>：产出评估价偏离标准</li>
+          <li><b>批量差异</b>：实际产量偏离计划，固定费分摊不均</li>
+          <li><b>剩余差异</b>：无法归入以上的产出差异</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>第四步：根因定位</h3>
+    <p>结合9类差异，按"差异类型 → 责任部门 → 主数据/执行根因"三层追溯。例如投入价格差异大→查 KSII 实际作业价 vs KP26 计划价→若是人工价偏高→查 KP06 计划工资 vs FI 实际工资→定责HR/车间。</p>
+
+    <h3>第五步：改善与反馈</h3>
+    <p>把分析结论反馈到三处：①修订主数据（BOM/Routing/作业价 KP26）；②优化业务执行（降低损耗、提高OEE）；③调整预算与标准（下期 CK40N 重估标准价）。形成"标准→执行→差异→改善→新标准"的闭环。</p>
+  </section>
+
+  <section id="analysis-tc">
+    <h2>七、成本分析取数事务码总表</h2>
+    <p>下表汇总成本分析全链路取数事务码，按分析维度分组，便于实操时快速定位。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>分析维度</th><th>事务码</th><th>功能</th><th>典型取数字段</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="4">物料实际成本</td><td><span class="tcode">CKM3</span></td><td>物料价格分析（多级）</td><td>价格差异、消耗差异、实际单价</td></tr>
+          <tr><td><span class="tcode">CKM3N</span></td><td>物料价格分析（新）</td><td>按物料/期间明细</td></tr>
+          <tr><td><span class="tcode">CKMLCP</span></td><td>物料分类账结算</td><td>实际成本计算结果</td></tr>
+          <tr><td><span class="tcode">CKMLQS</span></td><td>实际BOM结构查询</td><td>投入物料+作业的数量金额</td></tr>
+          <tr><td rowspan="5">生产订单成本</td><td><span class="tcode">CO03</span></td><td>生产订单显示</td><td>成本标签页：计划vs实际</td></tr>
+          <tr><td><span class="tcode">KOB1</span></td><td>订单行项目</td><td>按成本要素的明细</td></tr>
+          <tr><td><span class="tcode">KKBC_ORD</span></td><td>订单成本对象报表</td><td>成本组件、WIP、差异</td></tr>
+          <tr><td><span class="tcode">KKAO/KKAX</span></td><td>在制品计算</td><td>WIP金额</td></tr>
+          <tr><td><span class="tcode">KO88/CO88</span></td><td>订单结算</td><td>结算到物料/PA</td></tr>
+          <tr><td rowspan="4">差异分析</td><td><span class="tcode">KKS1</span></td><td>差异计算-订单（后台）</td><td>9类差异金额</td></tr>
+          <tr><td><span class="tcode">KKS2</span></td><td>差异计算-订单（前台）</td><td>9类差异明细</td></tr>
+          <tr><td><span class="tcode">KKS5/KKS6</span></td><td>差异计算-期间</td><td>期间维度差异</td></tr>
+          <tr><td><span class="tcode">KK3S</span></td><td>成本对象报表</td><td>对象层差异汇总</td></tr>
+          <tr><td rowspan="5">成本中心</td><td><span class="tcode">S_ALR_87013611</span></td><td>计划/实际/差异报表</td><td>中心层费用、作业量、差异</td></tr>
+          <tr><td><span class="tcode">KSB1</span></td><td>成本中心行项目</td><td>实际费用明细</td></tr>
+          <tr><td><span class="tcode">KSBT</span></td><td>成本中心报表</td><td>值类型1计划价/4实际价</td></tr>
+          <tr><td><span class="tcode">KSII</span></td><td>实际作业价计算</td><td>实际作业单价</td></tr>
+          <tr><td><span class="tcode">KB21N</span></td><td>作业实际数量计上</td><td>实际作业量</td></tr>
+          <tr><td rowspan="3">物料价格</td><td><span class="tcode">MM03</span></td><td>物料主数据</td><td>STPRS/VERPR/VPRSV/改价日期</td></tr>
+          <tr><td><span class="tcode">MR21</span></td><td>价格变更</td><td>调价记录</td></tr>
+          <tr><td><span class="tcode">S_ALR_87013199</span></td><td>物料价格分析报表</td><td>期间变动物料清单</td></tr>
+          <tr><td rowspan="2">获利能力</td><td><span class="tcode">KE30</span></td><td>CO-PA报表</td><td>按产品/客户/地区边际贡献</td></tr>
+          <tr><td><span class="tcode">KE24</span></td><td>CO-PA行项目</td><td>获利能力段明细</td></tr>
+          <tr><td rowspan="2">报价取数</td><td><span class="tcode">ME13/ME1P</span></td><td>采购信息记录/清单</td><td>供应商净价</td></tr>
+          <tr><td><span class="tcode">KP26/KSPI</span></td><td>计划作业价维护/计算</td><td>计划作业单价</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout success">
+      <strong>取数链路记忆口诀</strong>
+      报价取价：<b>材料看 MM03/ME13，作业看 KP26/KSPI，能耗走动力中心 KSBT</b>。<br>
+      成本分析：<b>物料看 CKM3，订单看 CO03/KKS2，中心看 S_ALR_87013611，差异9类 KKS2 分，获利最后 KE30</b>。<br>
+      月结复核：<b>KSS2 分割 → KSII 算实际价 → CON2 重估订单 → KKS2 算差异 → CO88 结算 → CKMLCP 物料账</b>。
+    </div>
+
+    <h3>相关专栏延伸</h3>
+    <p>本专栏聚焦报价取数与成本分析方法。具体的标准成本估算操作、月末结账六步法、物料分类账结算、差异9类详解、跨模块集成报错排查，分别在以下专栏展开：</p>
+    <div class="col-grid">
+      <a class="col-card" href="co-basics.html">
+        <span class="col-num">02</span>
+        <h3>CO模块知识体系</h3>
+        <p class="col-desc">CO-OM/CO-PC/CO-PA子模块、活动类型主数据、事务码速查表。</p>
+        <span class="col-go">进入专栏 →</span>
+      </a>
+      <a class="col-card" href="monthly-ops.html">
+        <span class="col-num">03</span>
+        <h3>日常与月结</h3>
+        <p class="col-desc">月末结账六步法、KSS2/KSII/CON2/CO88/CKMLCP完整流程。</p>
+        <span class="col-go">进入专栏 →</span>
+      </a>
+      <a class="col-card" href="integration.html">
+        <span class="col-num">05</span>
+        <h3>核对与集成</h3>
+        <p class="col-desc">成本核对方法、FI/MM/PP/SD集成报错排查。</p>
+        <span class="col-go">进入专栏 →</span>
+      </a>
+      <a class="col-card" href="cases-resources.html">
+        <span class="col-num">06</span>
+        <h3>案例与资源</h3>
+        <p class="col-desc">标准成本到月结出表端到端案例、学习资源推荐。</p>
+        <span class="col-go">进入专栏 →</span>
+      </a>
+    </div>
+
+    <h3>参考资料</h3>
+    <ol>
+      <li>SAP Help Portal - Product Cost Planning (CO-PC-PCP): 成本核算变式、评估变式、数量结构控制</li>
+      <li>SAP Community - Special Topics in Product Costing: KP06/KP26/KSPI 计划作业价计算流程</li>
+      <li>SAP Press - Product Cost Controlling with SAP S/4HANA: 标准成本估算与实际成本计算</li>
+      <li>SAP Learning - Introducing Product Cost Planning for Standard Cost Estimates</li>
+      <li>SAP 官方事务码文档: CK11N/CK51N/KP26/KSPI/KSII/KSS2/KSBT/CON2/KKS2/CKM3/S_ALR_87013611</li>
+      <li>leanx.eu - SAP Table MBEW: 物料估值表字段定义（STPRS/VERPR/VPRSV/ZPLPR）</li>
+    </ol>
+  </section>
+
+</main>
+</div>
+
+<div id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="返回顶部">↑</div>
+<div id="progressBar"></div>
+<div id="tocList"></div>
+
+<script src="_shared/js/mermaid.min.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'default',flowchart:{curve:'basis',useMaxWidth:true}});</script>
+</body>
+</html>
