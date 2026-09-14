@@ -186,17 +186,14 @@
     if (siteIndexLoaded || siteIndexLoading) return;
     siteIndexLoading = true;
     var s = document.createElement('script');
-    s.src = 'assets/search-index.js?v=20260914a';
+    s.src = 'assets/search-index.js?v=20260914b';
     s.onload = refreshSiteIndex;
     document.head.appendChild(s);
   }
   var PAGE_LABELS = {
     'index.html': '入门总览',
-    'co-basics.html': 'CO基础',
-    'monthly-ops.html': '日常与月结',
-    'special-yearend.html': '特殊与年结',
-    'integration.html': '排错与集成',
-    'cases-resources.html': '案例与资源',
+    'co-basics.html': 'CO模块与结账',
+    'integration.html': '跨模块集成',
     'cost-analysis.html': '报价与分析'
   };
 

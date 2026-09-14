@@ -1108,329 +1108,329 @@ window.SITE_SEARCH_INDEX = [
   "y": "表格"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "daily",
   "s": "日常成本核算工作要点",
   "t": "日常成本核算工作要点",
   "y": "标题"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "daily",
   "s": "日常成本核算工作要点",
   "t": "1. 标准成本维护",
   "y": "标题"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "daily",
   "s": "日常成本核算工作要点",
   "t": "2. 生产订单监控",
   "y": "标题"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "daily",
   "s": "日常成本核算工作要点",
   "t": "3. 成本中心费用监控",
   "y": "标题"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "daily",
   "s": "日常成本核算工作要点",
   "t": "4. 差异分析",
   "y": "标题"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "month-end",
   "s": "月末结账完整流程",
   "t": "月末结账完整流程",
   "y": "标题"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "month-end",
   "s": "月末结账完整流程",
   "t": "月结详细步骤清单",
   "y": "标题"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "month-end",
   "s": "月末结账完整流程",
   "t": "步骤",
   "y": "表格"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "month-end",
   "s": "月末结账完整流程",
   "t": "操作内容",
   "y": "表格"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "month-end",
   "s": "月末结账完整流程",
   "t": "事务码",
   "y": "表格"
  },
  {
-  "p": "monthly-ops.html",
+  "p": "co-basics.html",
   "a": "month-end",
   "s": "月末结账完整流程",
   "t": "关键检查点",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "制造业特殊业务场景成本处理",
   "y": "标题"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "返工 返工生产订单的成本处理 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "报废 生产报废/在制品报废 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "委外 委外加工（外协加工）成本核算 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "联副 联产品/副产品成本核算 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "跨期 跨期生产订单的成本处理 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "返工类型",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "创建方式",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "成本去向",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "项目",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "借方",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "贷方",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "事务码",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "功能",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "订单状态",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "系统判定",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "special-scenarios",
   "s": "制造业特殊业务场景成本处理",
   "t": "WIP/差异处理",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "年末结账完整流程",
   "y": "标题"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "年结 vs 月结的区别",
   "y": "标题"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "📅 月结（月末结账）",
   "y": "标题"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "📆 年结（年末结账）",
   "y": "标题"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "准备 年结前准备工作清单 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "核心 总账余额结转（FAGLGVTR / F.16） ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "资产 资产模块年结（AJRW / AJAB） ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "CO CO模块年结特有操作 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "物料账 物料分类账年结特殊处理 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "全流程 年结完整步骤顺序表 ▼",
   "y": "折叠项"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "序号",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "检查项",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "报错信息",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "原因",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "处理方法",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "步骤",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "说明",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "阶段",
   "y": "表格"
  },
  {
-  "p": "special-yearend.html",
+  "p": "co-basics.html",
   "a": "year-end",
   "s": "年末结账完整流程",
   "t": "操作",
@@ -1444,112 +1444,112 @@ window.SITE_SEARCH_INDEX = [
   "y": "标题"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "月结核对清单",
   "y": "标题"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "核对 生产成本科目对账（FI vs CO） ▼",
   "y": "折叠项"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "核对 WIP（在制品）核对方法 ▼",
   "y": "折叠项"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "核对 物料分类账差异核对（CKM3） ▼",
   "y": "折叠项"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "报错 CO88结算常见错误及解决 ▼",
   "y": "折叠项"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "报错 KSII实际价格计算常见错误 ▼",
   "y": "折叠项"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "报错 CKMLCP物料分类账常见错误 ▼",
   "y": "折叠项"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "报错 生产订单常见成本问题 ▼",
   "y": "折叠项"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "步骤",
   "y": "表格"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "事务码",
   "y": "表格"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "检查内容",
   "y": "表格"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "合格标准",
   "y": "表格"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "报错现象",
   "y": "表格"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "原因",
   "y": "表格"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cost-check",
   "s": "成本核对与常见报错排查",
   "t": "解决方法",
   "y": "表格"
  },
  {
-  "p": "integration.html",
+  "p": "co-basics.html",
   "a": "cross-module",
   "s": "CO与关联模块集成知识点",
   "t": "CO与关联模块集成知识点",
@@ -2326,945 +2326,945 @@ window.SITE_SEARCH_INDEX = [
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "完整实战案例：从标准成本到月结出表",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "案例企业背景",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "公司代码",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "工厂",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "控制范围",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "组织架构：成本中心体系",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "作业类型与计划价格（KP26）",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "物料体系与BOM结构",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "BOM结构图",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "标准成本构成明细",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "月初标准成本发布",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "月中生产业务",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "月末结算（七步法）",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "本月成本中心实际费用归集",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "物料分类账差异分摊（CKMLCP）",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "成本报表与分析",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "全流程数据流转图",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "全流程数据勾稽验证",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "💡 实战总结",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "月初 CK11N + CK24：标准成本估算与发布 ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "订单1 生产订单#1001：齿轮组件 20个 ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "订单2 生产订单#1002：齿轮箱 10台（部分完工） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤1 辅助成本中心分配/分摊（KSV5 / KSU5） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤2 实际成本分割（KSS2） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤3 计算实际作业价格（KSII） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤4 生产订单重估（MFN1 / CON2） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤5 WIP计算（KKAO） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤6 差异计算（KKS1 / KKS2） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤7 订单结算（CO88） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "物料账 CKMLCP完整流程（含具体数字） ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "报表 月结后核心报表与数据验证 ▼",
   "y": "折叠项"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "成本中心",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "类型",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "功能说明",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "作业类型",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "单位",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "计划价格",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "所属成本中心",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "物料编码",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "物料名称",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "物料类型",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "计价方式",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "标准价",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "成本组件",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "齿轮组件 SF001",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "齿轮箱 FG001",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "物料",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "发布前价格",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "发布后价格",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "状态",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "字段",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "步骤",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "事务码",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "操作内容",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "金额",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "会计凭证（简化）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "成本项目",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "计划成本",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "实际成本",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "差异",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "计划成本（10台）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "实际成本（已发生）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "费用项目",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "金额（元）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "备注",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "接收方",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "来自设备维护部",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "来自质量管理部",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "合计新增",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "原始费用",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "分入",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "合计",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "总费用",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "人工类成本",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "机器类成本",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "总成本",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "实际报工",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "计划价",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "实际价",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "重估前（计划价）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "重估后（实际价）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "调整额",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "订单号",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "是否计算WIP",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "WIP金额",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "说明",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "目标成本",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "项目",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "科目",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "借/贷",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "订单",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "结算前余额",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "WIP结转",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "差异结转",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "结算后余额",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "直接差异",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "期末库存",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "本期消耗",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "分摊到库存",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "分摊到消耗",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "上卷差异",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "总差异",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "消耗",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "会计凭证",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "差异分摊",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "月结后余额",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "订单#1001（齿轮组件）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "订单#1002（齿轮箱）",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "SF001 齿轮组件",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "FG001 齿轮箱",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "指标",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "数值",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "勾稽项",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "计算说明",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "case-study",
   "s": "完整实战案例：从标准成本到月结出表",
   "t": "验证结果",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "cost-analysis.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "学习资源推荐",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "《Controlling with SAP ERP: Business User Guide》↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "《Product Cost Controlling with SAP S/4HANA》↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "《SAP S4 FICO财务成本教程》↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "在线课程",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "SAP S4 HANA CO成本模块实战课程（CSDN）↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "Udemy - SAP CO : Product Costing & COPA & Material Ledger ↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "社区与网站",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "SAP Community（community.sap.com）↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "CSDN SAP专栏 ↗ / 知乎SAP话题 ↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "SAP Help Portal（help.sap.com）↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "SAP Blogs（blogs.sap.com）↗",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "实战练习建议",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "resources",
   "s": "学习资源推荐",
   "t": "建立测试环境 / IDES系统",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "plan",
   "s": "6个月学习时间规划",
   "t": "6个月学习时间规划",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "plan",
   "s": "6个月学习时间规划",
   "t": "每周学习建议",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "plan",
   "s": "6个月学习时间规划",
   "t": "学习效果自测",
   "y": "标题"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "plan",
   "s": "6个月学习时间规划",
   "t": "阶段",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "plan",
   "s": "6个月学习时间规划",
   "t": "自测问题",
   "y": "表格"
  },
  {
-  "p": "cases-resources.html",
+  "p": "index.html",
   "a": "plan",
   "s": "6个月学习时间规划",
   "t": "达标标准",
