@@ -1,66 +1,108 @@
-// === 侧边栏导航交互 ===
+// === 侧边栏导航交互 + 本页大纲（两层折叠）===
 (function() {
-  const links = document.querySelectorAll('.docs-sidebar a.sb-item');
-  const sections = document.querySelectorAll('main section[id]');
   const progressBar = document.getElementById('progressBar');
   const backToTop = document.getElementById('backToTop');
+  const sbAccordion = document.getElementById('sbAccordion');
 
-  // === 右侧目录（TOC）：扫描正文 h2/h3 生成 ===
-  const tocList = document.getElementById('tocList');
-  const tocHeaders = [];
-  if (tocList) {
-    const main = document.querySelector('.docs-main');
-    const hs = main ? main.querySelectorAll('section h2, section h3') : [];
+  // === 左侧栏：本页大纲两层折叠（一级=section h2，二级=section 内 h3）JS 自动生成 ===
+  const sbSections = []; // {secId, h2el, h3els}
+  if (sbAccordion) {
+    const sections = document.querySelectorAll('main section[id]');
     let html = '';
-    hs.forEach(function(h, i) {
-      const txt = h.textContent.replace(/\s+/g, ' ').replace(/^[一二三四五六七八九十]+、\s*/, '').trim();
-      if (!txt) return;
-      if (!h.id) h.id = 'toc-' + i;
-      h.style.scrollMarginTop = 'calc(3.5rem + 14px)';
-      tocHeaders.push(h);
-      html += '<a class="toc-item ' + (h.tagName === 'H2' ? 'lv2' : 'lv3') + '" href="#' + h.id + '">' + txt + '</a>';
+    let num = 0;
+    sections.forEach(function(sec) {
+      const h2 = sec.querySelector('h2');
+      if (!h2) return;
+      num++;
+      const h2txt = h2.textContent.replace(/\s+/g, ' ').replace(/^[一二三四五六七八九十]+、\s*/, '').trim();
+      if (!h2.id) h2.id = 'sb-sec-' + num;
+      h2.style.scrollMarginTop = 'calc(3.5rem + 14px)';
+      // 仅取直接属于此 section 的 h3（排除嵌套子 section 内的）
+      const directH3s = Array.from(sec.querySelectorAll('h3')).filter(function(h3) {
+        let p = h3.parentElement;
+        while (p && p.tagName !== 'SECTION') p = p.parentElement;
+        return p === sec;
+      });
+      const hasH3 = directH3s.length > 0;
+      const secId = sec.id;
+      sbSections.push({ secId: secId, h2el: h2, h3els: directH3s });
+      const isOpen = num === 1; // 第一个 section 默认展开
+      html += '<div class="sb-acc-item' + (isOpen ? ' open' : '') + '"' + (hasH3 ? '' : ' data-leaf="1"') + '>';
+      html += '<a class="sb-acc-header" href="#' + secId + '"' + (hasH3 ? ' role="button" aria-expanded="' + (isOpen ? 'true' : 'false') + '"' : '') + '>';
+      html += '<span class="sb-acc-num">' + num + '</span>';
+      html += '<span class="sb-acc-title">' + h2txt + '</span>';
+      if (hasH3) html += '<span class="sb-acc-arrow" aria-hidden="true">▾</span>';
+      html += '</a>';
+      if (hasH3) {
+        html += '<div class="sb-acc-sub">';
+        directH3s.forEach(function(h3, hi) {
+          const h3txt = h3.textContent.replace(/\s+/g, ' ').replace(/^第[一二三四五六七八九十]+[步章节条]：?\s*/, '').replace(/^[一二三四五六七八九十]+、\s*/, '').trim();
+          if (!h3.id) h3.id = 'sb-h3-' + num + '-' + hi;
+          h3.style.scrollMarginTop = 'calc(3.5rem + 14px)';
+          html += '<a class="sb-acc-link" href="#' + h3.id + '">' + h3txt + '</a>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
     });
-    tocList.innerHTML = html;
+    sbAccordion.innerHTML = html;
+
+    // 点击 header：导航（由 href 处理）+ 切换展开
+    sbAccordion.querySelectorAll('.sb-acc-header').forEach(function(hdr) {
+      hdr.addEventListener('click', function() {
+        const item = this.closest('.sb-acc-item');
+        if (item.hasAttribute('data-leaf')) return; // 叶子节点：纯导航
+        const willOpen = !item.classList.contains('open');
+        item.classList.toggle('open', willOpen);
+        this.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+      // 键盘 a11y：Space 触发点击（Enter 由链接默认行为处理）
+      hdr.addEventListener('keydown', function(e) {
+        if (e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          this.click();
+        }
+      });
+    });
   }
 
-  // 滚动监听：高亮当前章节 + 进度条 + 返回顶部
+  // 滚动监听：进度条 + 返回顶部 + 高亮当前章节
   function onScroll() {
-    if (!progressBar && !backToTop) return;
+    if (!progressBar && !backToTop && !sbAccordion) return;
     const scrollY = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
     if (progressBar) progressBar.style.width = progress + '%';
+    if (backToTop) backToTop.classList.toggle('visible', scrollY > 400);
 
-    // 返回顶部按钮
-    if (backToTop) {
-      if (scrollY > 400) {
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    }
-
-    // 高亮当前章节（左侧专栏树）
-    let current = '';
-    sections.forEach(function(sec) {
-      const rect = sec.getBoundingClientRect();
-      if (rect.top <= 120 && rect.bottom >= 120) {
-        current = sec.id;
-      }
-    });
-    links.forEach(function(link) {
-      link.classList.toggle('on', link.hash === '#' + current);
-    });
-
-    // 高亮当前标题（右侧目录）
-    if (tocList) {
-      let activeId = '';
-      for (var ti = 0; ti < tocHeaders.length; ti++) {
-        if (tocHeaders[ti].getBoundingClientRect().top <= 100) activeId = tocHeaders[ti].id;
-      }
-      const tocItems = tocList.querySelectorAll('.toc-item');
-      tocItems.forEach(function(item) {
-        item.classList.toggle('on', item.getAttribute('href') === '#' + activeId);
+    if (sbAccordion) {
+      // 当前 section（一级）
+      let activeSecId = '';
+      sbSections.forEach(function(s) {
+        const sec = document.getElementById(s.secId);
+        if (!sec) return;
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= 140 && rect.bottom >= 140) activeSecId = s.secId;
+      });
+      // 当前 h3（二级）
+      let activeH3Id = '';
+      sbSections.forEach(function(s) {
+        s.h3els.forEach(function(h3) {
+          if (h3.getBoundingClientRect().top <= 120) activeH3Id = h3.id;
+        });
+      });
+      sbAccordion.querySelectorAll('.sb-acc-item').forEach(function(item) {
+        const hdr = item.querySelector('.sb-acc-header');
+        const isCurrent = hdr.getAttribute('href') === '#' + activeSecId;
+        item.classList.toggle('on', isCurrent);
+        // 自动展开当前 section（若含 h3 且未展开）
+        if (isCurrent && !item.classList.contains('open') && !item.hasAttribute('data-leaf')) {
+          item.classList.add('open');
+          hdr.setAttribute('aria-expanded', 'true');
+        }
+        item.querySelectorAll('.sb-acc-link').forEach(function(link) {
+          link.classList.toggle('on', link.getAttribute('href') === '#' + activeH3Id);
+        });
       });
     }
   }
@@ -96,14 +138,16 @@
   var navToggle = document.querySelector('.topnav-toggle');
   if (navToggle) navToggle.addEventListener('click', window.toggleSidebar);
 
-  // 点击导航链接后关闭移动端侧边栏
-  links.forEach(function(link) {
-    link.addEventListener('click', function() {
-      if (window.innerWidth <= 1024) {
-        window.setSidebar(false);
-      }
+  // 点击大纲链接后关闭移动端侧边栏
+  if (sbAccordion) {
+    sbAccordion.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 1024) {
+          window.setSidebar(false);
+        }
+      });
     });
-  });
+  }
 
   // 视口从移动端放大到桌面端时，解除可能残留的滚动锁定
   window.addEventListener('resize', function() {
@@ -142,7 +186,7 @@
     if (siteIndexLoaded || siteIndexLoading) return;
     siteIndexLoading = true;
     var s = document.createElement('script');
-    s.src = 'assets/search-index.js?v=20260909a';
+    s.src = 'assets/search-index.js?v=20260914a';
     s.onload = refreshSiteIndex;
     document.head.appendChild(s);
   }
