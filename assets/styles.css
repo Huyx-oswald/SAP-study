@@ -1804,6 +1804,46 @@
   .sb-acc-link:hover { color: var(--accent); border-left-color: var(--accent); }
   .sb-acc-link.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
 
+  /* === 移动端侧边栏顶部"网站导航"区块（桌面端隐藏）=== */
+  .sb-sitenav {
+    display: none;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sb-sitenav-title {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    padding: 0 6px;
+  }
+  .sb-sitenav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .sb-sitenav-links a {
+    display: block;
+    padding: 9px 10px;
+    font-size: 0.9rem;
+    color: var(--ink);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background var(--transition), color var(--transition);
+  }
+  .sb-sitenav-links a:hover, .sb-sitenav-links a:active {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .sb-sitenav-links a.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
   /* === 正文列 === */
   .docs-main { min-width: 0; padding-top: 4px; }
   .docs-main section { scroll-margin-top: calc(3.5rem + 14px); }
@@ -1865,6 +1905,7 @@
   @media (max-width: 1024px) {
     .topnav-links { display: none; }
     .topnav-toggle { display: block; }
+    .sb-sitenav { display: block; }
     .topnav-search { margin-left: auto; width: 170px; }
     .docs-shell { grid-template-columns: 1fr; padding: 20px 16px 48px; }
     .docs-sidebar {

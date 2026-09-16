@@ -138,6 +138,29 @@
   var navToggle = document.querySelector('.topnav-toggle');
   if (navToggle) navToggle.addEventListener('click', window.toggleSidebar);
 
+  // 移动端在侧边栏顶部注入"网站导航"（4个模块链接），解决移动端顶部导航不可见问题
+  var docsSidebar = document.getElementById('docsSidebar');
+  if (docsSidebar) {
+    var topnavLinks = document.querySelector('.topnav-links');
+    if (topnavLinks) {
+      var siteNav = document.createElement('div');
+      siteNav.className = 'sb-sitenav';
+      siteNav.innerHTML = '<div class="sb-sitenav-title">网站导航</div>';
+      var linksClone = topnavLinks.cloneNode(true);
+      linksClone.className = 'sb-sitenav-links';
+      siteNav.appendChild(linksClone);
+      // 点击链接后关闭侧边栏（移动端）
+      siteNav.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          if (window.innerWidth <= 1024) {
+            window.setSidebar(false);
+          }
+        });
+      });
+      docsSidebar.insertBefore(siteNav, docsSidebar.firstChild);
+    }
+  }
+
   // 点击大纲链接后关闭移动端侧边栏
   if (sbAccordion) {
     sbAccordion.querySelectorAll('a').forEach(function(link) {
