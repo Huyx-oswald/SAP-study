@@ -10,7 +10,7 @@
 <meta property="og:title" content="CO模块知识体系 | SAP制造业成本会计学习">
 <meta property="og:description" content="SAP CO成本控制模块完整知识体系：成本中心会计、内部订单、产品成本控制、获利能力分析CO-PA、成本对象与主数据详解。">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/styles.css?v=20260916b">
+<link rel="stylesheet" href="assets/styles.css?v=20260916c">
 <link rel="prefetch" href="index.html">
 </head>
 <body>
@@ -146,7 +146,7 @@ graph TD
             <td><span class="badge green">高</span></td>
           </tr>
           <tr>
-            <td rowspan="4">生产订单结算</td>
+            <td rowspan="9">生产订单结算</td>
             <td><span class="tcode">MIGO</span></td>
             <td>货物移动（发料/收货）</td>
             <td><span class="badge amber">中</span></td>
@@ -164,6 +164,31 @@ graph TD
           <tr>
             <td><span class="tcode">CO88</span></td>
             <td>生产订单批量结算</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">COGI</span></td>
+            <td>货物移动错误后处理（261发料/101入库失败）</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">CO1P / CO14</span></td>
+            <td>报工确认错误后处理 / 报工详情查看</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">COFC</span></td>
+            <td>实际成本过账错误后处理（KKS1/KKS2失败）</td>
+            <td><span class="badge amber">中</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">COOIS</span></td>
+            <td>生产订单信息系统（按状态组合查询）</td>
+            <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">COHV / CO03</span></td>
+            <td>批量TECO / 工单成本分析与余额核对</td>
             <td><span class="badge green">高</span></td>
           </tr>
           <tr>
@@ -194,10 +219,15 @@ graph TD
             <td><span class="badge amber">中</span></td>
           </tr>
           <tr>
-            <td rowspan="2">常用报表</td>
+            <td rowspan="3">常用报表</td>
             <td><span class="tcode">S_ALR_87013611</span></td>
             <td>成本中心实际/计划对比</td>
             <td><span class="badge green">高</span></td>
+          </tr>
+          <tr>
+            <td><span class="tcode">S_ALR_87013127</span></td>
+            <td>工单结算余额查询（完工工单应为0）</td>
+            <td><span class="badge amber">中</span></td>
           </tr>
           <tr>
             <td><span class="tcode">KE30</span></td>
@@ -700,7 +730,7 @@ graph TD
     <figure class="diagram">
       <pre class="mermaid">
 graph TD
-    A1[月结前检查] --> A2[MM模块预关闭]
+    A1["月结前一周：工单检查与清理<br/>COGI/CO1P/COFC → COOIS → COHV"] --> A2[MM模块预关闭]
     A2 --> A3[确认所有业务单据过账完成]
     A3 --> B1[执行分配 KSV5]
     B1 --> B2[执行分摊 KSU5]
@@ -717,7 +747,7 @@ graph TD
     F1 --> F2[月结后检查]
     F2 --> F3[出具成本报表]
 
-    style A1 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style A1 fill:#e0e7ff,stroke:#4f46e5,stroke-width:3px,color:#3730a3
     style A2 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
     style A3 fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
     style B1 fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
@@ -738,6 +768,417 @@ graph TD
       <figcaption>图3：制造业CO月末结账流程图</figcaption>
     </figure>
 
+    <h3>月结前一周：工单检查与清理</h3>
+    <p>制造业成本会计在月末前一周即启动工单检查与清理工作。这套工作在 S/4HANA 中尤为关键——因为 ACDOCA 单表架构让数据实时可见，但<strong>工单异常若未在月结前清理完毕，仍会直接导致 CO88 结算报错、工单余额不为零无法关闭、月结后反结账</strong>，并产生大量不必要的会计凭证。</p>
+
+    <div class="callout">
+      <p><strong>💡 S/4HANA 架构背景：</strong>S/4HANA 引入 Universal Journal（ACDOCA 单表），所有 FI/CO/AA/ML 的实际过账都写入同一张表，FI 与 CO 天然对账，<strong>不再需要 KALC 对账程序</strong>。月结目标周期由 ECC 时代的 5-10 天压缩至 <strong>1-2 天</strong>，在制品（WIP）实时可见、差异可每班次计算，体现"持续关账"理念。工单结算（CO88）后差异直接写入 ACDOCA，工单余额为零，无需 FI-CO 调整凭证。</p>
+    </div>
+
+    <h4>1. 工单检查总览流程图</h4>
+    <figure class="diagram">
+      <pre class="mermaid">
+graph TD
+    A[月结前一周启动] --> B["COGI<br/>货物移动错误清理<br/>(261发料/101入库失败)"]
+    B --> C["CO1P<br/>报工确认错误清理<br/>(CO11N/CO15失败记录)"]
+    C --> D["COFC<br/>实际成本错误清理<br/>(KKS1/KKS2过账失败)"]
+    D --> E["COOIS<br/>工单状态核对<br/>(按状态组合查询)"]
+    E --> F["CO03 → 成本 → 分析<br/>投入产出合理性"]
+    F --> G["S_ALR_87013127<br/>工单结算余额核对"]
+    G --> H["COHV<br/>批量 TECO 技术完成"]
+
+    style A fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#3730a3
+    style B fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style C fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style D fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a
+    style E fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style F fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#064e3b
+    style G fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
+    style H fill:#fde68a,stroke:#ca8a04,stroke-width:2px,color:#713f12
+      </pre>
+      <figcaption>图4：月结前一周工单检查与清理流程</figcaption>
+    </figure>
+
+    <h4>2. 三大异常清理事务码详解</h4>
+    <p>SAP Note 520700 最佳实践强调：定期监控 COGI/CO1P/COFC 可减少 <strong>40-60%</strong> 的积压。清理顺序必须遵循 <strong>COGI → CO1P → COFC</strong>（先货物移动，再确认，最后成本），三者均为 S/4HANA Active 状态事务码。<sup><a href="#cite-11">[11]</a></sup><sup><a href="#cite-12">[12]</a></sup></p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>事务码</th>
+            <th>S/4HANA 状态</th>
+            <th>用途</th>
+            <th>触发事件</th>
+            <th>关键表</th>
+            <th>性能建议</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>COGI</strong></td>
+            <td>Active</td>
+            <td>货物移动错误后处理（261 发料/101 入库失败）</td>
+            <td>库存不足、库位缺失、批次问题、估价错误</td>
+            <td>MSEG（物料凭证）</td>
+            <td>队列保持 &lt; 1000 条以保证性能</td>
+          </tr>
+          <tr>
+            <td><strong>CO1P</strong></td>
+            <td>Active</td>
+            <td>报工确认错误后处理（CO11N/CO15 失败的确认）</td>
+            <td>报工数量差异、冲销失败、未来日期变更</td>
+            <td>AFRU（确认记录）</td>
+            <td>建议设为后台作业每班次运行（CORUPROZ）</td>
+          </tr>
+          <tr>
+            <td><strong>COFC</strong></td>
+            <td>Active</td>
+            <td>实际成本过账错误后处理（KKS1/KKS2 失败）</td>
+            <td>作业价格缺失、成本要素错误</td>
+            <td>COSP/COST（成本行项）</td>
+            <td>每日报工后运行，避免月末集中爆发</td>
+          </tr>
+          <tr>
+            <td><strong>CO14</strong></td>
+            <td>Active</td>
+            <td>报工确认详情查看（单工单报工历史）</td>
+            <td>—</td>
+            <td>AFRU</td>
+            <td>辅助 CO1P 排查，查看"货物移动"勾选项</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>💡 实务提示：</strong>当 CO1P 中看不到错误记录但 COGI 仍存在异常时，可通过 <strong>CO14</strong> 查看单工单报工历史，点击"管理 → 货物移动"，检查"有意于货物移动"勾选框是否被打勾——若被打勾，说明存在未处理的货物移动错误，处理后即可在 COGI 中看到出错信息。</p>
+    </div>
+
+    <h4>3. 工单状态链路与英文缩写含义</h4>
+    <p>S/4HANA 中工单状态机制与 ECC 保持一致，状态参数文件控制各阶段允许的操作。完整状态链路如下：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>状态缩写</th>
+            <th>英文全称</th>
+            <th>中文含义</th>
+            <th>触发条件</th>
+            <th>允许发料</th>
+            <th>允许报工</th>
+            <th>允许收货</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CRTD</strong></td>
+            <td>Created</td>
+            <td>已创建</td>
+            <td>订单创建时初始状态</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>PREL</strong></td>
+            <td>Partially Released</td>
+            <td>部分释放</td>
+            <td>仅下达部分工序时</td>
+            <td>✔（已释放部分）</td>
+            <td>✔（已释放部分）</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>REL</strong></td>
+            <td>Released</td>
+            <td>已释放</td>
+            <td>订单下达后，可执行状态</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>MANC</strong></td>
+            <td>Material Availability Check Not Carried Out</td>
+            <td>未检查物料可用性</td>
+            <td>未做组件物料可用性检查</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>MSPT</strong></td>
+            <td>Material Shortage</td>
+            <td>物料短缺</td>
+            <td>可用性检查出现短缺</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>MACM</strong></td>
+            <td>Material Committed</td>
+            <td>已承诺的物料</td>
+            <td>可用性检查全部可用</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>GMPS</strong></td>
+            <td>Goods Movement Posted</td>
+            <td>已过账的货物移动</td>
+            <td>已做过发料（261）</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>PCNF</strong></td>
+            <td>Partially Confirmed</td>
+            <td>部分确认</td>
+            <td>工序报工未最终完工确认</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>CNF</strong></td>
+            <td>Confirmed</td>
+            <td>已确认</td>
+            <td>工序最终完工确认</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>PDEL</strong></td>
+            <td>Partially Delivered</td>
+            <td>部分交货</td>
+            <td>部分产成品已入库</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+          </tr>
+          <tr>
+            <td><strong>PDLV</strong></td>
+            <td>Partially Delivered</td>
+            <td>部分交货（订单级）</td>
+            <td>订单级部分产出入库</td>
+            <td>✔</td>
+            <td>✔</td>
+            <td>✔</td>
+          </tr>
+          <tr>
+            <td><strong>DLV</strong></td>
+            <td>Delivered</td>
+            <td>已交货</td>
+            <td>成品完全入库，组件需求删除</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>VCAL</strong></td>
+            <td>Variance Calculation</td>
+            <td>差异计算</td>
+            <td>订单进行过差异运算（KKS2）</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>TECO</strong></td>
+            <td>Technically Completed</td>
+            <td>技术性完成</td>
+            <td>订单不再允许常规业务交易，从 MRP 移除</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>RESA</strong></td>
+            <td>Results Analysis</td>
+            <td>进行结果分析</td>
+            <td>订单进行过结算</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>CLSD</strong></td>
+            <td>Closed</td>
+            <td>已关闭</td>
+            <td>财务月末结算后关闭，禁止任何过账</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+          <tr>
+            <td><strong>DLID</strong></td>
+            <td>Deleted</td>
+            <td>已删除</td>
+            <td>标记删除，数据保留可恢复</td>
+            <td>❌</td>
+            <td>❌</td>
+            <td>❌</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>💡 状态对成本会计的影响：</strong>REL 状态开始归集实际成本，TECO 停止归集并触发差异计算，CLSD 完成差异结转。月结时必须确保当月投料/报工/入库完毕的工单已 TECO，否则 CO88 结算会异常。</p>
+    </div>
+
+    <h4>4. COOIS 按状态组合查询的关键场景</h4>
+    <p>COOIS（生产订单信息系统）是月结前工单检查的核心事务码，支持按系统状态组合筛选。以下是 3 个实战查询场景：<sup><a href="#cite-13">[13]</a></sup></p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>查询场景</th>
+            <th>状态筛选条件</th>
+            <th>业务目的</th>
+            <th>后续动作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>已入库但未报工确认</strong></td>
+            <td>状态 = DLV，排除 CNF</td>
+            <td>查找成品已完全入库但报工未完成的工单</td>
+            <td>联系生产部门补报工（CO11N）</td>
+          </tr>
+          <tr>
+            <td><strong>已发料但未交货的在制工单</strong></td>
+            <td>状态 = GMPS，排除 DLV</td>
+            <td>查找已领料但未产出成品的在制工单</td>
+            <td>确认是否仍在生产或需 TECO</td>
+          </tr>
+          <tr>
+            <td><strong>部分交货但未 TECO</strong></td>
+            <td>状态 = PDLV，排除 TECO</td>
+            <td>查找部分入库但未技术完成的工单</td>
+            <td>与业务部门确认是否需要 TECO</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>5. 工单成本核对方法</h4>
+    <p>月结前需对工单进行成本核对，确保投入产出合理、余额正确。S/4HANA 中所有成本数据实时写入 ACDOCA，可直接查询工单的 FI+CO 全维度数据。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>事务码</th>
+            <th>核对内容</th>
+            <th>正确标准</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>CO03 → 成本 → 分析</strong></td>
+            <td>目标成本 vs 实际成本</td>
+            <td>投入产出合理（如产 100 件不应只耗 50 台发动机）</td>
+          </tr>
+          <tr>
+            <td><strong>CO03 → 成本 → 余额</strong></td>
+            <td>工单借贷方合计</td>
+            <td>完工工单余额 = 0（已结算）</td>
+          </tr>
+          <tr>
+            <td><strong>S_ALR_87013127</strong></td>
+            <td>工单结算余额</td>
+            <td>完工工单余额 = 0；在制工单余额 ≠ 0</td>
+          </tr>
+          <tr>
+            <td><strong>KKAQ</strong></td>
+            <td>在制品查询</td>
+            <td>在制工单余额应与 KKAO 计算结果一致</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>6. TECO 批量关闭要点与跨月规则</h4>
+    <p>TECO（Technically Completed，技术性完成）是月结前工单清理的关键操作。TECO 后工单从 MRP 移除、删除组件需求、触发差异计算。<strong>跨月规则：当月投料/报工/入库完毕的工单必须当月 TECO</strong>，否则月结异常。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>操作</th>
+            <th>事务码</th>
+            <th>要点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>单个 TECO</strong></td>
+            <td>CO02</td>
+            <td>菜单 Function → Restrict processing → Complete technically</td>
+          </tr>
+          <tr>
+            <td><strong>批量 TECO</strong></td>
+            <td>COHV</td>
+            <td>功能代码 220，处理方式 E（实际运行）</td>
+          </tr>
+          <tr>
+            <td><strong>TECO 与 CLSD 区别</strong></td>
+            <td>—</td>
+            <td>TECO 停止业务交易但允许结算；CLSD 财务关闭后禁止任何过账</td>
+          </tr>
+          <tr>
+            <td><strong>TECO 警告处理</strong></td>
+            <td>CO1P / COGI</td>
+            <td>若 TECO 时报"生产订单仍有未处理记录"，<strong>不可强行 TECO</strong>，需先在 CO1P/COGI 清理</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>⚠️ 重要：</strong>若 TECO 时忽略"生产订单仍有未处理记录"警告强行 TECO，月末关闭工单时会报错"订单余额不为零不能关闭"。此时需用 <strong>KO88</strong> 对单个工单进行结算，确保余额归零后才能关闭。</p>
+    </div>
+
+    <h4>7. CO13 取消报工的注意事项</h4>
+    <p>CO13 用于取消报工确认，但存在三大限制，月结前操作需特别注意：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>限制项</th>
+            <th>说明</th>
+            <th>处理方法</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>只能整单取消</strong></td>
+            <td>不能部分取消报工单，必须取消整个报工确认</td>
+            <td>如需部分调整，先 CO13 取消再 CO11N 重新报工</td>
+          </tr>
+          <tr>
+            <td><strong>跨月冲销需先关 OKP1</strong></td>
+            <td>跨月冲销需先关闭上期 OKP1 成本期间，再更改过账日期到上期</td>
+            <td>OKP1 关闭上期 → CO13 冲销 → OKP1 重新打开</td>
+          </tr>
+          <tr>
+            <td><strong>反冲物料冲销失败</strong></td>
+            <td>反冲物料（Backflush）冲销失败时需先在 COGI 保存自动过账</td>
+            <td>CO14 查看报工历史 → COGI 处理失败记录 → CO13 取消</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <h3>月结详细步骤清单</h3>
     <div class="table-wrap">
       <table>
@@ -751,7 +1192,7 @@ graph TD
         </thead>
         <tbody>
           <tr>
-            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【一、月结前准备】</td>
+            <td colspan="4" style="background:var(--accent-soft);font-weight:600;color:var(--accent)">【一、月结前准备】（含月末前一周工单检查，详见上文"月结前一周：工单检查与清理"章节）</td>
           </tr>
           <tr>
             <td>1</td>
@@ -760,10 +1201,34 @@ graph TD
             <td>确保GR/IR科目清理完毕</td>
           </tr>
           <tr>
-            <td>2</td>
-            <td>检查所有生产订单报工是否完成</td>
+            <td>2a</td>
+            <td>清理货物移动错误（261发料/101入库失败）</td>
+            <td>COGI</td>
+            <td>队列保持&lt;1000条，先于CO1P/COFC处理</td>
+          </tr>
+          <tr>
+            <td>2b</td>
+            <td>清理报工确认错误（CO11N/CO15失败）</td>
+            <td>CO1P / CO14</td>
+            <td>建议设为后台作业每班次运行</td>
+          </tr>
+          <tr>
+            <td>2c</td>
+            <td>清理实际成本过账错误（KKS1/KKS2失败）</td>
+            <td>COFC</td>
+            <td>每日报工后运行，避免月末集中爆发</td>
+          </tr>
+          <tr>
+            <td>2d</td>
+            <td>按状态组合查询工单，核对报工与交货</td>
             <td>COOIS</td>
-            <td>本期产出工单是否全部报工</td>
+            <td>DLV排除CNF→补报工；GMPS排除DLV→确认在制</td>
+          </tr>
+          <tr>
+            <td>2e</td>
+            <td>工单成本核对与批量TECO</td>
+            <td>CO03 / S_ALR_87013127 / COHV</td>
+            <td>完工工单余额=0；当月工单必须当月TECO</td>
           </tr>
           <tr>
             <td>3</td>
@@ -1790,6 +2255,18 @@ graph TD
           <span class="src-title">Udemy, SAP CO : Product Costing & COPA & Material Ledger - Latest。产品成本与物料账英文课程。</span>
           <a href="https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/" target="_blank" rel="noopener">https://www.udemy.com/course/sap-co-activity-based-costing-co-om-abc-in-s4-hana-2021/</a>
         </li>
+        <li id="cite-11">
+          <span class="src-title">econvera.org, SAP PP Error Resolution: CO1P, COFC, COGI. 详解三大异常清理事务码的触发事件、对应表与清理顺序（2025-10）。</span>
+          <a href="https://www.econvera.org/sap-pp-error-resolution-co1p-cofc-cogi/" target="_blank" rel="noopener">https://www.econvera.org/sap-pp-error-resolution-co1p-cofc-cogi/</a>
+        </li>
+        <li id="cite-12">
+          <span class="src-title">SAP Note 520700, Production Order: Monitoring of CO1P, COGI, COFC. SAP 官方最佳实践，强调定期监控可减少 40-60% 积压。</span>
+          <a href="https://launchpad.support.sap.com/services/api/1.0/sapnotes/520700" target="_blank" rel="noopener">https://launchpad.support.sap.com/services/api/1.0/sapnotes/520700</a>
+        </li>
+        <li id="cite-13">
+          <span class="src-title">CSDN博客, SAP 月末生产订单不能关闭相关问题。COOIS 按状态组合查询工单的实战场景。</span>
+          <a href="https://blog.csdn.net/zhongguomao/article/details/135765432" target="_blank" rel="noopener">https://blog.csdn.net/zhongguomao/article/details/135765432</a>
+        </li>
       </ol>
     </div>
   </div>
@@ -1797,6 +2274,6 @@ graph TD
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js" defer></script>
 <script src="assets/charts.js?v=20260905c" defer></script>
-<script src="assets/app.js?v=20260916b" defer></script>
+<script src="assets/app.js?v=20260916c" defer></script>
 </body>
 </html>

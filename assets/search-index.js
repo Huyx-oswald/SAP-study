@@ -1125,6 +1125,167 @@ window.SITE_SEARCH_INDEX = [
   "p": "co-basics.html",
   "a": "month-end",
   "s": "月末结账完整流程",
+  "t": "月结前一周：工单检查与清理",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "工单检查总览流程图",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "三大异常清理事务码详解",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "COGI",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "CO1P",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "COFC",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "CO14",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "工单状态链路与英文缩写含义",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "CRTD",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "REL",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "GMPS",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "CNF",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "DLV",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "TECO",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "CLSD",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "COOIS按状态组合查询的关键场景",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "工单成本核对方法",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "S_ALR_87013127",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "KKAQ",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "TECO批量关闭要点与跨月规则",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "COHV",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "CO03",
+  "y": "表格"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
+  "t": "CO13取消报工的注意事项",
+  "y": "标题"
+ },
+ {
+  "p": "co-basics.html",
+  "a": "month-end",
+  "s": "月末结账完整流程",
   "t": "月结详细步骤清单",
   "y": "标题"
  },
