@@ -670,13 +670,6 @@ window.SITE_SEARCH_INDEX = [
   "p": "index.html",
   "a": "overview",
   "s": "学习路径总览",
-  "t": "SAP Fiori 应用与传统 GUI 事务码对应表",
-  "y": "标题"
- },
- {
-  "p": "index.html",
-  "a": "overview",
-  "s": "学习路径总览",
   "t": "对比维度",
   "y": "表格"
  },
@@ -699,27 +692,6 @@ window.SITE_SEARCH_INDEX = [
   "a": "overview",
   "s": "学习路径总览",
   "t": "对成本会计的影响",
-  "y": "表格"
- },
- {
-  "p": "index.html",
-  "a": "overview",
-  "s": "学习路径总览",
-  "t": "业务功能",
-  "y": "表格"
- },
- {
-  "p": "index.html",
-  "a": "overview",
-  "s": "学习路径总览",
-  "t": "SAP Fiori 应用（S/4HANA）",
-  "y": "表格"
- },
- {
-  "p": "index.html",
-  "a": "overview",
-  "s": "学习路径总览",
-  "t": "传统 GUI 事务码",
   "y": "表格"
  },
  {

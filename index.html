@@ -10,7 +10,7 @@
 <meta property="og:title" content="SAP制造业成本会计系统性学习规划">
 <meta property="og:description" content="面向制造业成本会计的SAP CO模块完整学习路线图，覆盖标准成本估算、生产订单结算、物料分类账、月末年末结账全流程，含事务码操作指南与实战案例。">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/styles.css?v=20260916a">
+<link rel="stylesheet" href="assets/styles.css?v=20260916b">
 <link rel="prefetch" href="co-basics.html">
 <link rel="prefetch" href="integration.html">
 </head>
@@ -1017,7 +1017,7 @@ graph TD
           <tr>
             <td><strong>成本中心会计</strong></td>
             <td>计划用 KP06/KP26，实际过账到 COEP，报表读 COSS/COSP</td>
-            <td>计划可使用 Fiori 应用，实际数据直接入 ACDOCA；COEP 仍存在但为兼容性视图</td>
+            <td>实际数据直接入 ACDOCA；COEP 仍存在但为兼容性视图</td>
             <td>S/4HANA 中成本中心余额可实时从 ACDOCA 聚合，无需等待期间结算</td>
           </tr>
           <tr>
@@ -1035,14 +1035,14 @@ graph TD
           <tr>
             <td><strong>期间开关</strong></td>
             <td>MMPV（物料期间）+ OB52（FI 期间）+ OKP1（CO 期间）</td>
-            <td>事务码保留；新增 Fiori 应用"Manage Posting Periods"统一管理</td>
-            <td>事务码在两版本中通用，操作逻辑一致</td>
+            <td>事务码保留，操作逻辑一致</td>
+            <td>事务码在两版本中通用</td>
           </tr>
           <tr>
             <td><strong>用户界面</strong></td>
             <td>以 SAP GUI 为主，部分 Web GUI</td>
-            <td><strong>SAP Fiori</strong> 为默认 UI，提供基于角色的应用；SAP GUI 仍可用</td>
-            <td>需熟悉 Fiori 应用与传统事务码的对应关系（见下文对照表）</td>
+            <td>SAP GUI 仍为默认操作界面，S/4HANA 兼容</td>
+            <td>事务码操作在两版本中通用</td>
           </tr>
           <tr>
             <td><strong>报表工具</strong></td>
@@ -1062,49 +1062,6 @@ graph TD
 
     <div class="callout">
       <p><strong>💡 学习建议：</strong>无论使用哪个版本，<strong>成本会计的业务逻辑（标准价归集 → 实际价调整 → 差异分摊）完全一致</strong>。差异主要在底层数据模型和前端工具上。建议先掌握业务逻辑，再根据所在系统版本学习具体操作。</p>
-    </div>
-
-    <!-- Fiori 与 GUI 事务码对应 -->
-    <h3>SAP Fiori 应用与传统 GUI 事务码对应表</h3>
-    <p>S/4HANA 中 Fiori 应用逐渐替代传统事务码。下表列出成本会计日常高频操作的 Fiori 应用与对应 GUI 事务码。</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>业务功能</th>
-            <th>SAP Fiori 应用（S/4HANA）</th>
-            <th>传统 GUI 事务码</th>
-            <th>说明</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>标准成本估算</strong></td><td>Cost Estimate with Quantity Structure / Process Material Cost Estimates</td><td>CK11N</td><td>Fiori 支持批量处理和状态跟踪</td></tr>
-          <tr><td><strong>标记与发布标准价</strong></td><td>Release Cost Estimates / Post Standard Price</td><td>CK24 / CKME</td><td>Fiori 提供审批工作流集成</td></tr>
-          <tr><td><strong>成本估算显示</strong></td><td>Display Material Cost Estimate</td><td>CK13N</td><td>Fiori 界面更直观，支持多维钻取</td></tr>
-          <tr><td><strong>生产订单创建</strong></td><td>Create Production Order (Fiori) / Process Production Orders</td><td>CO01</td><td>PP-FIORI 应用，支持移动端</td></tr>
-          <tr><td><strong>生产订单报工</strong></td><td>Confirm Production Order Operation</td><td>CO11N</td><td>Fiori 报工支持扫码和触摸屏</td></tr>
-          <tr><td><strong>货物移动</strong></td><td>Post Goods Movement / Goods Movement (MIGO-like)</td><td>MIGO</td><td>Fiori 版 MIGO 支持角色化视图</td></tr>
-          <tr><td><strong>成本中心实际/计划</strong></td><td>Display Cost Center Actual/Plan</td><td>S_ALR_87013611 / KSB1</td><td>Fiori 支持实时数据和自定义视图</td></tr>
-          <tr><td><strong>成本中心计划</strong></td><td>Plan Cost Centers (Costs and Allocations)</td><td>KP06 / KP26</td><td>Fiori 计划支持 Excel 导入和版本对比</td></tr>
-          <tr><td><strong>实际价格计算</strong></td><td>Calculate Actual Activity Price (Fiori)</td><td>KSII</td><td>Fiori 提供运行日志和错误分析</td></tr>
-          <tr><td><strong>订单重估</strong></td><td>Revaluate Orders at Actual Activity Prices</td><td>MFN1 / CON2</td><td>—</td></tr>
-          <tr><td><strong>在制品计算</strong></td><td>Work in Process by Order</td><td>KKAO / KKAX</td><td>Fiori 支持订单级 WIP 实时查看（事件型 WIP）</td></tr>
-          <tr><td><strong>差异计算</strong></td><td>Calculate Variances for Product Cost Collector / Order</td><td>KKS1 / KKS2</td><td>—</td></tr>
-          <tr><td><strong>订单结算</strong></td><td>Settle Product Cost Orders</td><td>CO88 / KO88</td><td>—</td></tr>
-          <tr><td><strong>物料分类账结算</strong></td><td>Actual Costing / Material Ledger Cockpit (Fiori)</td><td>CKMLCP</td><td>Fiori Cockpit 提供步骤可视化和状态监控</td></tr>
-          <tr><td><strong>物料价格分析</strong></td><td>Material Price Analysis</td><td>CKM3</td><td>Fiori 支持多层上卷追溯可视化</td></tr>
-          <tr><td><strong>期间管理</strong></td><td>Manage Posting Periods</td><td>OB52 / MMPV / OKP1</td><td>Fiori 统一管理 FI/MM/CO 期间</td></tr>
-          <tr><td><strong>CO-PA 获利报表</strong></td><td>Profitability Analysis (Margin Analysis)</td><td>KE30</td><td>Fiori 中 Margin Analysis 基于 ACDOCA 实时数据</td></tr>
-          <tr><td><strong>总账余额显示</strong></td><td>Display G/L Account Balances</td><td>FS10N / FAGLB03</td><td>Fiori 支持多维度实时筛选</td></tr>
-          <tr><td><strong>物料凭证查询</strong></td><td>Display Material Documents</td><td>MB51</td><td>—</td></tr>
-          <tr><td><strong>生产订单信息系统</strong></td><td>Production Order Information System</td><td>COOIS</td><td>Fiori 版支持更灵活的布局和导出</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="callout">
-      <p><strong>💡 提示：</strong>S/4HANA 中 Fiori 应用并非完全替代 GUI 事务码——部分底层配置（如 KEA0、KEDR 等）仍需在 GUI 中完成。建议<strong>优先学习 GUI 事务码（业务逻辑通用），再了解 Fiori 应用的差异</strong>。在 Fiori 中搜索应用时，可直接输入事务码名称（如"CK11N"）找到对应应用。</p>
     </div>
   </section>
 
@@ -1392,6 +1349,6 @@ graph TD
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js" defer></script>
 <script src="assets/charts.js?v=20260905c" defer></script>
-<script src="assets/app.js?v=20260916a" defer></script>
+<script src="assets/app.js?v=20260916b" defer></script>
 </body>
 </html>
