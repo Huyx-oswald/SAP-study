@@ -209,7 +209,7 @@
     if (siteIndexLoaded || siteIndexLoading) return;
     siteIndexLoading = true;
     var s = document.createElement('script');
-    s.src = 'assets/search-index.js?v=20260914b';
+    s.src = 'assets/search-index.js?v=20261109a';
     s.onload = refreshSiteIndex;
     document.head.appendChild(s);
   }
