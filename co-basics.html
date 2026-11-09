@@ -10,7 +10,7 @@
 <meta property="og:title" content="CO模块知识体系 | SAP制造业成本会计学习">
 <meta property="og:description" content="SAP CO成本控制模块完整知识体系：成本中心会计、内部订单、产品成本控制、获利能力分析CO-PA、成本对象与主数据详解。">
 <meta property="og:type" content="website">
-<link rel="stylesheet" href="assets/styles.css?v=20260916c">
+<link rel="stylesheet" href="assets/styles.css?v=20261109a">
 <link rel="prefetch" href="index.html">
 </head>
 <body>
@@ -599,6 +599,9 @@ graph TD
               <li><strong>单级价格确定</strong>：只计算物料自身的差异，按消耗与库存比例分摊</li>
               <li><strong>多级价格确定</strong>：将多层差异按BOM逐级上滚到产成品，最终确定完整实际成本</li>
             </ul>
+            <div class="callout-mini">
+              <strong>延伸阅读：</strong>这些差异究竟怎么形成的？原材料差异、在制品差异、半成品差异与上卷差异的来源与成因，见<a href="#month-end">月结章节 → 物料分类账差异：来源与成因</a>。
+            </div>
             <h5>✅ 关键检查点</h5>
             <ul>
               <li>必须先打开新物料期间（MMPV），才能执行记账清算</li>
@@ -1381,6 +1384,201 @@ graph TD
     <div class="callout warn">
       <strong>⚠️ 重要提醒</strong>
       月结步骤有严格的先后顺序，不可随意颠倒。例如：必须先完成成本中心分摊，才能计算实际作业价格；必须先计算WIP和差异，才能进行订单结算；必须先打开新物料期间（MMPV），才能执行物料账的记账清算。建议制作自己的月结Checklist，每次月结逐项打勾确认。
+    </div>
+
+    <h3>物料分类账差异：来源与成因</h3>
+    <p>在 CO 月结的物料分类账步骤（CKMLCP）中，系统会"跑出"大量差异——原材料差异、在制品差异、半成品差异、上卷差异等。要理解这些差异，必须先分清一个核心事实：<strong>物料分类账不是差异的"源头"，而是差异的"承接与分摊器"</strong>。绝大多数差异在进入物料分类账之前就已经形成了（采购、生产、作业价格重估），CKMLCP 只是按期间把它们归集起来，按"单级→多级→消耗重估"逐层分摊出去。<sup><a href="#cite-3">[3]</a></sup><sup><a href="#cite-7">[7]</a></sup></p>
+
+    <h4>1. 差异的两大来源：进物料账之前 vs 物料账内部</h4>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>来源类别</th>
+            <th>差异类型</th>
+            <th>怎么产生</th>
+            <th>引起环节</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="5"><strong>进物料账之前<br>就已形成</strong></td>
+            <td>采购价格差异 PPV</td>
+            <td>发票价格（实际采购价）≠ 标准价格</td>
+            <td>MM 发票校验 MIRO / 自动记账 OBYC PRD（价格差异科目）</td>
+          </tr>
+          <tr>
+            <td>汇率差异</td>
+            <td>外币采购：发票汇率 ≠ 收货时评估汇率</td>
+            <td>MM 收货 / 发票校验，OB08 汇率维护</td>
+          </tr>
+          <tr>
+            <td>用量/消耗差异</td>
+            <td>实际发料数量 ≠ 标准 BOM 用量（超耗/节约）</td>
+            <td>生产订单发料 MIGO 261，报工 CO11N 反冲</td>
+          </tr>
+          <tr>
+            <td>作业价格差异</td>
+            <td>实际作业单价（KSII 结算价）≠ 计划单价（KP26）</td>
+            <td>作业价格重估 CON2/MFN1，人工/机器价差</td>
+          </tr>
+          <tr>
+            <td>产出价格差异</td>
+            <td>产出入库评估价 ≠ 订单标准成本（产出数量×标准价偏差）</td>
+            <td>生产订单收货 MIGO 101</td>
+          </tr>
+          <tr>
+            <td rowspan="3"><strong>物料账内部<br>产生与分摊</strong></td>
+            <td>单级差异分摊</td>
+            <td>单层：物料自身差异按"库存+消耗"比例分摊，产生分摊尾差</td>
+            <td>CKMLCP 单级价格确定</td>
+          </tr>
+          <tr>
+            <td>多级（上卷）差异</td>
+            <td>下层物料（原材料/半成品）的差异按 BOM 结构滚到上层物料（产成品）</td>
+            <td>CKMLCP 多级价格确定（见下方上卷机制）</td>
+          </tr>
+          <tr>
+            <td>消耗重估尾差</td>
+            <td>分摊比例取整、库存为零物料、舍入误差等导致的未分配/未分摊差异</td>
+            <td>CKMLCP 消耗重估 / 记账清算</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>💡 关键理解：</strong>"原材料差异"的根源通常不在物料分类账，而在<strong>采购与标准价维护</strong>（PPV 或价格更新策略）。物料分类账的作用是把这些差异按期间归集后分摊——分摊到库存的差异进入存货价值，分摊到消耗的差异进入销售成本/生产成本科目。所以排查差异时，要先看"差异在哪一步形成的"，再去看 CKM3 的价格分析，而不是一上来就在 CKMLCP 里找。</p>
+    </div>
+
+    <h4>2. 按物料层级看差异：原材料 / 半成品 / 在制品 / 产成品</h4>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>物料层级</th>
+            <th>典型差异</th>
+            <th>产生原因</th>
+            <th>在 CKM3 中如何看</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>原材料</strong></td>
+            <td>采购价格差异、汇率差异、价格变更差异</td>
+            <td>发票价≠标准价；采购在途/收货评估差异；标准价变更未发布</td>
+            <td>CKM3 单级：看"采购差异"与"价格变更"行</td>
+          </tr>
+          <tr>
+            <td><strong>半成品</strong></td>
+            <td>作业价格差异、用量差异、下层上卷差异</td>
+            <td>自身生产订单差异（KSII 实际价≠KP26 计划价）+ 原材料差异滚入</td>
+            <td>CKM3 多级：看"输入差异"与"上层差异上卷"行</td>
+          </tr>
+          <tr>
+            <td><strong>在制品 WIP</strong></td>
+            <td>在制品差异（结果分析差异）</td>
+            <td>当月投料/报工但未完工入库的工单，成本滞留 WIP；差异未结转到成品</td>
+            <td>CO03 → 成本 → 在制品 / KKAQ；KKAO 计算</td>
+          </tr>
+          <tr>
+            <td><strong>产成品</strong></td>
+            <td>上卷差异（含所有下层差异）、自身生产差异</td>
+            <td>全部下层物料差异按 BOM 汇总 + 自身订单差异</td>
+            <td>CKM3 多级：总差异 = 单级差异 + 上卷差异</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>3. 上卷差异（多级价格确定）的产生机制</h4>
+    <p>上卷差异是多级价格确定（CKMLCP 步骤 4）的核心产物。机制如下：</p>
+    <figure class="diagram">
+      <pre class="mermaid">
+graph TD
+    RM[原材料<br/>PPV 差异 +200] -->|"BOM 发料<br/>按标准价计入"| SEMI[半成品<br/>订单成本归集]
+    SEMI -->|"半成品自身订单差异 +300"| SEMI2[半成品总差异 +500]
+    SEMI2 -->|"单级: 分摊到库存与消耗"| PART1[分摊到半成品库存部分]
+    PART1 -->|"多级: 作为下层差异上卷"| FG[产成品<br/>上卷差异 +500]
+    OP[作业价格差异<br/>+233] -->|"订单差异"| FG
+    FG -->|"产成品总差异<br/>= 单级 + 上卷"| TOT[产成品实际成本确定]
+
+    style RM fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    style SEMI fill:#d1fae5,stroke:#059669,color:#064e3b
+    style SEMI2 fill:#d1fae5,stroke:#059669,color:#064e3b
+    style PART1 fill:#fef3c7,stroke:#d97706,color:#78350f
+    style FG fill:#ede9fe,stroke:#7c3aed,color:#4c1d95
+    style TOT fill:#fce7f3,stroke:#db2777,color:#831843
+      </pre>
+      <figcaption>图5：物料分类账上卷差异产生机制</figcaption>
+    </figure>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>环节</th>
+            <th>差异怎么引起</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>单级价格确定</strong></td>
+            <td>只处理物料自身的差异（自身订单差异、自身 PPV），按库存余额与消耗量比例分摊。分摊后仍有"未分摊"部分 → 尾差。</td>
+          </tr>
+          <tr>
+            <td><strong>多级价格确定（上卷）</strong></td>
+            <td>把下层物料分摊到"库存"的那部分差异，按上层物料 BOM 中的消耗关系，作为输入差异滚入上层物料。层层上卷，直到产成品。</td>
+          </tr>
+          <tr>
+            <td><strong>消耗重估</strong></td>
+            <td>对上卷到产成品的差异，再次按"库存 vs 已销成本"分摊。差异最终进入：期末库存（存货）或销售成本（损益）。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>💡 核心公式：</strong>产成品总差异 = 单级差异（自身订单/采购差异）+ 上卷差异（所有下层物料差异）。<strong>只要 BOM 层级越深、物料互相消耗越交叉，上卷差异就越复杂</strong>，这也是为什么需要"确定顺序"（CKMLCP 步骤 2）——系统必须保证先处理下层物料，才能正确上卷到上层。</p>
+    </div>
+
+    <h4>4. 差异如何影响财务结果与排查思路</h4>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>差异去向</th>
+            <th>财务影响</th>
+            <th>排查事务码</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>分摊到期末库存</td>
+            <td>进入存货价值，影响资产负债表</td>
+            <td>CKM3 价格分析</td>
+          </tr>
+          <tr>
+            <td>分摊到消耗（销售成本）</td>
+            <td>进入主营业务成本，影响损益表</td>
+            <td>CKM3 消耗结构 / FB03 凭证</td>
+          </tr>
+          <tr>
+            <td>在制品差异</td>
+            <td>WIP 计入存货（资产负债表）；差异未结转</td>
+            <td>KKAQ / CO03 → 成本 → 在制品</td>
+          </tr>
+          <tr>
+            <td>未分摊/未分配尾差</td>
+            <td>停留在差异科目，月结后需手工调整</td>
+            <td>CKMLCP 检查未分配差异 / MR22</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <p><strong>⚠️ 排查思路（按优先级）：</strong>①先看 <strong>CKM3</strong> 价格分析定位差异层级与类型；②再看差异是在"采购环节"（PPV）还是"生产环节"（作业价/用量）形成的；③在制品差异先确认工单是否 TECO、是否未完工；④尾差先检查分摊比例与库存为零的物料，必要时 <strong>MR22</strong> 手工调整。具体数值案例见<a href="cost-analysis.html">报价与分析页面的多层结算演示</a>。</p>
     </div>
   </section>
 
@@ -2274,6 +2472,6 @@ graph TD
 
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js" defer></script>
 <script src="assets/charts.js?v=20260905c" defer></script>
-<script src="assets/app.js?v=20260916c" defer></script>
+<script src="assets/app.js?v=20261109a" defer></script>
 </body>
 </html>
